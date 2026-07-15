@@ -401,6 +401,8 @@ function PuzzleTiles({
 function WallShader() {
   const totalColumns = 5
   const totalRows = 9
+  const missingIndex = totalColumns * 4 + 2
+  const wallPalette = ['var(--nss-blue)', 'var(--nss-red)', 'var(--nss-gold)', '#31529a', '#82243a']
 
   return (
     <div className="wall-shader" aria-hidden="true">
@@ -409,20 +411,82 @@ function WallShader() {
       {Array.from({ length: totalColumns * totalRows }, (_, index) => {
         const row = Math.floor(index / totalColumns)
         const column = index % totalColumns
+        const shape = (row + column) % 2 === 0 ? 'a' : 'b'
+        const wallDelay = (totalRows - row - 1) * 82 + column * 23
+        const isMissing = index === missingIndex
 
         return (
           <span
-            className={joinClassNames('wall-block', 'wall-block--shape-' + ((row + column) % 2 === 0 ? 'a' : 'b'))}
+            className={joinClassNames('wall-cell', isMissing && 'wall-cell--missing')}
             key={index}
             style={
               {
-                '--wall-delay': String((totalRows - row - 1) * 82 + column * 23) + 'ms',
-                '--wall-tone': String((index + row) % 7),
+                '--wall-delay': String(wallDelay) + 'ms',
+                '--wall-you-delay': String(wallDelay + 860) + 'ms',
+                '--wall-color': wallPalette[(row * 2 + column) % wallPalette.length],
               } as CSSProperties
             }
-          />
+          >
+            {isMissing ? (
+              <>
+                <span className={joinClassNames('wall-gap', 'wall-gap--shape-' + shape)} />
+                <span className={joinClassNames('wall-you', 'wall-you--shape-' + shape)}>
+                  <strong>YOU</strong>
+                </span>
+              </>
+            ) : (
+              <span className={joinClassNames('wall-block', 'wall-block--shape-' + shape)} />
+            )}
+          </span>
         )
       })}
+    </div>
+  )
+}
+
+function LoaderPuzzle() {
+  const totalColumns = 4
+  const totalRows = 3
+  const missingIndex = totalColumns + 1
+
+  return (
+    <div className="loader-puzzle__stage" aria-hidden="true">
+      <div className="loader-puzzle">
+        {Array.from({ length: totalColumns * totalRows }, (_, index) => {
+          const row = Math.floor(index / totalColumns)
+          const column = index % totalColumns
+          const shape = (row + column) % 2 === 0 ? 'a' : 'b'
+          const isMissing = index === missingIndex
+          const pieceDelay = (totalRows - row - 1) * 170 + column * 40
+
+          return (
+            <span
+              className={joinClassNames('loader-puzzle__cell', isMissing && 'loader-puzzle__cell--missing')}
+              key={index}
+              style={
+                {
+                  '--piece-delay': String(pieceDelay) + 'ms',
+                  '--piece-entry-x': String((column - (totalColumns - 1) / 2) * 11) + 'px',
+                  '--piece-entry-y': String((totalRows - row) * 22) + 'px',
+                  '--loader-you-delay': String(pieceDelay + 720) + 'ms',
+                } as CSSProperties
+              }
+            >
+              {isMissing ? (
+                <>
+                  <span className={joinClassNames('loader-puzzle__void', 'loader-puzzle__void--shape-' + shape)} />
+                  <span className={joinClassNames('loader-puzzle__you', 'loader-puzzle__you--shape-' + shape)}>
+                    <strong>YOU</strong>
+                  </span>
+                </>
+              ) : (
+                <span className={joinClassNames('loader-puzzle__piece', 'loader-puzzle__piece--shape-' + shape)} />
+              )}
+            </span>
+          )
+        })}
+      </div>
+      <NssSeal className="loader-puzzle__seal" decorative />
     </div>
   )
 }
@@ -434,13 +498,7 @@ function LoadingScreen({ progress }: { progress: number }) {
       <div className="loading-screen__noise" />
       <div className="loading-screen__content">
         <p className="eyebrow">National Service Scheme / SCE KIIT</p>
-        <div className="loader-puzzle__stage">
-          <PuzzleTiles className="loader-puzzle" count={15} columns={5} emptyIndex={7} />
-          <div className="loader-puzzle__emblem" aria-hidden="true">
-            <span className="loader-puzzle__emblem-piece" />
-            <NssSeal className="loader-puzzle__seal" decorative />
-          </div>
-        </div>
+        <LoaderPuzzle />
         <p className="loading-screen__motto">
           <span>The National Service Scheme motto</span>
           <strong>Not Me, But You</strong>
@@ -783,7 +841,15 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [eventIndex, setEventIndex] = useState(0)
   const [eventCycle, setEventCycle] = useState(0)
+  const [diaryTimerCycle, setDiaryTimerCycle] = useState(0)
   const diaryPauseUntilRef = useRef(0)
+  const diaryDragRef = useRef({
+    pointerId: null as number | null,
+    startX: 0,
+    didMove: false,
+  })
+  const diaryClickSuppressedRef = useRef(false)
+  const [isDiaryDragging, setIsDiaryDragging] = useState(false)
   const diaryAutoDelay = 6500
   const selectedEvent = eventDiary[eventIndex]
 
@@ -825,6 +891,7 @@ function App() {
 
     setEventIndex((currentIndex) => (currentIndex + 1) % eventDiary.length)
     setEventCycle((currentCycle) => currentCycle + 1)
+    setDiaryTimerCycle((currentCycle) => currentCycle + 1)
   })
 
   useEffect(() => {
@@ -838,13 +905,80 @@ function App() {
 
   function pauseDiaryAutoAdvance(delay = diaryAutoDelay) {
     diaryPauseUntilRef.current = Date.now() + delay
-    setEventCycle((currentCycle) => currentCycle + 1)
+    setDiaryTimerCycle((currentCycle) => currentCycle + 1)
   }
 
   function selectDiaryEvent(requestedIndex: number) {
     diaryPauseUntilRef.current = Date.now() + diaryAutoDelay + 1800
     setEventIndex((requestedIndex + eventDiary.length) % eventDiary.length)
     setEventCycle((currentCycle) => currentCycle + 1)
+    setDiaryTimerCycle((currentCycle) => currentCycle + 1)
+  }
+
+  function handleDiaryPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    if (event.pointerType === 'mouse' && event.button !== 0) {
+      return
+    }
+
+    pauseDiaryAutoAdvance(9600)
+    diaryDragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      didMove: false,
+    }
+    event.currentTarget.setPointerCapture(event.pointerId)
+    setIsDiaryDragging(true)
+  }
+
+  function handleDiaryPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    const drag = diaryDragRef.current
+    if (drag.pointerId !== event.pointerId) {
+      return
+    }
+
+    if (Math.abs(event.clientX - drag.startX) > 18) {
+      drag.didMove = true
+    }
+  }
+
+  function finishDiaryDrag(event: ReactPointerEvent<HTMLDivElement>) {
+    const drag = diaryDragRef.current
+    if (drag.pointerId !== event.pointerId) {
+      return
+    }
+
+    const didMove = drag.didMove
+    const direction = event.clientX < drag.startX ? 1 : -1
+    drag.pointerId = null
+    drag.didMove = false
+    setIsDiaryDragging(false)
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+
+    if (!didMove) {
+      pauseDiaryAutoAdvance(4400)
+      return
+    }
+
+    diaryClickSuppressedRef.current = true
+    window.setTimeout(() => {
+      diaryClickSuppressedRef.current = false
+    }, 0)
+    selectDiaryEvent(eventIndex + direction)
+  }
+
+  function handleDiaryKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      selectDiaryEvent(eventIndex - 1)
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      selectDiaryEvent(eventIndex + 1)
+    }
   }
 
   function closeMenu() {
@@ -952,7 +1086,6 @@ function App() {
                   <div className="hero-puzzle__piece hero-puzzle__piece--g" />
                   <div className="hero-puzzle__piece hero-puzzle__piece--h" />
                   <div className="hero-puzzle__missing">
-                    <span>THE LAST PIECE</span>
                     <strong>YOU</strong>
                   </div>
                   <div className="hero-puzzle__logo">
@@ -1106,11 +1239,18 @@ function App() {
             </div>
 
             <div
-              className="diary-window"
+              className={joinClassNames('diary-window', isDiaryDragging && 'diary-window--dragging')}
               style={{ '--event-accent': selectedEvent.accent } as CSSProperties}
               role="region"
               aria-label="Automated NSS event diary"
+              tabIndex={0}
+              onKeyDown={handleDiaryKeyDown}
               onPointerEnter={() => pauseDiaryAutoAdvance()}
+              onPointerDown={handleDiaryPointerDown}
+              onPointerMove={handleDiaryPointerMove}
+              onPointerUp={finishDiaryDrag}
+              onPointerCancel={finishDiaryDrag}
+              onLostPointerCapture={finishDiaryDrag}
               onFocusCapture={() => pauseDiaryAutoAdvance()}
             >
               <div className="diary-window__visual" key={'visual-' + selectedEvent.id + '-' + eventCycle}>
@@ -1135,7 +1275,11 @@ function App() {
                   <button
                     className="circle-button"
                     type="button"
-                    onClick={() => selectDiaryEvent(eventIndex - 1)}
+                    onClick={() => {
+                      if (!diaryClickSuppressedRef.current) {
+                        selectDiaryEvent(eventIndex - 1)
+                      }
+                    }}
                     aria-label="Show previous event"
                   >
                     <ArrowIcon direction="left" />
@@ -1144,7 +1288,11 @@ function App() {
                   <button
                     className="circle-button"
                     type="button"
-                    onClick={() => selectDiaryEvent(eventIndex + 1)}
+                    onClick={() => {
+                      if (!diaryClickSuppressedRef.current) {
+                        selectDiaryEvent(eventIndex + 1)
+                      }
+                    }}
                     aria-label="Show next event"
                   >
                     <ArrowIcon />
@@ -1152,7 +1300,7 @@ function App() {
                 </div>
               </div>
               <div className="diary-window__autoplay" aria-hidden="true">
-                <span key={eventCycle} style={{ '--diary-delay': String(diaryAutoDelay) + 'ms' } as CSSProperties} />
+                <span key={diaryTimerCycle} style={{ '--diary-delay': String(diaryAutoDelay) + 'ms' } as CSSProperties} />
               </div>
             </div>
 
@@ -1164,7 +1312,11 @@ function App() {
                   type="button"
                   role="tab"
                   aria-selected={eventIndex === index}
-                  onClick={() => selectDiaryEvent(index)}
+                  onClick={() => {
+                    if (!diaryClickSuppressedRef.current) {
+                      selectDiaryEvent(index)
+                    }
+                  }}
                 >
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   {event.title}
