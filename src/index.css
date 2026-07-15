@@ -180,7 +180,7 @@ a {
   overflow: hidden;
   transform: translateX(-50%);
   pointer-events: none;
-  opacity: 0.68;
+  opacity: 0.56;
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 7%, black 88%, transparent);
   mask-image: linear-gradient(to bottom, transparent, black 7%, black 88%, transparent);
 }
