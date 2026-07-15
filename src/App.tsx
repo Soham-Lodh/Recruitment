@@ -288,7 +288,10 @@ function SunIcon() {
 function MoonIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M19.4 15.4A7.5 7.5 0 0 1 8.6 4.6a7.6 7.6 0 1 0 10.8 10.8Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
+      <circle cx="12" cy="12" r="7.45" fill="currentColor" />
+      <circle cx="9.2" cy="9.25" r="1.2" fill="var(--surface-solid)" />
+      <circle cx="15.25" cy="14.75" r="1.35" fill="var(--surface-solid)" />
+      <circle cx="15.85" cy="8.45" r="0.7" fill="var(--surface-solid)" />
     </svg>
   )
 }
@@ -406,7 +409,6 @@ function WallShader() {
 
   return (
     <div className="wall-shader" aria-hidden="true">
-      <span className="wall-shader__halo" />
       <span className="wall-shader__motto">NOT ME<br />BUT YOU</span>
       {Array.from({ length: totalColumns * totalRows }, (_, index) => {
         const row = Math.floor(index / totalColumns)
@@ -457,7 +459,7 @@ function LoaderPuzzle() {
           const column = index % totalColumns
           const shape = (row + column) % 2 === 0 ? 'a' : 'b'
           const isMissing = index === missingIndex
-          const pieceDelay = (totalRows - row - 1) * 170 + column * 40
+          const pieceDelay = (totalRows - row - 1) * 560 + column * 125
 
           return (
             <span
@@ -468,17 +470,14 @@ function LoaderPuzzle() {
                   '--piece-delay': String(pieceDelay) + 'ms',
                   '--piece-entry-x': String((column - (totalColumns - 1) / 2) * 11) + 'px',
                   '--piece-entry-y': String((totalRows - row) * 22) + 'px',
-                  '--loader-you-delay': String(pieceDelay + 720) + 'ms',
+                  '--loader-you-delay': String(pieceDelay + 1500) + 'ms',
                 } as CSSProperties
               }
             >
               {isMissing ? (
-                <>
-                  <span className={joinClassNames('loader-puzzle__void', 'loader-puzzle__void--shape-' + shape)} />
-                  <span className={joinClassNames('loader-puzzle__you', 'loader-puzzle__you--shape-' + shape)}>
-                    <strong>YOU</strong>
-                  </span>
-                </>
+                <span className={joinClassNames('loader-puzzle__you', 'loader-puzzle__you--shape-' + shape)}>
+                  <strong>YOU</strong>
+                </span>
               ) : (
                 <span className={joinClassNames('loader-puzzle__piece', 'loader-puzzle__piece--shape-' + shape)} />
               )}
@@ -491,9 +490,14 @@ function LoaderPuzzle() {
   )
 }
 
-function LoadingScreen({ progress }: { progress: number }) {
+function LoadingScreen({ progress, isLeaving }: { progress: number; isLeaving: boolean }) {
   return (
-    <div className="loading-screen" role="status" aria-live="polite" aria-label="Assembling the recruitment experience">
+    <div
+      className={joinClassNames('loading-screen', isLeaving && 'loading-screen--leaving')}
+      role="status"
+      aria-live="polite"
+      aria-label="Assembling the recruitment experience"
+    >
       <div className="loading-screen__aurora" />
       <div className="loading-screen__noise" />
       <div className="loading-screen__content">
@@ -792,7 +796,6 @@ function PremiumRail({
               <h3>{item.title}</h3>
               <span className="premium-card__line" />
               <p className="premium-card__description">{item.description}</p>
-              <span className="premium-card__discover">Explore the piece <ArrowIcon /></span>
             </div>
           </article>
         ))}
@@ -830,6 +833,7 @@ function PremiumRail({
 
 function App() {
   const [loading, setLoading] = useState(true)
+  const [isLoadingExiting, setIsLoadingExiting] = useState(false)
   const [progress, setProgress] = useState(0)
   const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = window.localStorage.getItem('nss-sce-theme')
@@ -842,6 +846,7 @@ function App() {
   const [eventIndex, setEventIndex] = useState(0)
   const [eventCycle, setEventCycle] = useState(0)
   const [diaryTimerCycle, setDiaryTimerCycle] = useState(0)
+  const eventIndexRef = useRef(0)
   const diaryPauseUntilRef = useRef(0)
   const diaryDragRef = useRef({
     pointerId: null as number | null,
@@ -855,7 +860,7 @@ function App() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const duration = reduceMotion ? 480 : 2700
+    const duration = reduceMotion ? 480 : 4800
     const startedAt = window.performance.now()
     let frame = 0
     let exitTimer = 0
@@ -867,7 +872,8 @@ function App() {
       if (nextProgress < 100) {
         frame = window.requestAnimationFrame(advance)
       } else {
-        exitTimer = window.setTimeout(() => setLoading(false), reduceMotion ? 80 : 320)
+        setIsLoadingExiting(true)
+        exitTimer = window.setTimeout(() => setLoading(false), reduceMotion ? 80 : 680)
       }
     }
 
@@ -889,7 +895,9 @@ function App() {
       return
     }
 
-    setEventIndex((currentIndex) => (currentIndex + 1) % eventDiary.length)
+    const nextIndex = (eventIndexRef.current + 1) % eventDiary.length
+    eventIndexRef.current = nextIndex
+    setEventIndex(nextIndex)
     setEventCycle((currentCycle) => currentCycle + 1)
     setDiaryTimerCycle((currentCycle) => currentCycle + 1)
   })
@@ -909,10 +917,17 @@ function App() {
   }
 
   function selectDiaryEvent(requestedIndex: number) {
+    const nextIndex = (requestedIndex + eventDiary.length) % eventDiary.length
     diaryPauseUntilRef.current = Date.now() + diaryAutoDelay + 1800
-    setEventIndex((requestedIndex + eventDiary.length) % eventDiary.length)
+    eventIndexRef.current = nextIndex
+    setEventIndex(nextIndex)
     setEventCycle((currentCycle) => currentCycle + 1)
     setDiaryTimerCycle((currentCycle) => currentCycle + 1)
+  }
+
+  function moveDiary(direction: number) {
+    pauseDiaryAutoAdvance()
+    selectDiaryEvent(eventIndexRef.current + direction)
   }
 
   function handleDiaryPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
@@ -966,18 +981,18 @@ function App() {
     window.setTimeout(() => {
       diaryClickSuppressedRef.current = false
     }, 0)
-    selectDiaryEvent(eventIndex + direction)
+    selectDiaryEvent(eventIndexRef.current + direction)
   }
 
   function handleDiaryKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key === 'ArrowLeft') {
       event.preventDefault()
-      selectDiaryEvent(eventIndex - 1)
+      moveDiary(-1)
     }
 
     if (event.key === 'ArrowRight') {
       event.preventDefault()
-      selectDiaryEvent(eventIndex + 1)
+      moveDiary(1)
     }
   }
 
@@ -1275,11 +1290,10 @@ function App() {
                   <button
                     className="circle-button"
                     type="button"
-                    onClick={() => {
-                      if (!diaryClickSuppressedRef.current) {
-                        selectDiaryEvent(eventIndex - 1)
-                      }
-                    }}
+                    onPointerDown={(event) => event.stopPropagation()}
+                    onPointerUp={(event) => event.stopPropagation()}
+                    onPointerCancel={(event) => event.stopPropagation()}
+                    onClick={() => moveDiary(-1)}
                     aria-label="Show previous event"
                   >
                     <ArrowIcon direction="left" />
@@ -1288,11 +1302,10 @@ function App() {
                   <button
                     className="circle-button"
                     type="button"
-                    onClick={() => {
-                      if (!diaryClickSuppressedRef.current) {
-                        selectDiaryEvent(eventIndex + 1)
-                      }
-                    }}
+                    onPointerDown={(event) => event.stopPropagation()}
+                    onPointerUp={(event) => event.stopPropagation()}
+                    onPointerCancel={(event) => event.stopPropagation()}
+                    onClick={() => moveDiary(1)}
                     aria-label="Show next event"
                   >
                     <ArrowIcon />
@@ -1386,7 +1399,7 @@ function App() {
         </a>
       </div>
 
-      {loading && <LoadingScreen progress={progress} />}
+      {loading && <LoadingScreen progress={progress} isLeaving={isLoadingExiting} />}
     </div>
   )
 }
