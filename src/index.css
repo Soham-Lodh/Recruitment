@@ -1879,13 +1879,14 @@ a {
 }
 
 .premium-card__body h3 {
-  max-width: 9ch;
+  max-width: 10ch;
   margin: 0.85rem 0 0;
   font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(2.3rem, 4.7vw, 5rem);
+  font-size: clamp(2rem, 4vw, 4.5rem);
   font-weight: 400;
   letter-spacing: -0.06em;
-  line-height: 0.88;
+  line-height: 1;
+  min-height: 4em;
 }
 
 .premium-card__line {
@@ -3198,7 +3199,6 @@ a {
   .section-copy h2,
   .story-brief__intro h2,
   .story-brief__card h3,
-  .premium-card__body h3,
   .diary-window__content h3,
   .connect-card h3 {
     overflow-wrap: anywhere;
@@ -3484,8 +3484,14 @@ a {
   }
 
   .premium-card__body h3 {
+    width: 100%;
+    max-width: none;
     margin-top: 0.62rem;
     font-size: clamp(2.5rem, 11.4vw, 3.7rem);
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    text-wrap: balance;
   }
 
   .premium-card__line {
