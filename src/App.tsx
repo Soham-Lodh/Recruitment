@@ -1065,10 +1065,13 @@ function App() {
         <header className="site-header">
           <a className="brand" href="#top" aria-label="NSS SCE KIIT home">
             <NssSeal className="brand__mark" alt="NSS SCE KIIT logo" />
+            <span className="brand__divider" aria-hidden="true" />
+            <img className="brand__kiit" src="/KIIT-Logo.png" alt="Kalinga Institute of Industrial Technology" />
+            <span className="brand__divider" aria-hidden="true" />
             <span className="brand__copy">
               <strong>NSS SCE</strong>
               <span>KIIT</span>
-            </span>
+            </span> 
           </a>
 
           <nav className="desktop-nav" aria-label="Primary navigation">
@@ -1088,6 +1091,10 @@ function App() {
               <span className="theme-switch__icon">{theme === 'dark' ? <SunIcon /> : <MoonIcon />}</span>
               <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
             </button>
+            <a className="button button--nss-site" href="https://nss.kiit.ac.in/" target="_blank" rel="noreferrer">
+              NSS KIIT
+              <ArrowIcon />
+            </a>
             <a className="button button--header" href={applicationUrl} target="_blank" rel="noreferrer">
               Apply now
               <ArrowIcon />
@@ -1111,6 +1118,7 @@ function App() {
             <a href="#projects" onClick={closeMenu}>Projects</a>
             <a href="#diary" onClick={closeMenu}>Impact diary</a>
             <a href="#connect" onClick={closeMenu}>Connect</a>
+            <a href="https://nss.kiit.ac.in/" target="_blank" rel="noreferrer" onClick={closeMenu}>NSS KIIT website</a>
             <a href={applicationUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>Apply now</a>
           </nav>
           <p>Every contribution matters.</p>
@@ -1155,9 +1163,6 @@ function App() {
                   <div className="hero-puzzle__piece hero-puzzle__piece--h" />
                   <div className="hero-puzzle__missing">
                     <strong>YOU</strong>
-                  </div>
-                  <div className="hero-puzzle__logo">
-                    <NssSeal alt="NSS SCE KIIT emblem" />
                   </div>
                 </div>
                 <div className="hero__stamp">
