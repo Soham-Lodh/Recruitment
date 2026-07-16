@@ -268,14 +268,6 @@ function ArrowIcon({ direction = 'right' }: { direction?: 'left' | 'right' }) {
   )
 }
 
-function PlayIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="m9 7 8 5-8 5V7Z" fill="currentColor" />
-    </svg>
-  )
-}
-
 function SunIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -321,10 +313,29 @@ function AssetFrame({
   kind: AssetKind
   className?: string
 }) {
+  const [isLoading, setIsLoading] = useState(true)
   const [failed, setFailed] = useState(false)
 
+  function handleError() {
+    setFailed(true)
+    setIsLoading(false)
+  }
+
   return (
-    <div className={joinClassNames('asset-frame', 'asset-frame--' + kind, className)}>
+    <div
+      className={joinClassNames(
+        'asset-frame',
+        'asset-frame--' + kind,
+        !isLoading && !failed && 'asset-frame--loaded',
+        failed && 'asset-frame--failed',
+        className,
+      )}
+    >
+      <div className="asset-skeleton" aria-hidden="true">
+        <span className="asset-skeleton__piece asset-skeleton__piece--one" />
+        <span className="asset-skeleton__piece asset-skeleton__piece--two" />
+        <span className="asset-skeleton__sheen" />
+      </div>
       <div className="asset-fallback" aria-hidden="true">
         <span className="asset-fallback__grid" />
         <span className="asset-fallback__label">{label}</span>
@@ -334,7 +345,8 @@ function AssetFrame({
           src={src}
           alt={alt}
           loading={kind === 'logo' ? 'eager' : 'lazy'}
-          onError={() => setFailed(true)}
+          onLoad={() => setIsLoading(false)}
+          onError={handleError}
         />
       )}
     </div>
@@ -350,11 +362,57 @@ function NssSeal({
   alt?: string
   decorative?: boolean
 }) {
+  const [isLoading, setIsLoading] = useState(true)
+  const [failed, setFailed] = useState(false)
+
   return (
-    <span className={joinClassNames('nss-seal', className)} aria-hidden={decorative ? true : undefined}>
+    <span
+      className={joinClassNames('nss-seal', !isLoading && !failed && 'nss-seal--loaded', failed && 'nss-seal--failed', className)}
+      aria-hidden={decorative ? true : undefined}
+    >
       <span className="nss-seal__glow" />
-      <img src="/NSS Logo.png" alt={decorative ? '' : alt} />
+      <span className="nss-seal__skeleton" aria-hidden="true" />
+      {!failed && (
+        <img
+          src="/NSS Logo.png"
+          alt={decorative ? '' : alt}
+          onLoad={() => setIsLoading(false)}
+          onError={() => {
+            setFailed(true)
+            setIsLoading(false)
+          }}
+        />
+      )}
     </span>
+  )
+}
+
+function VideoFrame() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fallbackTimer = window.setTimeout(() => setIsLoading(false), 8500)
+
+    return () => window.clearTimeout(fallbackTimer)
+  }, [])
+
+  return (
+    <div className={joinClassNames('video-card__frame', !isLoading && 'video-card__frame--loaded')}>
+      <div className="video-card__skeleton" aria-hidden="true">
+        <span className="video-card__skeleton-label" />
+        <span className="video-card__skeleton-caption video-card__skeleton-caption--one" />
+        <span className="video-card__skeleton-caption video-card__skeleton-caption--two" />
+        <span className="video-card__skeleton-track" />
+        <span className="video-card__skeleton-sheen" />
+      </div>
+      <iframe
+        src="https://player.vimeo.com/video/1106909037?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=0&muted=1"
+        title="NSS SCE KIIT promotional video"
+        allow="autoplay; fullscreen; picture-in-picture"
+        referrerPolicy="strict-origin-when-cross-origin"
+        onLoad={() => setIsLoading(false)}
+      />
+    </div>
   )
 }
 
@@ -722,9 +780,6 @@ function PremiumRail({
       </div>
 
       <div className="rail-toolbar">
-        <span className="rail-toolbar__count">
-          {String(active + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}
-        </span>
         <span className="rail-toolbar__hint">Swipe, drag or use the arrows</span>
         <div className="rail-toolbar__controls">
           <button
@@ -789,7 +844,6 @@ function PremiumRail({
                 label={item.title}
                 kind={kind === 'domain' ? 'domain' : 'project'}
               />
-              <span className="premium-card__serial">0{index + 1}</span>
             </div>
             <div className="premium-card__body">
               <p>{item.eyebrow}</p>
@@ -1090,7 +1144,6 @@ function App() {
               </div>
 
               <div className="hero__visual" aria-label="An abstract puzzle with one piece labelled you">
-                <span className="hero__orbit hero__orbit--one">CREATE / SERVE / LEAD /</span>
                 <div className="hero-puzzle">
                   <div className="hero-puzzle__piece hero-puzzle__piece--a" />
                   <div className="hero-puzzle__piece hero-puzzle__piece--b" />
@@ -1118,7 +1171,6 @@ function App() {
               <p>Scroll to find where your piece fits</p>
               <span className="hero__scroll-line" />
               <div className="hero__facts">
-                <span>01 / 01</span>
                 <span>Made of many strengths</span>
               </div>
             </div>
@@ -1135,7 +1187,6 @@ function App() {
 
             <div className="story-panel">
               <div className="story-panel__copy">
-                <span className="story-panel__number">01</span>
                 <p>Some lead. Some design. Some speak, write, photograph, manage, organise, and serve. No strength is too small to matter.</p>
                 <span className="story-panel__line" />
                 <p className="story-panel__accent">This campaign shifts the spotlight from the organisation to the applicant: NSS needs your distinct way of making a difference.</p>
@@ -1153,17 +1204,17 @@ function App() {
             </div>
             <div className="story-brief__grid">
               <article className="story-brief__card">
-                <span>01 / A unique shape</span>
+                <span>A unique shape</span>
                 <h3>Every individual carries something distinct.</h3>
                 <p>Every volunteer brings a different set of skills, ideas, and efforts. Like a puzzle piece, every person has a shape and purpose that cannot be replaced.</p>
               </article>
               <article className="story-brief__card story-brief__card--accent">
-                <span>02 / The missing piece</span>
+                <span>The missing piece</span>
                 <h3>You are not another addition to NSS.</h3>
                 <p>You are the missing piece that helps complete it. From your very first step, your contribution is important and valued.</p>
               </article>
               <article className="story-brief__card">
-                <span>03 / The whole picture</span>
+                <span>The whole picture</span>
                 <h3>When every strength meets, the picture becomes whole.</h3>
                 <p>Existing volunteers, seniors, coordinators, and new recruits come together to build an organisation shaped by everyone who chooses to be part of it.</p>
               </article>
@@ -1185,21 +1236,9 @@ function App() {
                 <span>Field reel / NSS SCE KIIT</span>
                 <span className="video-card__live"><i /> Ready</span>
               </div>
-              <div className="video-card__frame">
-                <iframe
-                  src="https://player.vimeo.com/video/1106909037?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=0&muted=1"
-                  title="NSS SCE KIIT promotional video"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
-                <div className="video-card__cover" aria-hidden="true">
-                  <span><PlayIcon /></span>
-                  <p>Play the story</p>
-                </div>
-              </div>
+              <VideoFrame />
               <div className="video-card__footer">
                 <span>Not Me, But You</span>
-                <span>00:45</span>
               </div>
             </div>
           </section>
@@ -1221,15 +1260,12 @@ function App() {
             </div>
             <div className="manifesto-section__pieces">
               <div>
-                <span>01</span>
                 <h3>Every volunteer is unique.</h3>
               </div>
               <div>
-                <span>02</span>
                 <h3>Every skill has a place.</h3>
               </div>
               <div>
-                <span>03</span>
                 <h3>Every contribution matters.</h3>
               </div>
             </div>
@@ -1247,7 +1283,7 @@ function App() {
           <section className="content-section diary-section" id="diary">
             <div className="section-copy section-copy--split">
               <div>
-                <p className="eyebrow">2025 event diary</p>
+                <p className="eyebrow">Event diary</p>
                 <h2>Moments that became more than moments.</h2>
               </div>
               <p>From health support to awareness drives, every field note tells the story of students choosing action over apathy.</p>
@@ -1276,7 +1312,6 @@ function App() {
                   kind="event"
                 />
                 <div className="diary-window__tag">NSS field note</div>
-                <span className="diary-window__count">{String(eventIndex + 1).padStart(2, '0')}</span>
               </div>
               <div className="diary-window__content" key={'content-' + selectedEvent.id + '-' + eventCycle}>
                 <p className="eyebrow">Event archive</p>
@@ -1298,7 +1333,6 @@ function App() {
                   >
                     <ArrowIcon direction="left" />
                   </button>
-                  <span>{String(eventIndex + 1).padStart(2, '0')} of {String(eventDiary.length).padStart(2, '0')}</span>
                   <button
                     className="circle-button"
                     type="button"
@@ -1331,7 +1365,6 @@ function App() {
                     }
                   }}
                 >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
                   {event.title}
                 </button>
               ))}
@@ -1352,7 +1385,6 @@ function App() {
 
             <div className="connect-section__grid">
               <article className="connect-card connect-card--about">
-                <span className="connect-card__index">01</span>
                 <h3>Stay close to the work.</h3>
                 <p>Connect with NSS SCE KIIT to stay updated with activities, events, and community service initiatives.</p>
                 <a href="https://nss.kiit.ac.in/" target="_blank" rel="noreferrer" className="text-link">
@@ -1361,7 +1393,6 @@ function App() {
                 </a>
               </article>
               <article className="connect-card">
-                <span className="connect-card__index">02</span>
                 <p className="connect-card__label">Follow the unit</p>
                 <a href="https://www.instagram.com/nss.sce.kiit/?hl=en" target="_blank" rel="noreferrer" className="connect-card__link">
                   Instagram
@@ -1377,7 +1408,6 @@ function App() {
                 </a>
               </article>
               <article className="connect-card connect-card--contacts">
-                <span className="connect-card__index">03</span>
                 <p className="connect-card__label">For further information</p>
                 <a href="tel:+917635088808">Piyush Agrawal <span>+91 76350 88808</span></a>
                 <a href="tel:+918709914709">Ankit Kumar <span>+91 87099 14709</span></a>
@@ -1393,10 +1423,6 @@ function App() {
           <a href="#top">Back to top <ArrowIcon /></a>
         </footer>
 
-        <a className="mobile-apply" href={applicationUrl} target="_blank" rel="noreferrer">
-          Apply now
-          <ArrowIcon />
-        </a>
       </div>
 
       {loading && <LoadingScreen progress={progress} isLeaving={isLoadingExiting} />}
