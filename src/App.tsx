@@ -473,41 +473,6 @@ function VideoFrame() {
   );
 }
 
-function PuzzleTiles({
-  className,
-  count,
-  columns = 5,
-  emptyIndex,
-}: {
-  className?: string;
-  count: number;
-  columns?: number;
-  emptyIndex?: number;
-}) {
-  return (
-    <div
-      className={joinClassNames("puzzle-tiles", className)}
-      aria-hidden="true"
-    >
-      {Array.from({ length: count }, (_, index) => {
-        const row = Math.floor(index / columns);
-        const column = index % columns;
-        const isEmpty = index === emptyIndex;
-
-        return (
-          <span
-            className={joinClassNames(
-              "puzzle-tile",
-              "puzzle-tile--shape-" + ((row + column) % 2 === 0 ? "a" : "b"),
-              isEmpty && "puzzle-tile--gap",
-            )}
-            key={index}
-          />
-        );
-      })}
-    </div>
-  );
-}
 
 function LoaderPuzzle() {
   const totalColumns = 4;
