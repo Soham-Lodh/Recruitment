@@ -201,40 +201,7 @@ a {
   mask-image: linear-gradient(to bottom, transparent, black 12%, black 76%, transparent);
 }
 
-.wall-shader {
-  --wall-piece-inset: calc(-18% + 1.36mm);
-  position: relative;
-  display: grid;
-  width: 100%;
-  height: 100%;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-rows: repeat(9, minmax(0, 1fr));
-  gap: 0;
-  padding: clamp(0.5rem, 1.35vw, 0.95rem);
-  overflow: hidden;
-  isolation: isolate;
-  background: linear-gradient(180deg, transparent 0 12%, color-mix(in srgb, var(--nss-blue) 8%, transparent) 72%, transparent 100%);
-}
 
-.wall-shader::before,
-.wall-shader::after {
-  position: absolute;
-  content: '';
-  pointer-events: none;
-}
-
-.wall-shader::before {
-  z-index: 3;
-  inset: -20%;
-  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.13) 0 1px, transparent 1px 22px);
-  mix-blend-mode: soft-light;
-  opacity: 0.28;
-  animation: none;
-}
-
-.wall-shader::after {
-  display: none;
-}
 
 .nss-seal {
   position: relative;
@@ -337,101 +304,10 @@ a {
   letter-spacing: 0.06em;
 }
 
-.wall-shader__motto {
-  display: none;
-}
-
-.wall-cell {
-  position: relative;
-  z-index: 1;
-  display: block;
-  min-width: 0;
-  min-height: 0;
-}
-
-.wall-block,
-.wall-gap,
-.wall-you {
-  --piece-mask: var(--puzzle-mask-a);
-  position: absolute;
-  inset: var(--wall-piece-inset);
-  -webkit-mask-image: var(--piece-mask);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: 100% 100%;
-  mask-image: var(--piece-mask);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: 100% 100%;
-}
-
-.wall-block {
-  z-index: 1;
-  display: block;
-  background:
-    linear-gradient(128deg, rgba(255, 255, 255, 0.42), transparent 36%, rgba(7, 14, 46, 0.2)),
-    linear-gradient(145deg, color-mix(in srgb, var(--wall-color) 62%, #ffffff), color-mix(in srgb, var(--wall-color) 88%, var(--ink)));
-  filter: none;
-  opacity: 0.5;
-  transform: none;
-  animation: none;
-}
-
-.wall-block::before {
-  position: absolute;
-  inset: 0;
-  content: '';
-  background: linear-gradient(118deg, rgba(255, 255, 255, 0.36), transparent 38%, rgba(7, 13, 52, 0.2));
-}
-
-.wall-gap {
-  display: none;
-}
-
-.wall-you {
-  display: none;
-}
-
-.wall-you::before {
-  position: absolute;
-  inset: -52% 34%;
-  content: '';
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.76), transparent);
-  transform: rotate(25deg) translateX(-180%);
-  animation: wall-reflection 10.8s ease-in-out calc(var(--wall-you-delay) + var(--wall-start-delay)) infinite both;
-}
-
-.wall-you small,
-.wall-you strong {
-  position: relative;
-  z-index: 1;
-}
-
-.wall-you small {
-  max-width: 72%;
-  font-family: 'DM Mono', 'Courier New', monospace;
-  font-size: clamp(0.31rem, 0.72vw, 0.48rem);
-  letter-spacing: 0.08em;
-  line-height: 1.05;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.wall-you strong {
-  font-size: clamp(1.3rem, 3.9vw, 2.35rem);
-  line-height: 0.75;
-}
-
-.wall-block--shape-a,
-.wall-gap--shape-a,
-.wall-you--shape-a,
 .puzzle-tile--shape-a {
   --piece-mask: var(--puzzle-mask-a);
 }
 
-.wall-block--shape-b,
-.wall-gap--shape-b,
-.wall-you--shape-b,
 .puzzle-tile--shape-b {
   --piece-mask: var(--puzzle-mask-b);
 }
@@ -654,6 +530,7 @@ a {
 }
 
 .button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -665,7 +542,9 @@ a {
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.01em;
-  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 220ms ease, background 220ms ease;
+  text-transform: uppercase;
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 300ms ease, background 300ms ease;
+  overflow: hidden;
 }
 
 .button:hover {
@@ -698,16 +577,29 @@ a {
 }
 
 .button--primary {
-  min-height: 3.55rem;
-  padding: 0.95rem 1.3rem;
   background: var(--accent);
   box-shadow: 0 10px 23px color-mix(in srgb, var(--accent) 24%, transparent);
   color: #fffaf5;
 }
 
+.button--primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transition: left 600ms ease;
+}
+
 .button--primary:hover {
   background: var(--accent-deep);
   box-shadow: 0 14px 28px color-mix(in srgb, var(--accent) 36%, transparent);
+}
+
+.button--primary:hover::before {
+  left: 100%;
 }
 
 .mobile-menu {
@@ -897,7 +789,7 @@ a {
   --hero-entry-y: 3.2rem;
   background:
     linear-gradient(128deg, rgba(255, 255, 255, 0.5), transparent 38%, rgba(20, 34, 98, 0.07)),
-    linear-gradient(145deg, color-mix(in srgb, var(--surface-solid) 94%, var(--nss-blue)), color-mix(in srgb, var(--surface-solid) 86%, var(--bg-deep))),
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-solid) 88%, var(--tile-color)), color-mix(in srgb, var(--surface-solid) 80%, var(--bg-deep))),
     var(--surface-solid);
   opacity: 0;
   transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0) scale(0.58);
@@ -924,6 +816,27 @@ a {
   --piece-mask: var(--puzzle-mask-b);
 }
 
+.hero-puzzle__piece--a,
+.hero-puzzle__piece--f,
+.hero-puzzle__piece--h,
+.hero-puzzle__missing {
+  --tile-color: var(--nss-blue-deep);
+}
+
+.hero-puzzle__piece--b,
+.hero-puzzle__piece--d,
+.hero-puzzle__piece--g {
+  --tile-color: var(--nss-blue);
+}
+
+.hero-puzzle__piece--c {
+  --tile-color: var(--nss-red);
+}
+
+.hero-puzzle__piece--e {
+  --tile-color: var(--nss-red-deep);
+}
+
 .hero-puzzle__piece--a {
   top: -4%;
   left: -4%;
@@ -937,7 +850,6 @@ a {
   left: 29%;
   --hero-entry-x: 0rem;
   --hero-entry-y: -3.7rem;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--surface-solid) 93%, var(--nss-blue)), color-mix(in srgb, var(--surface-solid) 85%, var(--bg-deep)));
   animation-name: hero-piece-assemble-top;
 }
 
@@ -954,7 +866,6 @@ a {
   left: -4%;
   --hero-entry-x: -3rem;
   --hero-entry-y: 0.7rem;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--surface-solid) 95%, var(--accent)), color-mix(in srgb, var(--surface-solid) 87%, var(--bg-deep)));
   animation-name: hero-piece-assemble-middle;
 }
 
@@ -963,7 +874,6 @@ a {
   right: -4%;
   --hero-entry-x: 3rem;
   --hero-entry-y: 0.7rem;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--surface-solid) 92%, var(--nss-blue)), color-mix(in srgb, var(--surface-solid) 86%, var(--bg-deep)));
   animation-name: hero-piece-assemble-middle;
 }
 
@@ -980,7 +890,6 @@ a {
   left: 29%;
   --hero-entry-x: 0rem;
   --hero-entry-y: 3.9rem;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--surface-solid) 95%, var(--accent)), color-mix(in srgb, var(--surface-solid) 87%, var(--bg-deep)));
   animation-name: hero-piece-assemble-bottom;
 }
 
@@ -1165,69 +1074,8 @@ a {
   margin: 1.6rem 0 0;
 }
 
-.story-panel {
-  position: relative;
-  min-height: 29rem;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 1.7rem;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--nss-blue) 12%, var(--surface-solid)), color-mix(in srgb, var(--surface-solid) 84%, transparent)),
-    var(--surface);
-  box-shadow: var(--shadow-soft);
-}
-
-.story-panel__copy {
-  position: relative;
-  z-index: 2;
-  width: min(72%, 20rem);
-  padding: clamp(1.55rem, 4vw, 2.6rem);
-}
-
-.story-panel__copy p {
-  margin: 1.5rem 0 0;
-  font-family: var(--font-display);
-  font-size: var(--type-card);
-  letter-spacing: -0.04em;
-  line-height: 1.07;
-}
-
-.story-panel__line {
-  display: block;
-  width: 3.4rem;
-  height: 1px;
-  margin-top: 1.5rem;
-  background: var(--accent);
-}
-
-.story-panel__copy .story-panel__accent {
-  color: var(--nss-blue);
-  font-family: var(--font-body);
-  font-size: 0.79rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1.6;
-}
-
-.story-panel__puzzle {
-  position: absolute;
-  right: -2%;
-  bottom: -4%;
-  width: 59%;
-  transform: rotate(6deg);
-  transform-origin: right bottom;
-}
-
-.story-panel__puzzle .puzzle-tiles {
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-}
-
-.story-panel__puzzle .puzzle-tile {
-  aspect-ratio: 1;
-}
-
 .story-brief {
+  margin-top:10rem;
   padding-top: 0;
 }
 
@@ -2203,9 +2051,19 @@ a {
 
 .connect-section__grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.8fr 1fr;
-  gap: 0.8rem;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
   margin-top: 2.5rem;
+}
+
+@media (min-width: 992px) {
+  .connect-section__grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+  .connect-card--contacts {
+    grid-column: 1 / -1;
+  }
 }
 
 .connect-card {
@@ -2218,6 +2076,7 @@ a {
   background: color-mix(in srgb, var(--surface-solid) 67%, transparent);
   box-shadow: 0 8px 22px rgba(30, 35, 31, 0.04);
 }
+
 
 .connect-card--about {
   background:
@@ -2273,21 +2132,34 @@ a {
   color: var(--accent);
 }
 
-.connect-card--contacts > a {
+.connect-card--contacts .contacts-grid {
+  margin-top: 0.6rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .connect-card--contacts .contacts-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .connect-card--contacts a {
+    border-bottom: none !important;
+  }
+}
+
+.connect-card--contacts a {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.65rem 0;
+  gap: 0.1rem;
+  padding: 0.45rem 0;
   border-bottom: 1px solid var(--line);
   font-size: 0.8rem;
   font-weight: 800;
 }
 
-.connect-card--contacts > a:first-of-type {
-  margin-top: 0.6rem;
-}
-
-.connect-card--contacts > a:last-child {
+.connect-card--contacts a:last-child {
   border-bottom: 0;
 }
 
@@ -2297,7 +2169,126 @@ a {
   font-size: 0.6rem;
   font-weight: 400;
 }
+.contact-directory {
+  width: min(1240px, calc(100% - 2rem));
+  margin: 0 auto 6rem;
+}
 
+.contact-directory__card {
+  position: relative;
+  overflow: hidden;
+
+  padding: clamp(1.8rem, 4vw, 3rem);
+
+  border: 1px solid var(--line);
+  border-radius: 1.75rem;
+
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-soft);
+}
+
+.contact-directory__card::before {
+  content: "";
+
+  position: absolute;
+  right: -8rem;
+  top: -8rem;
+
+  width: 18rem;
+  height: 18rem;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(circle,
+      color-mix(in srgb, var(--accent) 15%, transparent),
+      transparent 70%);
+}
+
+.contact-directory__header {
+  position: relative;
+  z-index: 2;
+  max-width: 42rem;
+  margin-bottom: 2rem;
+}
+
+.contact-directory__eyebrow {
+  margin: 0;
+
+  color: var(--accent-text);
+
+  font-family: var(--font-ui);
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.contact-directory__header h3 {
+  margin: .45rem 0 .8rem;
+
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: .95;
+}
+
+.contact-directory__header p {
+  margin: 0;
+
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 34rem;
+}
+
+.contact-directory__grid {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.contact-person {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+
+  padding: 1.15rem 1.2rem;
+
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+
+  background: color-mix(in srgb, var(--surface-solid) 90%, transparent);
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+.contact-person:hover {
+  transform: translateY(-4px);
+
+  border-color: var(--accent);
+
+  box-shadow: 0 12px 24px rgba(0,0,0,.08);
+}
+
+.contact-person strong {
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.contact-person span {
+  color: var(--muted);
+
+  font-family: var(--font-ui);
+  font-size: .82rem;
+  letter-spacing: .04em;
+}
 .site-footer {
   position: relative;
   z-index: 1;
@@ -2448,7 +2439,7 @@ a {
 }
 
 .loader-puzzle__cell:nth-child(4n + 2) { --tile-color: #ec1b24; }
-.loader-puzzle__cell:nth-child(4n + 3) { --tile-color: #7476c4; }
+.loader-puzzle__cell:nth-child(4n + 3) { --tile-color: #ffffff; }
 .loader-puzzle__cell:nth-child(4n) { --tile-color: #4f51a5; }
 
 .loader-puzzle__piece,
@@ -3193,16 +3184,7 @@ a {
     opacity: 0.12;
   }
 
-  .wall-shader {
-    gap: 0;
-    padding: 0.22rem;
-  }
 
-  .wall-shader__motto {
-    right: 0.8rem;
-    bottom: 1.35rem;
-    font-size: 0.46rem;
-  }
 
   .site-header {
     top: 0.6rem;
@@ -3331,18 +3313,7 @@ a {
     inset: 5% 4%;
   }
 
-  .hero-puzzle__piece,
-  .hero-puzzle__missing {
-    animation: none;
-    opacity: 1;
-    transform: none;
-    will-change: auto;
-  }
 
-  .hero-puzzle__missing::before {
-    animation: none;
-    opacity: 0;
-  }
 
   .hero__stamp {
     bottom: 2%;
@@ -3402,6 +3373,7 @@ a {
     min-height: 0;
     grid-template-rows: auto auto;
     border-radius: 1.35rem;
+    overflow: hidden;
   }
 
   .story-panel__copy {
@@ -3702,36 +3674,9 @@ a {
   }
 }
 
-@media (max-height: 620px) {
-  .wall-shader {
-    padding: 0.18rem;
-  }
 
-  .wall-shader__motto {
-    bottom: 1rem;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
-  .wall-shader::before,
-  .wall-shader::after {
-    animation: none !important;
-  }
-
-  .wall-block,
-  .wall-gap {
-    animation: none !important;
-    opacity: 0.4 !important;
-    transform: translate3d(0, 0, 0) scale(1) !important;
-  }
-
-  .wall-you {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: translate3d(0, 0, 0) scale(1) !important;
-  }
-
-  .wall-shader__motto,
   .loading-screen__motto {
     animation: none !important;
     opacity: 1 !important;

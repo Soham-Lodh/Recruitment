@@ -1,280 +1,315 @@
-import { useEffect, useEffectEvent, useRef, useState } from 'react'
-import type { CSSProperties, KeyboardEvent, PointerEvent as ReactPointerEvent } from 'react'
+import { useEffect, useEffectEvent, useRef, useState } from "react";
+import type {
+  CSSProperties,
+  KeyboardEvent,
+  PointerEvent as ReactPointerEvent,
+} from "react";
 
-type Theme = 'light' | 'dark'
-type AssetKind = 'domain' | 'project' | 'event' | 'logo'
+type Theme = "light" | "dark";
+type AssetKind = "domain" | "project" | "event" | "logo";
 
 type RailItem = {
-  id: string
-  title: string
-  eyebrow: string
-  description: string
-  image: string
-  accent: string
-}
+  id: string;
+  title: string;
+  eyebrow: string;
+  description: string;
+  image: string;
+  accent: string;
+};
 
 type EventItem = {
-  id: string
-  title: string
-  date: string
-  location: string
-  description: string
-  image: string
-  accent: string
-}
+  id: string;
+  title: string;
+  date: string;
+  location: string;
+  description: string;
+  image: string;
+  accent: string;
+};
 
-const applicationUrl = 'form.html'
+const applicationUrl = "form.html";
 
 const domains: RailItem[] = [
   {
-    id: 'video-editing',
-    title: 'Video Editing',
-    eyebrow: 'Story in motion',
+    id: "video-editing",
+    title: "Video Editing",
+    eyebrow: "Story in motion",
     description:
-      'Shape raw footage into compelling stories through precise cuts, transitions, effects, and a strong visual eye.',
-    image: '/videoeditor.jpg',
-    accent: '#f2633e',
+      "Shape raw footage into compelling stories through precise cuts, transitions, effects, and a strong visual eye.",
+    image: "/videoeditor.jpg",
+    accent: "#f2633e",
   },
   {
-    id: 'graphic-designing',
-    title: 'Graphic Designing',
-    eyebrow: 'Ideas, made visible',
+    id: "graphic-designing",
+    title: "Graphic Designing",
+    eyebrow: "Ideas, made visible",
     description:
-      'Bring ideas to life through visual storytelling, design principles, and compelling work for digital media.',
-    image: '/gd2.jpg',
-    accent: '#e0b833',
+      "Bring ideas to life through visual storytelling, design principles, and compelling work for digital media.",
+    image: "/gd2.jpg",
+    accent: "#e0b833",
   },
   {
-    id: 'photography',
-    title: 'Photography',
-    eyebrow: 'Moments, held close',
+    id: "photography",
+    title: "Photography",
+    eyebrow: "Moments, held close",
     description:
-      'Capture events, emotions, and perspectives with technical skill, creativity, and visual impact.',
-    image: '/camera.jpg',
-    accent: '#4a8b78',
+      "Capture events, emotions, and perspectives with technical skill, creativity, and visual impact.",
+    image: "/camera.jpg",
+    accent: "#4a8b78",
   },
   {
-    id: 'content-writing',
-    title: 'Content Writing',
-    eyebrow: 'Words with purpose',
+    id: "content-writing",
+    title: "Content Writing",
+    eyebrow: "Words with purpose",
     description:
-      'Craft engaging, impactful writing that combines creativity, clarity, and strategy for diverse audiences.',
-    image: '/contentwriter.jpg',
-    accent: '#4277b9',
+      "Craft engaging, impactful writing that combines creativity, clarity, and strategy for diverse audiences.",
+    image: "/contentwriter.jpg",
+    accent: "#4277b9",
   },
   {
-    id: 'general-volunteering',
-    title: 'General Volunteering',
-    eyebrow: 'Service in action',
+    id: "general-volunteering",
+    title: "General Volunteering",
+    eyebrow: "Service in action",
     description:
-      'Build social responsibility and leadership through hands-on service, guided by the motto Not Me But You.',
-    image: '/gv.jpg',
-    accent: '#8c5bb0',
+      "Build social responsibility and leadership through hands-on service, guided by the motto Not Me But You.",
+    image: "/gv.jpg",
+    accent: "#8c5bb0",
   },
-]
+];
 
 const projects: RailItem[] = [
   {
-    id: 'bandhutva',
-    title: 'Bandhutva',
-    eyebrow: 'NSS SCE project',
-    description: 'One of the many distinctive projects that make up the NSS SCE KIIT story.',
-    image: '/bandhutva.png',
-    accent: '#c91a35',
+    id: "bandhutva",
+    title: "Bandhutva",
+    eyebrow: "NSS SCE project",
+    description:
+      "One of the many distinctive projects that make up the NSS SCE KIIT story.",
+    image: "/bandhutva.png",
+    accent: "#c91a35",
   },
   {
-    id: 'dhara',
-    title: 'Dhara',
-    eyebrow: 'NSS SCE project',
-    description: 'A distinctive part of the shared work, energy, and service within NSS SCE KIIT.',
-    image: '/dhara.png',
-    accent: '#078a3d',
+    id: "dhara",
+    title: "Dhara",
+    eyebrow: "NSS SCE project",
+    description:
+      "A distinctive part of the shared work, energy, and service within NSS SCE KIIT.",
+    image: "/dhara.png",
+    accent: "#078a3d",
   },
   {
-    id: 'nidaan',
-    title: 'Nidaan',
-    eyebrow: 'NSS SCE project',
-    description: 'A chapter in the unit’s work that is made stronger by every volunteer who joins it.',
-    image: '/nidaan.png',
-    accent: '#cd8b29',
+    id: "nidaan",
+    title: "Nidaan",
+    eyebrow: "NSS SCE project",
+    description:
+      "A chapter in the unit’s work that is made stronger by every volunteer who joins it.",
+    image: "/nidaan.png",
+    accent: "#cd8b29",
   },
   {
-    id: 'riddhi',
-    title: 'Riddhi',
-    eyebrow: 'NSS SCE project',
-    description: 'A piece of the larger picture of community, initiative, and shared contribution.',
-    image: '/riddhi.png',
-    accent: '#f47721',
+    id: "riddhi",
+    title: "Riddhi",
+    eyebrow: "NSS SCE project",
+    description:
+      "A piece of the larger picture of community, initiative, and shared contribution.",
+    image: "/riddhi.png",
+    accent: "#f47721",
   },
   {
-    id: 'sanyukt',
-    title: 'Sanyukt',
-    eyebrow: 'NSS SCE project',
-    description: 'A project identity within the collective energy that keeps the unit moving forward.',
-    image: '/sanyukt.png',
-    accent: '#f6a31a',
+    id: "sanyukt",
+    title: "Sanyukt",
+    eyebrow: "NSS SCE project",
+    description:
+      "A project identity within the collective energy that keeps the unit moving forward.",
+    image: "/sanyukt.png",
+    accent: "#f6a31a",
   },
   {
-    id: 'sparsh',
-    title: 'Sparsh',
-    eyebrow: 'NSS SCE project',
-    description: 'A distinct project within the whole, made meaningful by people who choose to contribute.',
-    image: '/sparsh.png',
-    accent: '#d7a01d',
+    id: "sparsh",
+    title: "Sparsh",
+    eyebrow: "NSS SCE project",
+    description:
+      "A distinct project within the whole, made meaningful by people who choose to contribute.",
+    image: "/sparsh.png",
+    accent: "#d7a01d",
   },
   {
-    id: 'swet',
-    title: 'Swet',
-    eyebrow: 'NSS SCE project',
-    description: 'A project piece in the larger NSS SCE KIIT picture of hands-on service.',
-    image: '/swet.png',
-    accent: '#0b6098',
+    id: "swet",
+    title: "Swet",
+    eyebrow: "NSS SCE project",
+    description:
+      "A project piece in the larger NSS SCE KIIT picture of hands-on service.",
+    image: "/swet.png",
+    accent: "#0b6098",
   },
   {
-    id: 'udaan',
-    title: 'Udaan',
-    eyebrow: 'NSS SCE project',
-    description: 'A distinct part of the work that comes alive when individual strengths meet a shared purpose.',
-    image: '/udaan.png',
-    accent: '#dd0c86',
+    id: "udaan",
+    title: "Udaan",
+    eyebrow: "NSS SCE project",
+    description:
+      "A distinct part of the work that comes alive when individual strengths meet a shared purpose.",
+    image: "/udaan.png",
+    accent: "#dd0c86",
   },
   {
-    id: 'urja',
-    title: 'Urja',
-    eyebrow: 'NSS SCE project',
-    description: 'An identity within the NSS SCE KIIT project ecosystem, powered by collective effort.',
-    image: '/urja.png',
-    accent: '#079fce',
+    id: "urja",
+    title: "Urja",
+    eyebrow: "NSS SCE project",
+    description:
+      "An identity within the NSS SCE KIIT project ecosystem, powered by collective effort.",
+    image: "/urja.png",
+    accent: "#079fce",
   },
-]
+];
 
 const eventDiary: EventItem[] = [
   {
-    id: 'health-camp',
-    title: 'Health Camp',
-    date: 'March 2025',
-    location: 'Damana High School',
+    id: "health-camp",
+    title: "Health Camp",
+    date: "March 2025",
+    location: "Damana High School",
     description:
-      'NSS SCE organized an ENT health camp with free check-ups, consultations, and guidance to encourage healthy practices and early detection.',
-    image: '/health camp.jpg',
-    accent: '#e46e51',
+      "NSS SCE organized an ENT health camp with free check-ups, consultations, and guidance to encourage healthy practices and early detection.",
+    image: "/health camp.jpg",
+    accent: "#e46e51",
   },
   {
-    id: 'orphanage-visit',
-    title: 'Orphanage Visit',
-    date: 'March 2025',
-    location: 'Madhurmaye Orphanage',
+    id: "orphanage-visit",
+    title: "Orphanage Visit",
+    date: "March 2025",
+    location: "Madhurmaye Orphanage",
     description:
-      'Volunteers shared meaningful moments with children through interactive sessions on good habits, hygiene practices, and moral values.',
-    image: '/orphange.jpg',
-    accent: '#6c79bc',
+      "Volunteers shared meaningful moments with children through interactive sessions on good habits, hygiene practices, and moral values.",
+    image: "/orphange.jpg",
+    accent: "#6c79bc",
   },
   {
-    id: 'plantation-drive',
-    title: 'Plantation Drive',
-    date: 'July 2025',
-    location: 'Prasanti Vihar',
+    id: "plantation-drive",
+    title: "Plantation Drive",
+    date: "July 2025",
+    location: "Prasanti Vihar",
     description:
-      'Saplings were planted in public spaces and educational institutions to encourage greener practices and environmental responsibility.',
-    image: '/plantation.jpeg',
-    accent: '#47886d',
+      "Saplings were planted in public spaces and educational institutions to encourage greener practices and environmental responsibility.",
+    image: "/plantation.jpeg",
+    accent: "#47886d",
   },
   {
-    id: 'cleanliness-drive',
-    title: 'Cleanliness Drive',
-    date: 'September 2024',
-    location: 'KIIT Road',
+    id: "cleanliness-drive",
+    title: "Cleanliness Drive",
+    date: "September 2024",
+    location: "KIIT Road",
     description:
-      'Volunteers cleaned public areas, spoke about waste management, and encouraged the community to maintain a clean, healthy environment.',
-    image: '/cleandrive.jpg',
-    accent: '#d59345',
+      "Volunteers cleaned public areas, spoke about waste management, and encouraged the community to maintain a clean, healthy environment.",
+    image: "/cleandrive.jpg",
+    accent: "#d59345",
   },
   {
-    id: 'road-safety',
-    title: 'Road Safety Rally',
-    date: 'January 2025',
-    location: 'KIIT Road',
+    id: "road-safety",
+    title: "Road Safety Rally",
+    date: "January 2025",
+    location: "KIIT Road",
     description:
-      'A public rally used posters, slogans, and conversations to reinforce responsible driving, helmets, seatbelts, and traffic safety.',
-    image: '/roadsafety.JPG',
-    accent: '#c85f50',
+      "A public rally used posters, slogans, and conversations to reinforce responsible driving, helmets, seatbelts, and traffic safety.",
+    image: "/roadsafety.JPG",
+    accent: "#c85f50",
   },
   {
-    id: 'animal-feeding',
-    title: 'Animal Feeding',
-    date: 'November 2024',
-    location: 'KIIT Road',
+    id: "animal-feeding",
+    title: "Animal Feeding",
+    date: "November 2024",
+    location: "KIIT Road",
     description:
-      'The unit provided food and clean water to stray animals, promoting empathy, care, and humane treatment for voiceless beings.',
-    image: '/animalfeeding.jpg',
-    accent: '#8f6a4a',
+      "The unit provided food and clean water to stray animals, promoting empathy, care, and humane treatment for voiceless beings.",
+    image: "/animalfeeding.jpg",
+    accent: "#8f6a4a",
   },
   {
-    id: 'special-camp',
-    title: 'Special Camp',
-    date: 'March 2024',
-    location: 'Village',
+    id: "special-camp",
+    title: "Special Camp",
+    date: "March 2024",
+    location: "Village",
     description:
-      'A community-focused camp brought together cleanliness drives, awareness rallies, health check-ups, and educational sessions.',
-    image: '/specialcamp.jpg',
-    accent: '#9164ab',
+      "A community-focused camp brought together cleanliness drives, awareness rallies, health check-ups, and educational sessions.",
+    image: "/specialcamp.jpg",
+    accent: "#9164ab",
   },
   {
-    id: 'daan',
-    title: 'DAAN',
-    date: 'November 2024',
-    location: 'Slum',
+    id: "daan",
+    title: "DAAN",
+    date: "November 2024",
+    location: "Slum",
     description:
-      'Essentials including clothes, food items, and stationery were collected and distributed to support underprivileged communities.',
-    image: '/daan.jpg',
-    accent: '#bf7852',
+      "Essentials including clothes, food items, and stationery were collected and distributed to support underprivileged communities.",
+    image: "/daan.jpg",
+    accent: "#bf7852",
   },
   {
-    id: 'slum-visit',
-    title: 'Slum Visit',
-    date: 'March 2025',
-    location: 'Local Slum',
+    id: "slum-visit",
+    title: "Slum Visit",
+    date: "March 2025",
+    location: "Local Slum",
     description:
-      'Volunteers held awareness sessions around hygiene, education, and health while listening to residents and distributing essentials.',
-    image: '/slumvisit.jpg',
-    accent: '#497b92',
+      "Volunteers held awareness sessions around hygiene, education, and health while listening to residents and distributing essentials.",
+    image: "/slumvisit.jpg",
+    accent: "#497b92",
   },
   {
-    id: 'school-visit',
-    title: 'School Visit',
-    date: 'December 2025',
-    location: 'Damana High School',
+    id: "school-visit",
+    title: "School Visit",
+    date: "December 2025",
+    location: "Damana High School",
     description:
-      'Interactive learning sessions covered hygiene, discipline, and moral values to inspire young minds and support holistic development.',
-    image: '/schoolvisit.jpg',
-    accent: '#d1a24e',
+      "Interactive learning sessions covered hygiene, discipline, and moral values to inspire young minds and support holistic development.",
+    image: "/schoolvisit.jpg",
+    accent: "#d1a24e",
   },
-]
+];
 
-function joinClassNames(...classNames: Array<string | false | null | undefined>) {
-  return classNames.filter(Boolean).join(' ')
+function joinClassNames(
+  ...classNames: Array<string | false | null | undefined>
+) {
+  return classNames.filter(Boolean).join(" ");
 }
 
-function ArrowIcon({ direction = 'right' }: { direction?: 'left' | 'right' }) {
+function ArrowIcon({ direction = "right" }: { direction?: "left" | "right" }) {
   const path =
-    direction === 'left'
-      ? 'M14.5 5 7.5 12l7 7M8 12h9'
-      : 'm9.5 5 7 7-7 7M16 12H7'
+    direction === "left"
+      ? "M14.5 5 7.5 12l7 7M8 12h9"
+      : "m9.5 5 7 7-7 7M16 12H7";
 
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d={path} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+      <path
+        d={path}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
     </svg>
-  )
+  );
 }
 
 function SunIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4M18.7 18.7l-1.4-1.4M6.7 6.7 5.3 5.3" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.7" />
+      <circle
+        cx="12"
+        cy="12"
+        r="3.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M12 2.5v2M12 19.5v2M21.5 12h-2M4.5 12h-2M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4M18.7 18.7l-1.4-1.4M6.7 6.7 5.3 5.3"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="1.7"
+      />
     </svg>
-  )
+  );
 }
 
 function MoonIcon() {
@@ -285,19 +320,31 @@ function MoonIcon() {
       <circle cx="15.25" cy="14.75" r="1.35" fill="var(--surface-solid)" />
       <circle cx="15.85" cy="8.45" r="0.7" fill="var(--surface-solid)" />
     </svg>
-  )
+  );
 }
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       {open ? (
-        <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" />
+        <path
+          d="m6 6 12 12M18 6 6 18"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.8"
+        />
       ) : (
-        <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" />
+        <path
+          d="M4 7h16M4 12h16M4 17h16"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.8"
+        />
       )}
     </svg>
-  )
+  );
 }
 
 function AssetFrame({
@@ -307,27 +354,27 @@ function AssetFrame({
   kind,
   className,
 }: {
-  src: string
-  alt: string
-  label: string
-  kind: AssetKind
-  className?: string
+  src: string;
+  alt: string;
+  label: string;
+  kind: AssetKind;
+  className?: string;
 }) {
-  const [isLoading, setIsLoading] = useState(true)
-  const [failed, setFailed] = useState(false)
+  const [isLoading, setIsLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
 
   function handleError() {
-    setFailed(true)
-    setIsLoading(false)
+    setFailed(true);
+    setIsLoading(false);
   }
 
   return (
     <div
       className={joinClassNames(
-        'asset-frame',
-        'asset-frame--' + kind,
-        !isLoading && !failed && 'asset-frame--loaded',
-        failed && 'asset-frame--failed',
+        "asset-frame",
+        "asset-frame--" + kind,
+        !isLoading && !failed && "asset-frame--loaded",
+        failed && "asset-frame--failed",
         className,
       )}
     >
@@ -344,30 +391,35 @@ function AssetFrame({
         <img
           src={src}
           alt={alt}
-          loading={kind === 'logo' ? 'eager' : 'lazy'}
+          loading={kind === "logo" ? "eager" : "lazy"}
           onLoad={() => setIsLoading(false)}
           onError={handleError}
         />
       )}
     </div>
-  )
+  );
 }
 
 function NssSeal({
   className,
-  alt = 'National Service Scheme logo',
+  alt = "National Service Scheme logo",
   decorative = false,
 }: {
-  className?: string
-  alt?: string
-  decorative?: boolean
+  className?: string;
+  alt?: string;
+  decorative?: boolean;
 }) {
-  const [isLoading, setIsLoading] = useState(true)
-  const [failed, setFailed] = useState(false)
+  const [isLoading, setIsLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
 
   return (
     <span
-      className={joinClassNames('nss-seal', !isLoading && !failed && 'nss-seal--loaded', failed && 'nss-seal--failed', className)}
+      className={joinClassNames(
+        "nss-seal",
+        !isLoading && !failed && "nss-seal--loaded",
+        failed && "nss-seal--failed",
+        className,
+      )}
       aria-hidden={decorative ? true : undefined}
     >
       <span className="nss-seal__glow" />
@@ -375,29 +427,34 @@ function NssSeal({
       {!failed && (
         <img
           src="/NSS Logo.png"
-          alt={decorative ? '' : alt}
+          alt={decorative ? "" : alt}
           onLoad={() => setIsLoading(false)}
           onError={() => {
-            setFailed(true)
-            setIsLoading(false)
+            setFailed(true);
+            setIsLoading(false);
           }}
         />
       )}
     </span>
-  )
+  );
 }
 
 function VideoFrame() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fallbackTimer = window.setTimeout(() => setIsLoading(false), 8500)
+    const fallbackTimer = window.setTimeout(() => setIsLoading(false), 8500);
 
-    return () => window.clearTimeout(fallbackTimer)
-  }, [])
+    return () => window.clearTimeout(fallbackTimer);
+  }, []);
 
   return (
-    <div className={joinClassNames('video-card__frame', !isLoading && 'video-card__frame--loaded')}>
+    <div
+      className={joinClassNames(
+        "video-card__frame",
+        !isLoading && "video-card__frame--loaded",
+      )}
+    >
       <div className="video-card__skeleton" aria-hidden="true">
         <span className="video-card__skeleton-label" />
         <span className="video-card__skeleton-caption video-card__skeleton-caption--one" />
@@ -413,7 +470,7 @@ function VideoFrame() {
         onLoad={() => setIsLoading(false)}
       />
     </div>
-  )
+  );
 }
 
 function PuzzleTiles({
@@ -422,123 +479,107 @@ function PuzzleTiles({
   columns = 5,
   emptyIndex,
 }: {
-  className?: string
-  count: number
-  columns?: number
-  emptyIndex?: number
+  className?: string;
+  count: number;
+  columns?: number;
+  emptyIndex?: number;
 }) {
   return (
-    <div className={joinClassNames('puzzle-tiles', className)} aria-hidden="true">
+    <div
+      className={joinClassNames("puzzle-tiles", className)}
+      aria-hidden="true"
+    >
       {Array.from({ length: count }, (_, index) => {
-        const row = Math.floor(index / columns)
-        const column = index % columns
-        const isEmpty = index === emptyIndex
+        const row = Math.floor(index / columns);
+        const column = index % columns;
+        const isEmpty = index === emptyIndex;
 
         return (
           <span
             className={joinClassNames(
-              'puzzle-tile',
-              'puzzle-tile--shape-' + ((row + column) % 2 === 0 ? 'a' : 'b'),
-              isEmpty && 'puzzle-tile--gap',
+              "puzzle-tile",
+              "puzzle-tile--shape-" + ((row + column) % 2 === 0 ? "a" : "b"),
+              isEmpty && "puzzle-tile--gap",
             )}
             key={index}
           />
-        )
+        );
       })}
     </div>
-  )
-}
-
-function WallShader() {
-  const totalColumns = 5
-  const totalRows = 9
-  const missingIndex = totalColumns * 4 + 2
-  const wallPalette = ['var(--nss-blue)', 'var(--nss-red)', 'var(--nss-blue-soft)', 'var(--nss-blue-mid)', 'var(--nss-red-soft)']
-
-  return (
-    <div className="wall-shader" aria-hidden="true">
-      <span className="wall-shader__motto">NOT ME<br />BUT YOU</span>
-      {Array.from({ length: totalColumns * totalRows }, (_, index) => {
-        const row = Math.floor(index / totalColumns)
-        const column = index % totalColumns
-        const shape = (row + column) % 2 === 0 ? 'a' : 'b'
-        const isMissing = index === missingIndex
-
-        return (
-          <span
-            className={joinClassNames('wall-cell', isMissing && 'wall-cell--missing')}
-            key={index}
-            style={
-              {
-                '--wall-color': wallPalette[(row * 2 + column) % wallPalette.length],
-              } as CSSProperties
-            }
-          >
-            {isMissing ? (
-              <>
-                <span className={joinClassNames('wall-gap', 'wall-gap--shape-' + shape)} />
-                <span className={joinClassNames('wall-you', 'wall-you--shape-' + shape)}>
-                  <strong>YOU</strong>
-                </span>
-              </>
-            ) : (
-              <span className={joinClassNames('wall-block', 'wall-block--shape-' + shape)} />
-            )}
-          </span>
-        )
-      })}
-    </div>
-  )
+  );
 }
 
 function LoaderPuzzle() {
-  const totalColumns = 4
-  const totalRows = 3
-  const missingIndex = totalColumns + 1
+  const totalColumns = 4;
+  const totalRows = 3;
+  const missingIndex = totalColumns + 1;
 
   return (
     <div className="loader-puzzle__stage" aria-hidden="true">
       <div className="loader-puzzle">
         {Array.from({ length: totalColumns * totalRows }, (_, index) => {
-          const row = Math.floor(index / totalColumns)
-          const column = index % totalColumns
-          const shape = (row + column) % 2 === 0 ? 'a' : 'b'
-          const isMissing = index === missingIndex
-          const pieceDelay = (totalRows - row - 1) * 560 + column * 125
+          const row = Math.floor(index / totalColumns);
+          const column = index % totalColumns;
+          const shape = (row + column) % 2 === 0 ? "a" : "b";
+          const isMissing = index === missingIndex;
+          const pieceDelay = (totalRows - row - 1) * 560 + column * 125;
 
           return (
             <span
-              className={joinClassNames('loader-puzzle__cell', isMissing && 'loader-puzzle__cell--missing')}
+              className={joinClassNames(
+                "loader-puzzle__cell",
+                isMissing && "loader-puzzle__cell--missing",
+              )}
               key={index}
               style={
                 {
-                  '--piece-delay': String(pieceDelay) + 'ms',
-                  '--piece-entry-x': String((column - (totalColumns - 1) / 2) * 11) + 'px',
-                  '--piece-entry-y': String((totalRows - row) * 22) + 'px',
-                  '--loader-you-delay': String(pieceDelay + 1500) + 'ms',
+                  "--piece-delay": String(pieceDelay) + "ms",
+                  "--piece-entry-x":
+                    String((column - (totalColumns - 1) / 2) * 11) + "px",
+                  "--piece-entry-y": String((totalRows - row) * 22) + "px",
+                  "--loader-you-delay": String(pieceDelay + 1500) + "ms",
                 } as CSSProperties
               }
             >
               {isMissing ? (
-                <span className={joinClassNames('loader-puzzle__you', 'loader-puzzle__you--shape-' + shape)}>
+                <span
+                  className={joinClassNames(
+                    "loader-puzzle__you",
+                    "loader-puzzle__you--shape-" + shape,
+                  )}
+                >
                   <strong>YOU</strong>
                 </span>
               ) : (
-                <span className={joinClassNames('loader-puzzle__piece', 'loader-puzzle__piece--shape-' + shape)} />
+                <span
+                  className={joinClassNames(
+                    "loader-puzzle__piece",
+                    "loader-puzzle__piece--shape-" + shape,
+                  )}
+                />
               )}
             </span>
-          )
+          );
         })}
       </div>
       <NssSeal className="loader-puzzle__seal" decorative />
     </div>
-  )
+  );
 }
 
-function LoadingScreen({ progress, isLeaving }: { progress: number; isLeaving: boolean }) {
+function LoadingScreen({
+  progress,
+  isLeaving,
+}: {
+  progress: number;
+  isLeaving: boolean;
+}) {
   return (
     <div
-      className={joinClassNames('loading-screen', isLeaving && 'loading-screen--leaving')}
+      className={joinClassNames(
+        "loading-screen",
+        isLeaving && "loading-screen--leaving",
+      )}
       role="status"
       aria-live="polite"
       aria-label="Assembling the recruitment experience"
@@ -554,11 +595,11 @@ function LoadingScreen({ progress, isLeaving }: { progress: number; isLeaving: b
         </p>
         <div className="loading-screen__copy">
           <span>Building a place for every strength</span>
-          <strong>{String(progress).padStart(2, '0')}%</strong>
+          <strong>{String(progress).padStart(2, "0")}%</strong>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function PremiumRail({
@@ -569,195 +610,208 @@ function PremiumRail({
   items,
   kind,
 }: {
-  sectionId: string
-  eyebrow: string
-  title: string
-  description: string
-  items: RailItem[]
-  kind: 'domain' | 'project'
+  sectionId: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  items: RailItem[];
+  kind: "domain" | "project";
 }) {
-  const railRef = useRef<HTMLDivElement>(null)
-  const activeRef = useRef(0)
-  const pauseUntilRef = useRef(0)
-  const scrollFrameRef = useRef<number | null>(null)
+  const railRef = useRef<HTMLDivElement>(null);
+  const activeRef = useRef(0);
+  const pauseUntilRef = useRef(0);
+  const scrollFrameRef = useRef<number | null>(null);
   const dragRef = useRef({
     pointerId: null as number | null,
     startX: 0,
     startScrollLeft: 0,
     didMove: false,
-  })
-  const suppressClickRef = useRef(false)
-  const [active, setActive] = useState(0)
-  const [cycle, setCycle] = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
-  const autoDelay = kind === 'domain' ? 5600 : 6800
+  });
+  const suppressClickRef = useRef(false);
+  const [active, setActive] = useState(0);
+  const [cycle, setCycle] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const autoDelay = kind === "domain" ? 5600 : 6800;
 
-  function selectSlide(requestedIndex: number, behavior: ScrollBehavior = 'smooth') {
-    const nextIndex = (requestedIndex + items.length) % items.length
-    activeRef.current = nextIndex
-    setActive(nextIndex)
-    setCycle((currentCycle) => currentCycle + 1)
+  function selectSlide(
+    requestedIndex: number,
+    behavior: ScrollBehavior = "smooth",
+  ) {
+    const nextIndex = (requestedIndex + items.length) % items.length;
+    activeRef.current = nextIndex;
+    setActive(nextIndex);
+    setCycle((currentCycle) => currentCycle + 1);
 
     window.requestAnimationFrame(() => {
-      const rail = railRef.current
-      const card = rail?.children.item(nextIndex) as HTMLElement | null
+      const rail = railRef.current;
+      const card = rail?.children.item(nextIndex) as HTMLElement | null;
 
       if (!rail || !card) {
-        return
+        return;
       }
 
       rail.scrollTo({
-        left: Math.max(0, card.offsetLeft - (rail.clientWidth - card.offsetWidth) / 2),
+        left: Math.max(
+          0,
+          card.offsetLeft - (rail.clientWidth - card.offsetWidth) / 2,
+        ),
         behavior,
-      })
-    })
+      });
+    });
   }
 
   const advanceRail = useEffectEvent(() => {
     if (Date.now() >= pauseUntilRef.current) {
-      selectSlide(activeRef.current + 1)
+      selectSlide(activeRef.current + 1);
     }
-  })
+  });
 
   useEffect(() => {
-    const interval = window.setInterval(() => advanceRail(), autoDelay)
-    return () => window.clearInterval(interval)
-  }, [autoDelay])
+    const interval = window.setInterval(() => advanceRail(), autoDelay);
+    return () => window.clearInterval(interval);
+  }, [autoDelay]);
 
   useEffect(() => {
     return () => {
       if (scrollFrameRef.current !== null) {
-        window.cancelAnimationFrame(scrollFrameRef.current)
+        window.cancelAnimationFrame(scrollFrameRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   function getClosestIndex(rail: HTMLDivElement) {
-    const railCenter = rail.scrollLeft + rail.clientWidth / 2
-    let closestIndex = 0
-    let smallestDistance = Number.POSITIVE_INFINITY
+    const railCenter = rail.scrollLeft + rail.clientWidth / 2;
+    let closestIndex = 0;
+    let smallestDistance = Number.POSITIVE_INFINITY;
 
     Array.from(rail.children).forEach((child, index) => {
-      const card = child as HTMLElement
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2
-      const distance = Math.abs(cardCenter - railCenter)
+      const card = child as HTMLElement;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - railCenter);
 
       if (distance < smallestDistance) {
-        smallestDistance = distance
-        closestIndex = index
+        smallestDistance = distance;
+        closestIndex = index;
       }
-    })
+    });
 
-    return closestIndex
+    return closestIndex;
   }
 
   function handleScroll() {
     if (scrollFrameRef.current !== null) {
-      window.cancelAnimationFrame(scrollFrameRef.current)
+      window.cancelAnimationFrame(scrollFrameRef.current);
     }
 
     scrollFrameRef.current = window.requestAnimationFrame(() => {
-      const rail = railRef.current
+      const rail = railRef.current;
       if (!rail) {
-        return
+        return;
       }
 
-      const closestIndex = getClosestIndex(rail)
+      const closestIndex = getClosestIndex(rail);
 
       if (closestIndex !== activeRef.current) {
-        activeRef.current = closestIndex
-        setActive(closestIndex)
-        setCycle((currentCycle) => currentCycle + 1)
+        activeRef.current = closestIndex;
+        setActive(closestIndex);
+        setCycle((currentCycle) => currentCycle + 1);
       }
-    })
+    });
   }
 
   function pauseAutoAdvance(delay = 6200) {
-    pauseUntilRef.current = Date.now() + delay
+    pauseUntilRef.current = Date.now() + delay;
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault()
-      pauseAutoAdvance()
-      selectSlide(activeRef.current - 1)
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      pauseAutoAdvance();
+      selectSlide(activeRef.current - 1);
     }
 
-    if (event.key === 'ArrowRight') {
-      event.preventDefault()
-      pauseAutoAdvance()
-      selectSlide(activeRef.current + 1)
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      pauseAutoAdvance();
+      selectSlide(activeRef.current + 1);
     }
   }
 
   function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
-    if (event.pointerType === 'mouse' && event.button !== 0) {
-      return
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
     }
 
-    const rail = railRef.current
+    const rail = railRef.current;
     if (!rail) {
-      return
+      return;
     }
 
-    pauseAutoAdvance(9600)
+    pauseAutoAdvance(9600);
     dragRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
       startScrollLeft: rail.scrollLeft,
       didMove: false,
-    }
-    rail.setPointerCapture(event.pointerId)
-    setIsDragging(true)
+    };
+    rail.setPointerCapture(event.pointerId);
+    setIsDragging(true);
   }
 
   function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    const rail = railRef.current
-    const drag = dragRef.current
+    const rail = railRef.current;
+    const drag = dragRef.current;
 
     if (!rail || drag.pointerId !== event.pointerId) {
-      return
+      return;
     }
 
-    const distance = event.clientX - drag.startX
+    const distance = event.clientX - drag.startX;
     if (Math.abs(distance) > 4) {
-      drag.didMove = true
+      drag.didMove = true;
     }
 
-    rail.scrollLeft = drag.startScrollLeft - distance
+    rail.scrollLeft = drag.startScrollLeft - distance;
   }
 
   function finishPointerDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    const rail = railRef.current
-    const drag = dragRef.current
+    const rail = railRef.current;
+    const drag = dragRef.current;
 
     if (drag.pointerId !== event.pointerId) {
-      return
+      return;
     }
 
     if (rail?.hasPointerCapture(event.pointerId)) {
-      rail.releasePointerCapture(event.pointerId)
+      rail.releasePointerCapture(event.pointerId);
     }
 
-    const didMove = drag.didMove
-    dragRef.current.pointerId = null
-    dragRef.current.didMove = false
-    setIsDragging(false)
-    pauseAutoAdvance(didMove ? 6200 : 4400)
+    const didMove = drag.didMove;
+    dragRef.current.pointerId = null;
+    dragRef.current.didMove = false;
+    setIsDragging(false);
+    pauseAutoAdvance(didMove ? 6200 : 4400);
 
     if (!rail || !didMove) {
-      return
+      return;
     }
 
-    suppressClickRef.current = true
+    suppressClickRef.current = true;
     window.setTimeout(() => {
-      suppressClickRef.current = false
-    }, 0)
-    selectSlide(getClosestIndex(rail))
+      suppressClickRef.current = false;
+    }, 0);
+    selectSlide(getClosestIndex(rail));
   }
 
   return (
-    <section className={joinClassNames('content-section', 'content-section--rail', 'content-section--' + kind)} id={sectionId}>
+    <section
+      className={joinClassNames(
+        "content-section",
+        "content-section--rail",
+        "content-section--" + kind,
+      )}
+      id={sectionId}
+    >
       <div className="section-copy section-copy--split">
         <div>
           <p className="eyebrow">{eyebrow}</p>
@@ -767,16 +821,18 @@ function PremiumRail({
       </div>
 
       <div className="rail-toolbar">
-        <span className="rail-toolbar__hint">Swipe, drag or use the arrows</span>
+        <span className="rail-toolbar__hint">
+          Swipe, drag or use the arrows
+        </span>
         <div className="rail-toolbar__controls">
           <button
             className="circle-button"
             type="button"
             onClick={() => {
-              pauseAutoAdvance()
-              selectSlide(activeRef.current - 1)
+              pauseAutoAdvance();
+              selectSlide(activeRef.current - 1);
             }}
-            aria-label={'Show previous ' + kind}
+            aria-label={"Show previous " + kind}
           >
             <ArrowIcon direction="left" />
           </button>
@@ -784,10 +840,10 @@ function PremiumRail({
             className="circle-button"
             type="button"
             onClick={() => {
-              pauseAutoAdvance()
-              selectSlide(activeRef.current + 1)
+              pauseAutoAdvance();
+              selectSlide(activeRef.current + 1);
             }}
-            aria-label={'Show next ' + kind}
+            aria-label={"Show next " + kind}
           >
             <ArrowIcon />
           </button>
@@ -795,10 +851,13 @@ function PremiumRail({
       </div>
 
       <div
-        className={joinClassNames('premium-rail', isDragging && 'premium-rail--dragging')}
+        className={joinClassNames(
+          "premium-rail",
+          isDragging && "premium-rail--dragging",
+        )}
         ref={railRef}
         role="region"
-        aria-label={title + ' carousel'}
+        aria-label={title + " carousel"}
         tabIndex={0}
         onKeyDown={handleKeyDown}
         onScroll={handleScroll}
@@ -810,26 +869,29 @@ function PremiumRail({
       >
         {items.map((item, index) => (
           <article
-            className={joinClassNames('premium-card', active === index && 'premium-card--active')}
+            className={joinClassNames(
+              "premium-card",
+              active === index && "premium-card--active",
+            )}
             key={item.id}
-            style={{ '--card-accent': item.accent } as CSSProperties}
+            style={{ "--card-accent": item.accent } as CSSProperties}
             onClick={() => {
               if (suppressClickRef.current) {
-                return
+                return;
               }
 
               if (active !== index) {
-                pauseAutoAdvance()
-                selectSlide(index)
+                pauseAutoAdvance();
+                selectSlide(index);
               }
             }}
           >
             <div className="premium-card__visual">
               <AssetFrame
                 src={item.image}
-                alt={item.title + ' visual'}
+                alt={item.title + " visual"}
                 label={item.title}
-                kind={kind === 'domain' ? 'domain' : 'project'}
+                kind={kind === "domain" ? "domain" : "project"}
               />
             </div>
             <div className="premium-card__body">
@@ -843,15 +905,21 @@ function PremiumRail({
       </div>
 
       <div className="rail-progress" aria-hidden="true">
-        <span key={cycle} style={{ '--rail-delay': String(autoDelay) + 'ms' } as CSSProperties} />
+        <span
+          key={cycle}
+          style={{ "--rail-delay": String(autoDelay) + "ms" } as CSSProperties}
+        />
       </div>
 
-      <div className="rail-mobile-controls" aria-label={title + ' carousel controls'}>
+      <div
+        className="rail-mobile-controls"
+        aria-label={title + " carousel controls"}
+      >
         <button
           type="button"
           onClick={() => {
-            pauseAutoAdvance()
-            selectSlide(activeRef.current - 1)
+            pauseAutoAdvance();
+            selectSlide(activeRef.current - 1);
           }}
         >
           <ArrowIcon direction="left" />
@@ -860,8 +928,8 @@ function PremiumRail({
         <button
           type="button"
           onClick={() => {
-            pauseAutoAdvance()
-            selectSlide(activeRef.current + 1)
+            pauseAutoAdvance();
+            selectSlide(activeRef.current + 1);
           }}
         >
           <span>Next</span>
@@ -869,196 +937,208 @@ function PremiumRail({
         </button>
       </div>
     </section>
-  )
+  );
 }
 
 function App() {
-  const [loading, setLoading] = useState(true)
-  const [isLoadingExiting, setIsLoadingExiting] = useState(false)
-  const [progress, setProgress] = useState(0)
+  const [loading, setLoading] = useState(true);
+  const [isLoadingExiting, setIsLoadingExiting] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = window.localStorage.getItem('nss-sce-theme')
-    if (savedTheme === 'dark' || savedTheme === 'light') {
-      return savedTheme
+    const savedTheme = window.localStorage.getItem("nss-sce-theme");
+    if (savedTheme === "dark" || savedTheme === "light") {
+      return savedTheme;
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  })
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [eventIndex, setEventIndex] = useState(0)
-  const [eventCycle, setEventCycle] = useState(0)
-  const [diaryTimerCycle, setDiaryTimerCycle] = useState(0)
-  const eventIndexRef = useRef(0)
-  const diaryPauseUntilRef = useRef(0)
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [eventIndex, setEventIndex] = useState(0);
+  const [eventCycle, setEventCycle] = useState(0);
+  const [diaryTimerCycle, setDiaryTimerCycle] = useState(0);
+  const eventIndexRef = useRef(0);
+  const diaryPauseUntilRef = useRef(0);
   const diaryDragRef = useRef({
     pointerId: null as number | null,
     startX: 0,
     didMove: false,
-  })
-  const diaryClickSuppressedRef = useRef(false)
-  const [isDiaryDragging, setIsDiaryDragging] = useState(false)
-  const diaryAutoDelay = 6500
-  const selectedEvent = eventDiary[eventIndex]
+  });
+  const diaryClickSuppressedRef = useRef(false);
+  const [isDiaryDragging, setIsDiaryDragging] = useState(false);
+  const diaryAutoDelay = 6500;
+  const selectedEvent = eventDiary[eventIndex];
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const duration = reduceMotion ? 480 : 4800
-    const startedAt = window.performance.now()
-    let frame = 0
-    let exitTimer = 0
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const duration = reduceMotion ? 480 : 4800;
+    const startedAt = window.performance.now();
+    let frame = 0;
+    let exitTimer = 0;
 
     function advance(now: number) {
-      const nextProgress = Math.min(100, Math.round(((now - startedAt) / duration) * 100))
-      setProgress(nextProgress)
+      const nextProgress = Math.min(
+        100,
+        Math.round(((now - startedAt) / duration) * 100),
+      );
+      setProgress(nextProgress);
 
       if (nextProgress < 100) {
-        frame = window.requestAnimationFrame(advance)
+        frame = window.requestAnimationFrame(advance);
       } else {
-        setIsLoadingExiting(true)
-        exitTimer = window.setTimeout(() => setLoading(false), reduceMotion ? 80 : 680)
+        setIsLoadingExiting(true);
+        exitTimer = window.setTimeout(
+          () => setLoading(false),
+          reduceMotion ? 80 : 680,
+        );
       }
     }
 
-    frame = window.requestAnimationFrame(advance)
+    frame = window.requestAnimationFrame(advance);
 
     return () => {
-      window.cancelAnimationFrame(frame)
-      window.clearTimeout(exitTimer)
-    }
-  }, [])
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(exitTimer);
+    };
+  }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('nss-sce-theme', theme)
-    document.documentElement.dataset.theme = theme
-  }, [theme])
+    window.localStorage.setItem("nss-sce-theme", theme);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   const advanceDiary = useEffectEvent(() => {
     if (Date.now() < diaryPauseUntilRef.current) {
-      return
+      return;
     }
 
-    const nextIndex = (eventIndexRef.current + 1) % eventDiary.length
-    eventIndexRef.current = nextIndex
-    setEventIndex(nextIndex)
-    setEventCycle((currentCycle) => currentCycle + 1)
-    setDiaryTimerCycle((currentCycle) => currentCycle + 1)
-  })
+    const nextIndex = (eventIndexRef.current + 1) % eventDiary.length;
+    eventIndexRef.current = nextIndex;
+    setEventIndex(nextIndex);
+    setEventCycle((currentCycle) => currentCycle + 1);
+    setDiaryTimerCycle((currentCycle) => currentCycle + 1);
+  });
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
     }
 
-    const interval = window.setInterval(() => advanceDiary(), diaryAutoDelay)
-    return () => window.clearInterval(interval)
-  }, [diaryAutoDelay])
+    const interval = window.setInterval(() => advanceDiary(), diaryAutoDelay);
+    return () => window.clearInterval(interval);
+  }, [diaryAutoDelay]);
 
   function pauseDiaryAutoAdvance(delay = diaryAutoDelay) {
-    diaryPauseUntilRef.current = Date.now() + delay
-    setDiaryTimerCycle((currentCycle) => currentCycle + 1)
+    diaryPauseUntilRef.current = Date.now() + delay;
+    setDiaryTimerCycle((currentCycle) => currentCycle + 1);
   }
 
   function selectDiaryEvent(requestedIndex: number) {
-    const nextIndex = (requestedIndex + eventDiary.length) % eventDiary.length
-    diaryPauseUntilRef.current = Date.now() + diaryAutoDelay + 1800
-    eventIndexRef.current = nextIndex
-    setEventIndex(nextIndex)
-    setEventCycle((currentCycle) => currentCycle + 1)
-    setDiaryTimerCycle((currentCycle) => currentCycle + 1)
+    const nextIndex = (requestedIndex + eventDiary.length) % eventDiary.length;
+    diaryPauseUntilRef.current = Date.now() + diaryAutoDelay + 1800;
+    eventIndexRef.current = nextIndex;
+    setEventIndex(nextIndex);
+    setEventCycle((currentCycle) => currentCycle + 1);
+    setDiaryTimerCycle((currentCycle) => currentCycle + 1);
   }
 
   function moveDiary(direction: number) {
-    pauseDiaryAutoAdvance()
-    selectDiaryEvent(eventIndexRef.current + direction)
+    pauseDiaryAutoAdvance();
+    selectDiaryEvent(eventIndexRef.current + direction);
   }
 
   function handleDiaryPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
-    if (event.pointerType === 'mouse' && event.button !== 0) {
-      return
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
     }
 
-    pauseDiaryAutoAdvance(9600)
+    pauseDiaryAutoAdvance(9600);
     diaryDragRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
       didMove: false,
-    }
-    event.currentTarget.setPointerCapture(event.pointerId)
-    setIsDiaryDragging(true)
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setIsDiaryDragging(true);
   }
 
   function handleDiaryPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    const drag = diaryDragRef.current
+    const drag = diaryDragRef.current;
     if (drag.pointerId !== event.pointerId) {
-      return
+      return;
     }
 
     if (Math.abs(event.clientX - drag.startX) > 18) {
-      drag.didMove = true
+      drag.didMove = true;
     }
   }
 
   function finishDiaryDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    const drag = diaryDragRef.current
+    const drag = diaryDragRef.current;
     if (drag.pointerId !== event.pointerId) {
-      return
+      return;
     }
 
-    const didMove = drag.didMove
-    const direction = event.clientX < drag.startX ? 1 : -1
-    drag.pointerId = null
-    drag.didMove = false
-    setIsDiaryDragging(false)
+    const didMove = drag.didMove;
+    const direction = event.clientX < drag.startX ? 1 : -1;
+    drag.pointerId = null;
+    drag.didMove = false;
+    setIsDiaryDragging(false);
 
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId)
+      event.currentTarget.releasePointerCapture(event.pointerId);
     }
 
     if (!didMove) {
-      pauseDiaryAutoAdvance(4400)
-      return
+      pauseDiaryAutoAdvance(4400);
+      return;
     }
 
-    diaryClickSuppressedRef.current = true
+    diaryClickSuppressedRef.current = true;
     window.setTimeout(() => {
-      diaryClickSuppressedRef.current = false
-    }, 0)
-    selectDiaryEvent(eventIndexRef.current + direction)
+      diaryClickSuppressedRef.current = false;
+    }, 0);
+    selectDiaryEvent(eventIndexRef.current + direction);
   }
 
   function handleDiaryKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault()
-      moveDiary(-1)
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      moveDiary(-1);
     }
 
-    if (event.key === 'ArrowRight') {
-      event.preventDefault()
-      moveDiary(1)
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      moveDiary(1);
     }
   }
 
   function closeMenu() {
-    setMenuOpen(false)
+    setMenuOpen(false);
   }
 
   return (
     <div className="h-full m-0 mt-0 p-0 pt-0">
       <div className="site-shell h-full" data-theme={theme}>
-        <div className="ambient-puzzle" aria-hidden="true">
-          <WallShader />
-        </div>
+        <div className="ambient-puzzle" aria-hidden="true"></div>
         <div className="grain" aria-hidden="true" />
 
         <header className="site-header">
           <a className="brand" href="#top" aria-label="NSS SCE KIIT home">
             <NssSeal className="brand__mark" alt="NSS SCE KIIT logo" />
             <span className="brand__divider" aria-hidden="true" />
-            <img className="brand__kiit" src="/KIIT-Logo.png" alt="Kalinga Institute of Industrial Technology" />
+            <img
+              className="brand__kiit"
+              src="/KIIT-Logo.png"
+              alt="Kalinga Institute of Industrial Technology"
+            />
             <span className="brand__divider" aria-hidden="true" />
             <span className="brand__copy">
               <strong>NSS SCE</strong>
               <span>KIIT</span>
-            </span> 
+            </span>
           </a>
 
           <nav className="desktop-nav" aria-label="Primary navigation">
@@ -1072,24 +1152,40 @@ function App() {
             <button
               className="theme-switch"
               type="button"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              aria-label={'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme'}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label={
+                "Switch to " + (theme === "dark" ? "light" : "dark") + " theme"
+              }
             >
-              <span className="theme-switch__icon">{theme === 'dark' ? <SunIcon /> : <MoonIcon />}</span>
-              <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+              <span className="theme-switch__icon">
+                {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+              </span>
+              <span>{theme === "dark" ? "Light" : "Dark"}</span>
             </button>
-            <a className="button button--nss-site" href="https://nss.kiit.ac.in/" target="_blank" rel="noreferrer">
+            <a
+              className="button button--nss-site"
+              href="https://nss.kiit.ac.in/"
+              target="_blank"
+              rel="noreferrer"
+            >
               NSS KIIT
               <ArrowIcon />
             </a>
-            <a className="button button--header" href={applicationUrl} target="_blank" rel="noreferrer">
+            <a
+              className="button button--header rounded-lg"
+              href={applicationUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
               Apply now
               <ArrowIcon />
             </a>
             <button
               className="menu-button"
               type="button"
-              aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-label={
+                menuOpen ? "Close navigation menu" : "Open navigation menu"
+              }
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(!menuOpen)}
             >
@@ -1098,15 +1194,44 @@ function App() {
           </div>
         </header>
 
-        <div className={joinClassNames('mobile-menu', menuOpen && 'mobile-menu--open')}>
+        <div
+          className={joinClassNames(
+            "mobile-menu",
+            menuOpen && "mobile-menu--open",
+          )}
+        >
           <nav aria-label="Mobile navigation">
-            <a href="#story" onClick={closeMenu}>The story</a>
-            <a href="#domains" onClick={closeMenu}>Domains</a>
-            <a href="#projects" onClick={closeMenu}>Projects</a>
-            <a href="#diary" onClick={closeMenu}>Impact diary</a>
-            <a href="#connect" onClick={closeMenu}>Connect</a>
-            <a href="https://nss.kiit.ac.in/" target="_blank" rel="noreferrer" onClick={closeMenu}>NSS KIIT website</a>
-            <a href={applicationUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>Apply now</a>
+            <a href="#story" onClick={closeMenu}>
+              The story
+            </a>
+            <a href="#domains" onClick={closeMenu}>
+              Domains
+            </a>
+            <a href="#projects" onClick={closeMenu}>
+              Projects
+            </a>
+            <a href="#diary" onClick={closeMenu}>
+              Impact diary
+            </a>
+            <a href="#connect" onClick={closeMenu}>
+              Connect
+            </a>
+            <a
+              href="https://nss.kiit.ac.in/"
+              target="_blank"
+              rel="noreferrer"
+              onClick={closeMenu}
+            >
+              NSS KIIT website
+            </a>
+            <a
+              href={applicationUrl}
+              target="_blank"
+              rel="noreferrer"
+              onClick={closeMenu}
+            >
+              Apply now
+            </a>
           </nav>
           <p>Every contribution matters.</p>
         </div>
@@ -1124,10 +1249,20 @@ function App() {
                   <em>almost complete.</em>
                 </h1>
                 <p className="hero__lede">
-                  Every volunteer is unique. Every skill has a place. Every contribution matters. The only missing piece is <strong>you.</strong>
+                  Every volunteer is unique. Every skill has a place. Every
+                  contribution matters.
+                  <br />
+                  <br />
+                  The puzzle is almost complete. The only missing piece is{" "}
+                  <strong>you.</strong>
                 </p>
                 <div className="hero__actions">
-                  <a className="button button--primary" href={applicationUrl} target="_blank" rel="noreferrer">
+                  <a
+                    className="button button--primary"
+                    href={applicationUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     Be the missing piece
                     <ArrowIcon />
                   </a>
@@ -1138,7 +1273,10 @@ function App() {
                 </div>
               </div>
 
-              <div className="hero__visual" aria-label="An abstract puzzle with one piece labelled you">
+              <div
+                className="hero__visual"
+                aria-label="An abstract puzzle with one piece labelled you"
+              >
                 <div className="hero-puzzle">
                   <div className="hero-puzzle__piece hero-puzzle__piece--a" />
                   <div className="hero-puzzle__piece hero-puzzle__piece--b" />
@@ -1154,7 +1292,11 @@ function App() {
                 </div>
                 <div className="hero__stamp">
                   <span>NSS Motto</span>
-                  <strong>Not Me,<br />But You</strong>
+                  <strong>
+                    Not Me,
+                    <br />
+                    But You
+                  </strong>
                 </div>
               </div>
             </div>
@@ -1168,47 +1310,40 @@ function App() {
             </div>
           </section>
 
-          <section className="content-section story-section" id="story">
-            <div className="section-copy story-section__copy">
-              <p className="eyebrow">The missing piece</p>
-              <h2>NSS is a puzzle built by people who show up for others.</h2>
-              <p>
-                Over the years, countless volunteers, coordinators, and seniors have brought their own skills, ideas, and effort to NSS SCE KIIT. Together, they create something meaningful. Still, the picture has room for one more piece.
-              </p>
-            </div>
-
-            <div className="story-panel">
-              <div className="story-panel__copy">
-                <p className="text-xl">Some lead. Some design. Some speak, write, photograph, manage, organise, and serve. No strength is too small to matter.</p>
-                <span className="story-panel__line" />
-                <p className="story-panel__accent">This campaign shifts the spotlight from the organisation to the applicant: NSS needs your distinct way of making a difference.</p>
-              </div>
-              <div className="story-panel__puzzle">
-                <PuzzleTiles count={20} columns={5} />
-              </div>
-            </div>
-          </section>
-
           <section className="content-section story-brief">
             <div className="story-brief__intro">
               <p className="eyebrow">The applicant is the answer</p>
-              <h2>We are not simply asking you to join. We are showing you where NSS needs you.</h2>
+              <h2>
+                We are not simply asking you to join. We are showing you where
+                NSS needs you.
+              </h2>
             </div>
             <div className="story-brief__grid">
               <article className="story-brief__card">
                 <span>A unique shape</span>
                 <h3>Every individual carries something distinct.</h3>
-                <p>Every volunteer brings a different set of skills, ideas, and efforts. Like a puzzle piece, every person has a shape and purpose that cannot be replaced.</p>
+                <p>
+                  Every volunteer brings a different set of skills, ideas, and
+                  efforts. Like a puzzle piece, every person has a shape and
+                  purpose that cannot be replaced.
+                </p>
               </article>
               <article className="story-brief__card story-brief__card--accent">
                 <span>The missing piece</span>
                 <h3>You are not another addition to NSS.</h3>
-                <p>You are the missing piece that helps complete it. From your very first step, your contribution is important and valued.</p>
+                <p>
+                  You are the missing piece that helps complete it. From your
+                  very first step, your contribution is important and valued.
+                </p>
               </article>
               <article className="story-brief__card">
                 <span>The whole picture</span>
                 <h3>When every strength meets, the picture becomes whole.</h3>
-                <p>Existing volunteers, seniors, coordinators, and new recruits come together to build an organisation shaped by everyone who chooses to be part of it.</p>
+                <p>
+                  Existing volunteers, seniors, coordinators, and new recruits
+                  come together to build an organisation shaped by everyone who
+                  chooses to be part of it.
+                </p>
               </article>
             </div>
           </section>
@@ -1217,7 +1352,10 @@ function App() {
             <div className="video-section__copy">
               <p className="eyebrow">See the picture move</p>
               <h2>Service has a rhythm.</h2>
-              <p>The work is hands-on, people-first, and always bigger than a single person.</p>
+              <p>
+                The work is hands-on, people-first, and always bigger than a
+                single person.
+              </p>
               <a className="text-link" href="#diary">
                 Explore the event diary
                 <span />
@@ -1226,7 +1364,9 @@ function App() {
             <div className="video-card">
               <div className="video-card__topbar">
                 <span>Field reel / NSS SCE KIIT</span>
-                <span className="video-card__live"><i /> Ready</span>
+                <span className="video-card__live">
+                  <i /> Ready
+                </span>
               </div>
               <VideoFrame />
               <div className="video-card__footer">
@@ -1247,8 +1387,13 @@ function App() {
           <section className="content-section manifesto-section">
             <div className="manifesto-section__quote">
               <span className="manifesto-section__mark">"</span>
-              <p>The organisation is not built by a few individuals. It is built by everyone who chooses to be a part of it.</p>
-              <span className="manifesto-section__mark manifesto-section__mark--end">"</span>
+              <p>
+                The organisation is not built by a few individuals. It is built
+                by everyone who chooses to be a part of it.
+              </p>
+              <span className="manifesto-section__mark manifesto-section__mark--end">
+                "
+              </span>
             </div>
             <div className="manifesto-section__pieces">
               <div>
@@ -1278,12 +1423,20 @@ function App() {
                 <p className="eyebrow">Event diary</p>
                 <h2>Moments that became more than moments.</h2>
               </div>
-              <p>From health support to awareness drives, every field note tells the story of students choosing action over apathy.</p>
+              <p>
+                From health support to awareness drives, every field note tells
+                the story of students choosing action over apathy.
+              </p>
             </div>
 
             <div
-              className={joinClassNames('diary-window', isDiaryDragging && 'diary-window--dragging')}
-              style={{ '--event-accent': selectedEvent.accent } as CSSProperties}
+              className={joinClassNames(
+                "diary-window",
+                isDiaryDragging && "diary-window--dragging",
+              )}
+              style={
+                { "--event-accent": selectedEvent.accent } as CSSProperties
+              }
               role="region"
               aria-label="Automated NSS event diary"
               tabIndex={0}
@@ -1296,7 +1449,10 @@ function App() {
               onLostPointerCapture={finishDiaryDrag}
               onFocusCapture={() => pauseDiaryAutoAdvance()}
             >
-              <div className="diary-window__visual" key={'visual-' + selectedEvent.id + '-' + eventCycle}>
+              <div
+                className="diary-window__visual"
+                key={"visual-" + selectedEvent.id + "-" + eventCycle}
+              >
                 <AssetFrame
                   src={selectedEvent.image}
                   alt={selectedEvent.title}
@@ -1305,7 +1461,10 @@ function App() {
                 />
                 <div className="diary-window__tag">NSS field note</div>
               </div>
-              <div className="diary-window__content" key={'content-' + selectedEvent.id + '-' + eventCycle}>
+              <div
+                className="diary-window__content"
+                key={"content-" + selectedEvent.id + "-" + eventCycle}
+              >
                 <p className="eyebrow">Event archive</p>
                 <h3>{selectedEvent.title}</h3>
                 <div className="diary-window__meta">
@@ -1339,21 +1498,35 @@ function App() {
                 </div>
               </div>
               <div className="diary-window__autoplay" aria-hidden="true">
-                <span key={diaryTimerCycle} style={{ '--diary-delay': String(diaryAutoDelay) + 'ms' } as CSSProperties} />
+                <span
+                  key={diaryTimerCycle}
+                  style={
+                    {
+                      "--diary-delay": String(diaryAutoDelay) + "ms",
+                    } as CSSProperties
+                  }
+                />
               </div>
             </div>
 
-            <div className="diary-tabs" role="tablist" aria-label="Choose an event">
+            <div
+              className="diary-tabs"
+              role="tablist"
+              aria-label="Choose an event"
+            >
               {eventDiary.map((event, index) => (
                 <button
-                  className={joinClassNames('diary-tab', eventIndex === index && 'diary-tab--active')}
+                  className={joinClassNames(
+                    "diary-tab",
+                    eventIndex === index && "diary-tab--active",
+                  )}
                   key={event.id}
                   type="button"
                   role="tab"
                   aria-selected={eventIndex === index}
                   onClick={() => {
                     if (!diaryClickSuppressedRef.current) {
-                      selectDiaryEvent(index)
+                      selectDiaryEvent(index);
                     }
                   }}
                 >
@@ -1369,7 +1542,12 @@ function App() {
                 <p className="eyebrow">Your piece is waiting</p>
                 <h2>Ready to complete the picture?</h2>
               </div>
-              <a className="button button--primary" href={applicationUrl} target="_blank" rel="noreferrer">
+              <a
+                className="button button--primary rounded-lg"
+                href={applicationUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Apply for recruitment
                 <ArrowIcon />
               </a>
@@ -1378,51 +1556,112 @@ function App() {
             <div className="connect-section__grid">
               <article className="connect-card connect-card--about">
                 <h3>Stay close to the work.</h3>
-                <p>Connect with NSS SCE KIIT to stay updated with activities, events, and community service initiatives.</p>
-                <a href="https://nss.kiit.ac.in/" target="_blank" rel="noreferrer" className="text-link">
+                <p>
+                  Connect with NSS SCE KIIT to stay updated with activities,
+                  events, and community service initiatives.
+                </p>
+                <a
+                  href="https://nss.kiit.ac.in/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-link"
+                >
                   NSS KIIT home page
                   <span />
                 </a>
               </article>
               <article className="connect-card">
                 <p className="connect-card__label">Follow the unit</p>
-                <a href="https://www.instagram.com/nss.sce.kiit/?hl=en" target="_blank" rel="noreferrer" className="connect-card__link">
+                <a
+                  href="https://www.instagram.com/nss.sce.kiit/?hl=en"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="connect-card__link"
+                >
                   Instagram
                   <ArrowIcon />
                 </a>
-                <a href="https://www.youtube.com/c/NSSSCE" target="_blank" rel="noreferrer" className="connect-card__link">
+                <a
+                  href="https://www.youtube.com/c/NSSSCE"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="connect-card__link"
+                >
                   YouTube
                   <ArrowIcon />
                 </a>
-                <a href="https://www.linkedin.com/company/nss-sce-kiit/" target="_blank" rel="noreferrer" className="connect-card__link">
+                <a
+                  href="https://www.linkedin.com/company/nss-sce-kiit/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="connect-card__link"
+                >
                   LinkedIn
                   <ArrowIcon />
                 </a>
               </article>
-              <article className="connect-card connect-card--contacts">
-                <p className="connect-card__label">For further information</p>
-                <a href="tel:+918334822932">Soham Lodh <span>+91 83348 22932</span></a>
-                <a href="tel:+919717008778">Aditya Sharma <span>+91 97170 08778</span></a>
-                <a href="tel:+918582072009">Anshu Kumar Pandey <span>+91 85820 72009</span></a>
-                <a href="tel:+919312370886">Anuj Sharma <span>+91 93123 70886</span></a>
-                <a href="tel:+916291816126">Pinak Dhar <span>+91 62918 16126</span></a>
-                <a href="tel:+919142169264">Ayush Kumar <span>+91 91421 69264</span></a>
-              </article>
             </div>
+          </section>
+          <section className="contact-directory">
+            <article className="contact-directory__card">
+              <div className="contact-directory__header">
+                <p className="contact-directory__eyebrow">Need assistance?</p>
+                <h3>Contact the Recruitment Team</h3>
+                <p>
+                  Reach out to any of the coordinators below for recruitment,
+                  volunteering, or event-related queries.
+                </p>
+              </div>
+
+              <div className="contact-directory__grid">
+                <a href="tel:+918334822932" className="contact-person">
+                  <strong>Soham Lodh</strong>
+                  <span>+91 83348 22932</span>
+                </a>
+
+                <a href="tel:+919717008778" className="contact-person">
+                  <strong>Aditya Sharma</strong>
+                  <span>+91 97170 08778</span>
+                </a>
+
+                <a href="tel:+918582072009" className="contact-person">
+                  <strong>Anshu Kumar Pandey</strong>
+                  <span>+91 85820 72009</span>
+                </a>
+
+                <a href="tel:+919312370886" className="contact-person">
+                  <strong>Anuj Sharma</strong>
+                  <span>+91 93123 70886</span>
+                </a>
+
+                <a href="tel:+916291816126" className="contact-person">
+                  <strong>Pinak Dhar</strong>
+                  <span>+91 62918 16126</span>
+                </a>
+
+                <a href="tel:+919142169264" className="contact-person">
+                  <strong>Ayush Kumar</strong>
+                  <span>+91 91421 69264</span>
+                </a>
+              </div>
+            </article>
           </section>
         </main>
 
         <footer className="site-footer">
           <p>© 2026 NSS SCE KIIT</p>
           <p>National Service Scheme / School of Computer Engineering</p>
-          <a href="#top">Back to top <ArrowIcon /></a>
+          <a href="#top">
+            Back to top <ArrowIcon />
+          </a>
         </footer>
-
       </div>
 
-      {loading && <LoadingScreen progress={progress} isLeaving={isLoadingExiting} />}
+      {loading && (
+        <LoadingScreen progress={progress} isLeaving={isLoadingExiting} />
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
