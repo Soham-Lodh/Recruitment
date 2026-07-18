@@ -1179,7 +1179,7 @@ function App() {
 
             <div className="story-panel">
               <div className="story-panel__copy">
-                <p>Some lead. Some design. Some speak, write, photograph, manage, organise, and serve. No strength is too small to matter.</p>
+                <p className="text-xl">Some lead. Some design. Some speak, write, photograph, manage, organise, and serve. No strength is too small to matter.</p>
                 <span className="story-panel__line" />
                 <p className="story-panel__accent">This campaign shifts the spotlight from the organisation to the applicant: NSS needs your distinct way of making a difference.</p>
               </div>
@@ -1406,6 +1406,7 @@ function App() {
                 <a href="tel:+918582072009">Anshu Kumar Pandey <span>+91 85820 72009</span></a>
                 <a href="tel:+919312370886">Anuj Sharma <span>+91 93123 70886</span></a>
                 <a href="tel:+916291816126">Pinak Dhar <span>+91 62918 16126</span></a>
+                <a href="tel:+919142169264">Ayush Kumar <span>+91 91421 69264</span></a>
               </article>
             </div>
           </section>
