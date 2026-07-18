@@ -427,8 +427,6 @@ function PuzzleTiles({
   columns?: number
   emptyIndex?: number
 }) {
-  const totalRows = Math.ceil(count / columns)
-
   return (
     <div className={joinClassNames('puzzle-tiles', className)} aria-hidden="true">
       {Array.from({ length: count }, (_, index) => {
@@ -444,14 +442,6 @@ function PuzzleTiles({
               isEmpty && 'puzzle-tile--gap',
             )}
             key={index}
-            style={
-              {
-                '--piece-delay': String((totalRows - row - 1) * 150 + column * 44) + 'ms',
-                '--piece-tone': String(index % 7),
-                '--piece-entry-x': String((column - (columns - 1) / 2) * 12) + 'px',
-                '--piece-entry-y': String((totalRows - row) * 26) + 'px',
-              } as CSSProperties
-            }
           />
         )
       })}
@@ -463,7 +453,7 @@ function WallShader() {
   const totalColumns = 5
   const totalRows = 9
   const missingIndex = totalColumns * 4 + 2
-  const wallPalette = ['var(--nss-blue)', 'var(--nss-red)', 'var(--nss-gold)', '#31529a', '#82243a']
+  const wallPalette = ['var(--nss-blue)', 'var(--nss-red)', 'var(--nss-blue-soft)', 'var(--nss-blue-mid)', 'var(--nss-red-soft)']
 
   return (
     <div className="wall-shader" aria-hidden="true">
@@ -472,7 +462,6 @@ function WallShader() {
         const row = Math.floor(index / totalColumns)
         const column = index % totalColumns
         const shape = (row + column) % 2 === 0 ? 'a' : 'b'
-        const wallDelay = (totalRows - row - 1) * 82 + column * 23
         const isMissing = index === missingIndex
 
         return (
@@ -481,8 +470,6 @@ function WallShader() {
             key={index}
             style={
               {
-                '--wall-delay': String(wallDelay) + 'ms',
-                '--wall-you-delay': String(wallDelay + 860) + 'ms',
                 '--wall-color': wallPalette[(row * 2 + column) % wallPalette.length],
               } as CSSProperties
             }
@@ -1414,9 +1401,11 @@ function App() {
               </article>
               <article className="connect-card connect-card--contacts">
                 <p className="connect-card__label">For further information</p>
-                <a href="tel:+917635088808">Piyush Agrawal <span>+91 76350 88808</span></a>
-                <a href="tel:+918709914709">Ankit Kumar <span>+91 87099 14709</span></a>
-                <a href="tel:+917985078516">Kaustubh Rastogi <span>+91 79850 78516</span></a>
+                <a href="tel:+918334822932">Soham Lodh <span>+91 83348 22932</span></a>
+                <a href="tel:+919717008778">Aditya Sharma <span>+91 97170 08778</span></a>
+                <a href="tel:+918582072009">Anshu Kumar Pandey <span>+91 85820 72009</span></a>
+                <a href="tel:+919312370886">Anuj Sharma <span>+91 93123 70886</span></a>
+                <a href="tel:+916291816126">Pinak Dhar <span>+91 62918 16126</span></a>
               </article>
             </div>
           </section>
