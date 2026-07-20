@@ -837,6 +837,21 @@ a {
   --tile-color: var(--nss-red-deep);
 }
 
+html:not([data-theme='dark']) .hero-puzzle__piece {
+  background:
+    linear-gradient(128deg, rgba(255, 255, 255, 0.6), transparent 38%, rgba(20, 34, 98, 0.15)),
+    linear-gradient(145deg, color-mix(in srgb, var(--tile-color) 90%, white), var(--tile-color));
+}
+
+html:not([data-theme='dark']) .hero-puzzle__piece--a { --tile-color: var(--nss-blue); }
+html:not([data-theme='dark']) .hero-puzzle__piece--b { --tile-color: var(--nss-blue-deep); }
+html:not([data-theme='dark']) .hero-puzzle__piece--c { --tile-color: var(--nss-red); }
+html:not([data-theme='dark']) .hero-puzzle__piece--d { --tile-color: var(--nss-blue); }
+html:not([data-theme='dark']) .hero-puzzle__piece--e { --tile-color: var(--nss-red-deep); }
+html:not([data-theme='dark']) .hero-puzzle__piece--f { --tile-color: var(--nss-red); }
+html:not([data-theme='dark']) .hero-puzzle__piece--g { --tile-color: var(--nss-blue-mid); }
+html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-blue-deep); }
+
 .hero-puzzle__piece--a {
   top: -4%;
   left: -4%;
