@@ -309,7 +309,7 @@ export const EVENT_DIARY: EventItem[] = [
 export const CONTACT_DIRECTORY: ContactPerson[] = [
   { name: "Soham Lodh", phone: "+91 83348 22932" },
   { name: "Aditya Sharma", phone: "+91 97170 08778" },
-  { name: "Anshu Kumar Pandey", phone: "+91 85820 72009" },
+  { name: "Anshu Kumar", phone: "+91 85820 72009" },
   { name: "Anuj Sharma", phone: "+91 93123 70886" },
   { name: "Pinak Dhar", phone: "+91 62918 16126" },
   { name: "Ayush Kumar", phone: "+91 91421 69264" },
