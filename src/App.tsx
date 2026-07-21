@@ -186,7 +186,7 @@ function NssSeal({
       <span className="nss-seal__skeleton" aria-hidden="true" />
       {!failed && (
         <img
-          src="./public/logos/NSS-Logo.png"
+          src="./logos/NSS-Logo.png"
           alt={decorative ? "" : alt}
           onLoad={() => setIsLoading(false)}
           onError={() => {
