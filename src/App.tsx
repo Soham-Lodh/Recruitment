@@ -1,268 +1,28 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import type {
   CSSProperties,
   KeyboardEvent,
   PointerEvent as ReactPointerEvent,
 } from "react";
+import {
+  RiInstagramFill,
+  RiLinkedinBoxFill,
+  RiYoutubeFill,
+} from "./components/SocialIcons";
+
+import {
+  DOMAINS as domains,
+  EVENT_DIARY as eventDiary,
+  CONTACT_DIRECTORY,
+  projectRailItems as projects,
+} from "./data";
+import type { RailItem } from "./data";
 
 type Theme = "light" | "dark";
 type AssetKind = "domain" | "project" | "event" | "logo";
 
-type RailItem = {
-  id: string;
-  title: string;
-  eyebrow: string;
-  description: string;
-  image: string;
-  accent: string;
-};
-
-type EventItem = {
-  id: string;
-  title: string;
-  date: string;
-  location: string;
-  description: string;
-  image: string;
-  accent: string;
-};
-
 const applicationUrl = "form.html";
-
-const domains: RailItem[] = [
-  {
-    id: "video-editing",
-    title: "Video Editing",
-    eyebrow: "Story in motion",
-    description:
-      "Shape raw footage into compelling stories through precise cuts, transitions, effects, and a strong visual eye.",
-    image: "/videoeditor.jpg",
-    accent: "#f2633e",
-  },
-  {
-    id: "graphic-designing",
-    title: "Graphic Designing",
-    eyebrow: "Ideas, made visible",
-    description:
-      "Bring ideas to life through visual storytelling, design principles, and compelling work for digital media.",
-    image: "/gd2.jpg",
-    accent: "#e0b833",
-  },
-  {
-    id: "photography",
-    title: "Photography",
-    eyebrow: "Moments, held close",
-    description:
-      "Capture events, emotions, and perspectives with technical skill, creativity, and visual impact.",
-    image: "/camera.jpg",
-    accent: "#4a8b78",
-  },
-  {
-    id: "content-writing",
-    title: "Content Writing",
-    eyebrow: "Words with purpose",
-    description:
-      "Craft engaging, impactful writing that combines creativity, clarity, and strategy for diverse audiences.",
-    image: "/contentwriter.jpg",
-    accent: "#4277b9",
-  },
-  {
-    id: "general-volunteering",
-    title: "General Volunteering",
-    eyebrow: "Service in action",
-    description:
-      "Build social responsibility and leadership through hands-on service, guided by the motto Not Me But You.",
-    image: "/gv.jpg",
-    accent: "#8c5bb0",
-  },
-];
-
-const projects: RailItem[] = [
-  {
-    id: "bandhutva",
-    title: "Bandhutva",
-    eyebrow: "NSS SCE project",
-    description:
-      "One of the many distinctive projects that make up the NSS SCE KIIT story.",
-    image: "/bandhutva.png",
-    accent: "#c91a35",
-  },
-  {
-    id: "dhara",
-    title: "Dhara",
-    eyebrow: "NSS SCE project",
-    description:
-      "A distinctive part of the shared work, energy, and service within NSS SCE KIIT.",
-    image: "/dhara.png",
-    accent: "#078a3d",
-  },
-  {
-    id: "nidaan",
-    title: "Nidaan",
-    eyebrow: "NSS SCE project",
-    description:
-      "A chapter in the unit’s work that is made stronger by every volunteer who joins it.",
-    image: "/nidaan.png",
-    accent: "#cd8b29",
-  },
-  {
-    id: "riddhi",
-    title: "Riddhi",
-    eyebrow: "NSS SCE project",
-    description:
-      "A piece of the larger picture of community, initiative, and shared contribution.",
-    image: "/riddhi.png",
-    accent: "#f47721",
-  },
-  {
-    id: "sanyukt",
-    title: "Sanyukt",
-    eyebrow: "NSS SCE project",
-    description:
-      "A project identity within the collective energy that keeps the unit moving forward.",
-    image: "/sanyukt.png",
-    accent: "#f6a31a",
-  },
-  {
-    id: "sparsh",
-    title: "Sparsh",
-    eyebrow: "NSS SCE project",
-    description:
-      "A distinct project within the whole, made meaningful by people who choose to contribute.",
-    image: "/sparsh.png",
-    accent: "#d7a01d",
-  },
-  {
-    id: "swet",
-    title: "Swet",
-    eyebrow: "NSS SCE project",
-    description:
-      "A project piece in the larger NSS SCE KIIT picture of hands-on service.",
-    image: "/swet.png",
-    accent: "#0b6098",
-  },
-  {
-    id: "udaan",
-    title: "Udaan",
-    eyebrow: "NSS SCE project",
-    description:
-      "A distinct part of the work that comes alive when individual strengths meet a shared purpose.",
-    image: "/udaan.png",
-    accent: "#dd0c86",
-  },
-  {
-    id: "urja",
-    title: "Urja",
-    eyebrow: "NSS SCE project",
-    description:
-      "An identity within the NSS SCE KIIT project ecosystem, powered by collective effort.",
-    image: "/urja.png",
-    accent: "#079fce",
-  },
-];
-
-const eventDiary: EventItem[] = [
-  {
-    id: "health-camp",
-    title: "Health Camp",
-    date: "March 2025",
-    location: "Damana High School",
-    description:
-      "NSS SCE organized an ENT health camp with free check-ups, consultations, and guidance to encourage healthy practices and early detection.",
-    image: "/health camp.jpg",
-    accent: "#e46e51",
-  },
-  {
-    id: "orphanage-visit",
-    title: "Orphanage Visit",
-    date: "March 2025",
-    location: "Madhurmaye Orphanage",
-    description:
-      "Volunteers shared meaningful moments with children through interactive sessions on good habits, hygiene practices, and moral values.",
-    image: "/orphange.jpg",
-    accent: "#6c79bc",
-  },
-  {
-    id: "plantation-drive",
-    title: "Plantation Drive",
-    date: "July 2025",
-    location: "Prasanti Vihar",
-    description:
-      "Saplings were planted in public spaces and educational institutions to encourage greener practices and environmental responsibility.",
-    image: "/plantation.jpeg",
-    accent: "#47886d",
-  },
-  {
-    id: "cleanliness-drive",
-    title: "Cleanliness Drive",
-    date: "September 2024",
-    location: "KIIT Road",
-    description:
-      "Volunteers cleaned public areas, spoke about waste management, and encouraged the community to maintain a clean, healthy environment.",
-    image: "/cleandrive.jpg",
-    accent: "#d59345",
-  },
-  {
-    id: "road-safety",
-    title: "Road Safety Rally",
-    date: "January 2025",
-    location: "KIIT Road",
-    description:
-      "A public rally used posters, slogans, and conversations to reinforce responsible driving, helmets, seatbelts, and traffic safety.",
-    image: "/roadsafety.JPG",
-    accent: "#c85f50",
-  },
-  {
-    id: "animal-feeding",
-    title: "Animal Feeding",
-    date: "November 2024",
-    location: "KIIT Road",
-    description:
-      "The unit provided food and clean water to stray animals, promoting empathy, care, and humane treatment for voiceless beings.",
-    image: "/animalfeeding.jpg",
-    accent: "#8f6a4a",
-  },
-  {
-    id: "special-camp",
-    title: "Special Camp",
-    date: "March 2024",
-    location: "Village",
-    description:
-      "A community-focused camp brought together cleanliness drives, awareness rallies, health check-ups, and educational sessions.",
-    image: "/specialcamp.jpg",
-    accent: "#9164ab",
-  },
-  {
-    id: "daan",
-    title: "DAAN",
-    date: "November 2024",
-    location: "Slum",
-    description:
-      "Essentials including clothes, food items, and stationery were collected and distributed to support underprivileged communities.",
-    image: "/daan.jpg",
-    accent: "#bf7852",
-  },
-  {
-    id: "slum-visit",
-    title: "Slum Visit",
-    date: "March 2025",
-    location: "Local Slum",
-    description:
-      "Volunteers held awareness sessions around hygiene, education, and health while listening to residents and distributing essentials.",
-    image: "/slumvisit.jpg",
-    accent: "#497b92",
-  },
-  {
-    id: "school-visit",
-    title: "School Visit",
-    date: "December 2025",
-    location: "Damana High School",
-    description:
-      "Interactive learning sessions covered hygiene, discipline, and moral values to inspire young minds and support holistic development.",
-    image: "/schoolvisit.jpg",
-    accent: "#d1a24e",
-  },
-];
 
 function joinClassNames(
   ...classNames: Array<string | false | null | undefined>
@@ -426,7 +186,7 @@ function NssSeal({
       <span className="nss-seal__skeleton" aria-hidden="true" />
       {!failed && (
         <img
-          src="/NSS Logo.png"
+          src="./public/logos/NSS-Logo.png"
           alt={decorative ? "" : alt}
           onLoad={() => setIsLoading(false)}
           onError={() => {
@@ -862,6 +622,11 @@ function PremiumRail({
             <div className="premium-card__body">
               <p>{item.eyebrow}</p>
               <h3>{item.title}</h3>
+              {item.sdgLabel && (
+                <span className="premium-card__sdg-tag">
+                  {item.sdgLabel}
+                </span>
+              )}
               <span className="premium-card__line" />
               <p className="premium-card__description">{item.description}</p>
             </div>
@@ -918,7 +683,55 @@ function App() {
       ? "dark"
       : "light";
   });
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    if (!(document as any).startViewTransition) {
+      setTheme(newTheme);
+      return;
+    }
+
+    document.documentElement.classList.add("theme-transition");
+    const transition = (document as any).startViewTransition(() => {
+      flushSync(() => {
+        setTheme(newTheme);
+      });
+    });
+
+    transition.finished.finally(() => {
+      document.documentElement.classList.remove("theme-transition");
+    });
+  };
+
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>(() => {
+    if (typeof window !== "undefined" && window.location.hash) {
+      return window.location.hash.replace("#", "");
+    }
+    return "top";
+  });
+  const isManualScrollRef = useRef(false);
+  const manualScrollTimeoutRef = useRef<number | null>(null);
+  const activeSectionRef = useRef<string>(activeSection);
+
+  function handleNavClick(id: string) {
+    isManualScrollRef.current = true;
+    activeSectionRef.current = id;
+    setActiveSection(id);
+
+    const newHash = id === "top" ? "" : `#${id}`;
+    const targetUrl =
+      newHash || window.location.pathname + window.location.search;
+    window.history.pushState(null, "", targetUrl);
+
+    if (manualScrollTimeoutRef.current !== null) {
+      window.clearTimeout(manualScrollTimeoutRef.current);
+    }
+    manualScrollTimeoutRef.current = window.setTimeout(() => {
+      isManualScrollRef.current = false;
+    }, 900);
+  }
+
   const [eventIndex, setEventIndex] = useState(0);
   const [eventCycle, setEventCycle] = useState(0);
   const [diaryTimerCycle, setDiaryTimerCycle] = useState(0);
@@ -973,6 +786,79 @@ function App() {
     window.localStorage.setItem("nss-sce-theme", theme);
     document.documentElement.dataset.theme = theme;
   }, [theme]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    if (window.location.hash) {
+      const hashId = window.location.hash.replace("#", "");
+      const targetEl = document.getElementById(hashId);
+      if (targetEl) {
+        window.setTimeout(() => {
+          targetEl.scrollIntoView({ behavior: "smooth" });
+          setActiveSection(hashId);
+          activeSectionRef.current = hashId;
+        }, 120);
+      }
+    }
+
+    const sectionIds = [
+      "top",
+      "story",
+      "domains",
+      "projects",
+      "diary",
+      "connect",
+    ];
+
+    const handleScroll = () => {
+      if (isManualScrollRef.current) return;
+
+      const offsetMargin = 180;
+      const scrollY = window.scrollY;
+      const windowBottom = scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      let currentSection = "top";
+
+      if (documentHeight - windowBottom < 80) {
+        currentSection = "connect";
+      } else {
+        for (let i = sectionIds.length - 1; i >= 0; i--) {
+          const id = sectionIds[i];
+          const el = document.getElementById(id);
+          if (el) {
+            const top = el.offsetTop - offsetMargin;
+            if (scrollY >= top) {
+              currentSection = id;
+              break;
+            }
+          }
+        }
+      }
+
+      if (currentSection !== activeSectionRef.current) {
+        activeSectionRef.current = currentSection;
+        setActiveSection(currentSection);
+
+        const newHash = currentSection === "top" ? "" : `#${currentSection}`;
+        const currentHash = window.location.hash;
+
+        if (currentHash !== newHash) {
+          const targetUrl =
+            newHash || window.location.pathname + window.location.search;
+          window.history.replaceState(null, "", targetUrl);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [loading]);
 
   const advanceDiary = useEffectEvent(() => {
     if (Date.now() < diaryPauseUntilRef.current) {
@@ -1091,12 +977,17 @@ function App() {
         <div className="grain" aria-hidden="true" />
 
         <header className="site-header">
-          <a className="brand" href="#top" aria-label="NSS SCE KIIT home">
+          <a
+            className="brand"
+            href="#top"
+            aria-label="NSS SCE KIIT home"
+            onClick={() => handleNavClick("top")}
+          >
             <NssSeal className="brand__mark" alt="NSS SCE KIIT logo" />
             <span className="brand__divider" aria-hidden="true" />
             <img
               className="brand__kiit"
-              src="/KIIT-Logo.png"
+              src="./public/logos/KIIT-Logo.png"
               alt="Kalinga Institute of Industrial Technology"
             />
             <span className="brand__divider" aria-hidden="true" />
@@ -1107,17 +998,53 @@ function App() {
           </a>
 
           <nav className="desktop-nav" aria-label="Primary navigation">
-            <a href="#story">The story</a>
-            <a href="#domains">Domains</a>
-            <a href="#projects">Projects</a>
-            <a href="#diary">Impact</a>
+            <a
+              href="#story"
+              className={activeSection === "story" ? "nav-link--active" : ""}
+              aria-current={activeSection === "story" ? "page" : undefined}
+              onClick={() => handleNavClick("story")}
+            >
+              The Story
+            </a>
+            <a
+              href="#domains"
+              className={activeSection === "domains" ? "nav-link--active" : ""}
+              aria-current={activeSection === "domains" ? "page" : undefined}
+              onClick={() => handleNavClick("domains")}
+            >
+              Domains
+            </a>
+            <a
+              href="#projects"
+              className={activeSection === "projects" ? "nav-link--active" : ""}
+              aria-current={activeSection === "projects" ? "page" : undefined}
+              onClick={() => handleNavClick("projects")}
+            >
+              Projects
+            </a>
+            <a
+              href="#diary"
+              className={activeSection === "diary" ? "nav-link--active" : ""}
+              aria-current={activeSection === "diary" ? "page" : undefined}
+              onClick={() => handleNavClick("diary")}
+            >
+              Impact
+            </a>
+            <a
+              href="#connect"
+              className={activeSection === "connect" ? "nav-link--active" : ""}
+              aria-current={activeSection === "connect" ? "page" : undefined}
+              onClick={() => handleNavClick("connect")}
+            >
+              Connect
+            </a>
           </nav>
 
           <div className="header-actions">
             <button
               className="theme-switch"
               type="button"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={toggleTheme}
               aria-label={
                 "Switch to " + (theme === "dark" ? "light" : "dark") + " theme"
               }
@@ -1166,19 +1093,59 @@ function App() {
           )}
         >
           <nav aria-label="Mobile navigation">
-            <a href="#story" onClick={closeMenu}>
+            <a
+              href="#story"
+              className={activeSection === "story" ? "nav-link--active" : ""}
+              aria-current={activeSection === "story" ? "page" : undefined}
+              onClick={() => {
+                closeMenu();
+                handleNavClick("story");
+              }}
+            >
               The story
             </a>
-            <a href="#domains" onClick={closeMenu}>
+            <a
+              href="#domains"
+              className={activeSection === "domains" ? "nav-link--active" : ""}
+              aria-current={activeSection === "domains" ? "page" : undefined}
+              onClick={() => {
+                closeMenu();
+                handleNavClick("domains");
+              }}
+            >
               Domains
             </a>
-            <a href="#projects" onClick={closeMenu}>
+            <a
+              href="#projects"
+              className={activeSection === "projects" ? "nav-link--active" : ""}
+              aria-current={activeSection === "projects" ? "page" : undefined}
+              onClick={() => {
+                closeMenu();
+                handleNavClick("projects");
+              }}
+            >
               Projects
             </a>
-            <a href="#diary" onClick={closeMenu}>
+            <a
+              href="#diary"
+              className={activeSection === "diary" ? "nav-link--active" : ""}
+              aria-current={activeSection === "diary" ? "page" : undefined}
+              onClick={() => {
+                closeMenu();
+                handleNavClick("diary");
+              }}
+            >
               Impact diary
             </a>
-            <a href="#connect" onClick={closeMenu}>
+            <a
+              href="#connect"
+              className={activeSection === "connect" ? "nav-link--active" : ""}
+              aria-current={activeSection === "connect" ? "page" : undefined}
+              onClick={() => {
+                closeMenu();
+                handleNavClick("connect");
+              }}
+            >
               Connect
             </a>
             <a
@@ -1201,8 +1168,8 @@ function App() {
           <p>Every contribution matters.</p>
         </div>
 
-        <main id="top">
-          <section className="hero" aria-labelledby="hero-title">
+        <main>
+          <section className="hero" id="top" aria-labelledby="hero-title">
             <div className="hero__content">
               <div className="hero__intro">
                 <p className="eyebrow eyebrow--hero">
@@ -1231,7 +1198,11 @@ function App() {
                     Be the missing piece
                     <ArrowIcon />
                   </a>
-                  <a className="text-link" href="#story">
+                  <a
+                    className="text-link"
+                    href="#story"
+                    onClick={() => handleNavClick("story")}
+                  >
                     See why you matter
                     <span />
                   </a>
@@ -1275,7 +1246,7 @@ function App() {
             </div>
           </section>
 
-          <section className="content-section story-brief">
+          <section className="content-section story-brief" id="story">
             <div className="story-brief__intro">
               <p className="eyebrow">The applicant is the answer</p>
               <h2>
@@ -1321,7 +1292,11 @@ function App() {
                 The work is hands-on, people-first, and always bigger than a
                 single person.
               </p>
-              <a className="text-link" href="#diary">
+              <a
+                className="text-link"
+                href="#diary"
+                onClick={() => handleNavClick("diary")}
+              >
                 Explore the event diary
                 <span />
               </a>
@@ -1541,27 +1516,36 @@ function App() {
                   href="https://www.instagram.com/nss.sce.kiit/?hl=en"
                   target="_blank"
                   rel="noreferrer"
-                  className="connect-card__link"
+                  className="connect-card__link connect-card__link--instagram"
                 >
-                  Instagram
+                  <span className="connect-card__link-label">
+                    <RiInstagramFill className="social-icon social-icon--instagram" />
+                    <span>Instagram</span>
+                  </span>
                   <ArrowIcon />
                 </a>
                 <a
                   href="https://www.youtube.com/c/NSSSCE"
                   target="_blank"
                   rel="noreferrer"
-                  className="connect-card__link"
+                  className="connect-card__link connect-card__link--youtube"
                 >
-                  YouTube
+                  <span className="connect-card__link-label">
+                    <RiYoutubeFill className="social-icon social-icon--youtube" />
+                    <span>YouTube</span>
+                  </span>
                   <ArrowIcon />
                 </a>
                 <a
                   href="https://www.linkedin.com/company/nss-sce-kiit/"
                   target="_blank"
                   rel="noreferrer"
-                  className="connect-card__link"
+                  className="connect-card__link connect-card__link--linkedin"
                 >
-                  LinkedIn
+                  <span className="connect-card__link-label">
+                    <RiLinkedinBoxFill className="social-icon social-icon--linkedin" />
+                    <span>LinkedIn</span>
+                  </span>
                   <ArrowIcon />
                 </a>
               </article>
@@ -1579,35 +1563,16 @@ function App() {
               </div>
 
               <div className="contact-directory__grid">
-                <a href="tel:+918334822932" className="contact-person">
-                  <strong>Soham Lodh</strong>
-                  <span>+91 83348 22932</span>
-                </a>
-
-                <a href="tel:+919717008778" className="contact-person">
-                  <strong>Aditya Sharma</strong>
-                  <span>+91 97170 08778</span>
-                </a>
-
-                <a href="tel:+918582072009" className="contact-person">
-                  <strong>Anshu Kumar Pandey</strong>
-                  <span>+91 85820 72009</span>
-                </a>
-
-                <a href="tel:+919312370886" className="contact-person">
-                  <strong>Anuj Sharma</strong>
-                  <span>+91 93123 70886</span>
-                </a>
-
-                <a href="tel:+916291816126" className="contact-person">
-                  <strong>Pinak Dhar</strong>
-                  <span>+91 62918 16126</span>
-                </a>
-
-                <a href="tel:+919142169264" className="contact-person">
-                  <strong>Ayush Kumar</strong>
-                  <span>+91 91421 69264</span>
-                </a>
+                {CONTACT_DIRECTORY.map((person) => (
+                  <a
+                    key={person.name}
+                    href={`tel:${person.phone.replace(/\s+/g, "")}`}
+                    className="contact-person"
+                  >
+                    <strong>{person.name}</strong>
+                    <span>{person.phone}</span>
+                  </a>
+                ))}
               </div>
             </article>
           </section>
@@ -1616,7 +1581,7 @@ function App() {
         <footer className="site-footer">
           <p>© 2026 NSS SCE KIIT</p>
           <p>National Service Scheme / School of Computer Engineering</p>
-          <a href="#top">
+          <a href="#top" onClick={() => handleNavClick("top")}>
             Back to top <ArrowIcon />
           </a>
         </footer>
