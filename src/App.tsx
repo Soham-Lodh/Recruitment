@@ -987,7 +987,7 @@ function App() {
             <span className="brand__divider" aria-hidden="true" />
             <img
               className="brand__kiit"
-              src="./public/logos/KIIT-Logo.png"
+              src="./logos/KIIT-Logo.png"
               alt="Kalinga Institute of Industrial Technology"
             />
             <span className="brand__divider" aria-hidden="true" />
