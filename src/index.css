@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Oranienbaum&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Oranienbaum&family=Source+Sans+3:wght@400;500;600;700&display=swap");
 
 :root {
   color-scheme: light;
-  --font-display: 'Oranienbaum', Georgia, serif;
-  --font-body: 'Source Sans 3', 'Avenir Next', 'Trebuchet MS', sans-serif;
-  --font-ui: 'DM Mono', 'Courier New', monospace;
+  --font-display: "Oranienbaum", Georgia, serif;
+  --font-body: "Source Sans 3", "Avenir Next", "Trebuchet MS", sans-serif;
+  --font-ui: "DM Mono", "Courier New", monospace;
   font-family: var(--font-body);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -24,7 +24,7 @@ html {
   background: #f8f9fd;
 }
 
-html[data-theme='dark'] {
+html[data-theme="dark"] {
   scrollbar-color: #ff747a #111536;
   background: #090b25;
 }
@@ -44,11 +44,11 @@ html[data-theme='dark'] {
   background: linear-gradient(180deg, #2f3192, #ec1b24);
 }
 
-html[data-theme='dark'] *::-webkit-scrollbar-track {
+html[data-theme="dark"] *::-webkit-scrollbar-track {
   background: #111536;
 }
 
-html[data-theme='dark'] *::-webkit-scrollbar-thumb {
+html[data-theme="dark"] *::-webkit-scrollbar-thumb {
   border-color: #111536;
   background: linear-gradient(180deg, #aeb1ff, #ff747a);
 }
@@ -64,8 +64,8 @@ body {
   min-height: 100%;
 }
 
-html[data-theme='dark'] body,
-html[data-theme='dark'] #root {
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root {
   background: #090b25;
 }
 
@@ -115,13 +115,21 @@ a {
   min-height: 100svh;
   overflow: clip;
   background:
-    radial-gradient(circle at 90% 4%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 23rem),
-    radial-gradient(circle at 10% 34%, color-mix(in srgb, var(--nss-blue) 7%, transparent), transparent 29rem),
+    radial-gradient(
+      circle at 90% 4%,
+      color-mix(in srgb, var(--accent) 8%, transparent),
+      transparent 23rem
+    ),
+    radial-gradient(
+      circle at 10% 34%,
+      color-mix(in srgb, var(--nss-blue) 7%, transparent),
+      transparent 29rem
+    ),
     var(--bg);
   color: var(--ink);
 }
 
-.site-shell[data-theme='dark'] {
+.site-shell[data-theme="dark"] {
   --nss-blue: #aeb1ff;
   --nss-blue-deep: #7377d5;
   --nss-blue-mid: #7b7ed8;
@@ -144,15 +152,23 @@ a {
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
   --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.25);
   background:
-    radial-gradient(circle at 90% 4%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 23rem),
-    radial-gradient(circle at 10% 34%, color-mix(in srgb, var(--nss-blue) 9%, transparent), transparent 29rem),
+    radial-gradient(
+      circle at 90% 4%,
+      color-mix(in srgb, var(--accent) 11%, transparent),
+      transparent 23rem
+    ),
+    radial-gradient(
+      circle at 10% 34%,
+      color-mix(in srgb, var(--nss-blue) 9%, transparent),
+      transparent 29rem
+    ),
     var(--bg);
   color-scheme: dark;
 }
 
 .site-shell::before,
 .site-shell::after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: 0;
   border-radius: 999px;
@@ -197,11 +213,21 @@ a {
   transform: translateX(-50%);
   pointer-events: none;
   opacity: 0.14;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 76%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, black 12%, black 76%, transparent);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 76%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 76%,
+    transparent
+  );
 }
-
-
 
 .nss-seal {
   position: relative;
@@ -216,7 +242,12 @@ a {
   z-index: -1;
   inset: -18%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(237, 28, 36, 0.3), rgba(46, 49, 146, 0.16) 45%, transparent 72%);
+  background: radial-gradient(
+    circle,
+    rgba(237, 28, 36, 0.3),
+    rgba(46, 49, 146, 0.16) 45%,
+    transparent 72%
+  );
   filter: blur(8px);
 }
 
@@ -230,7 +261,9 @@ a {
   object-fit: contain;
   opacity: 0;
   transform: scale(0.92);
-  transition: opacity 420ms ease, transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 420ms ease,
+    transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nss-seal--loaded img {
@@ -246,18 +279,32 @@ a {
   border: 1px solid color-mix(in srgb, var(--nss-blue) 32%, #ffffff);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.82), transparent 23%),
-    conic-gradient(from 210deg, var(--nss-blue), color-mix(in srgb, var(--accent) 76%, var(--nss-blue)), #ffffff, var(--nss-blue));
-  box-shadow: inset 0 0 0 0.12rem color-mix(in srgb, var(--surface-solid) 48%, transparent);
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 255, 255, 0.82),
+      transparent 23%
+    ),
+    conic-gradient(
+      from 210deg,
+      var(--nss-blue),
+      color-mix(in srgb, var(--accent) 76%, var(--nss-blue)),
+      #ffffff,
+      var(--nss-blue)
+    );
+  box-shadow: inset 0 0 0 0.12rem
+    color-mix(in srgb, var(--surface-solid) 48%, transparent);
   opacity: 1;
   transform: scale(1);
-  transition: opacity 380ms ease, transform 520ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0s;
+  transition:
+    opacity 380ms ease,
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
 }
 
 .nss-seal__skeleton::before,
 .nss-seal__skeleton::after {
   position: absolute;
-  content: '';
+  content: "";
 }
 
 .nss-seal__skeleton::before {
@@ -273,7 +320,12 @@ a {
   left: -80%;
   width: 70%;
   height: 170%;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
   transform: rotate(14deg);
   animation: skeleton-sweep 1.85s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
@@ -297,8 +349,8 @@ a {
   border-radius: 50%;
   background: var(--surface-solid);
   color: var(--nss-blue);
-  content: 'NSS';
-  font-family: 'DM Mono', 'Courier New', monospace;
+  content: "NSS";
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.36em;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -328,10 +380,19 @@ a {
   position: absolute;
   inset: -18%;
   z-index: 1;
-  content: '';
+  content: "";
   background:
-    linear-gradient(128deg, rgba(255, 255, 255, 0.32), transparent 38%, rgba(8, 13, 54, 0.08)),
-    linear-gradient(145deg, color-mix(in srgb, var(--nss-blue) 46%, var(--surface-solid)), color-mix(in srgb, var(--nss-blue) 22%, var(--surface-solid)));
+    linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.32),
+      transparent 38%,
+      rgba(8, 13, 54, 0.08)
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--nss-blue) 46%, var(--surface-solid)),
+      color-mix(in srgb, var(--nss-blue) 22%, var(--surface-solid))
+    );
   -webkit-mask-image: var(--piece-mask);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
@@ -340,7 +401,9 @@ a {
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: 100% 100%;
-  filter: drop-shadow(0 4px 8px color-mix(in srgb, var(--nss-blue) 12%, transparent));
+  filter: drop-shadow(
+    0 4px 8px color-mix(in srgb, var(--nss-blue) 12%, transparent)
+  );
 }
 
 .puzzle-tile--gap {
@@ -372,11 +435,19 @@ a {
   min-height: 4.5rem;
   margin: 0.9rem auto 0;
   padding: 0.58rem 0.65rem 0.58rem 1rem;
-  border: 1px solid var(--line);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
   border-radius: 1.2rem;
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
-  box-shadow: 0 10px 32px rgba(30, 35, 31, 0.05);
-  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.06), inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  backdrop-filter: blur(24px) saturate(150%);
+  transition: background 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+}
+
+.site-shell[data-theme="dark"] .site-header {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(12, 15, 43, 0.68);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
 }
 
 .brand {
@@ -402,7 +473,7 @@ a {
 }
 
 .brand__copy strong {
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.78rem;
   letter-spacing: 0.04em;
 }
@@ -453,7 +524,7 @@ a {
   left: 0;
   width: 0;
   height: 1px;
-  content: '';
+  content: "";
   background: var(--accent);
   transition: width 180ms ease;
 }
@@ -494,7 +565,10 @@ a {
   border: 1px solid var(--line);
   color: var(--ink);
   cursor: pointer;
-  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
 }
 
 .theme-switch:hover,
@@ -511,7 +585,7 @@ a {
   padding: 0.35rem 0.68rem;
   border-radius: 0.75rem;
   background: transparent;
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.64rem;
   letter-spacing: 0.02em;
 }
@@ -556,7 +630,10 @@ a {
   font-weight: 800;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 300ms ease, background 300ms ease;
+  transition:
+    transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 300ms ease,
+    background 300ms ease;
   overflow: hidden;
 }
 
@@ -596,13 +673,18 @@ a {
 }
 
 .button--primary::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
   transition: left 600ms ease;
 }
 
@@ -630,7 +712,9 @@ a {
   opacity: 0;
   pointer-events: none;
   transform: translateY(-0.6rem) scale(0.98);
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .mobile-menu--open {
@@ -647,7 +731,9 @@ a {
   padding: 0.9rem 0.8rem;
   border-bottom: 1px solid var(--line);
   font-weight: 700;
-  transition: background 180ms ease, color 180ms ease;
+  transition:
+    background 180ms ease,
+    color 180ms ease;
 }
 
 .mobile-menu nav a.nav-link--active,
@@ -665,7 +751,7 @@ a {
 .mobile-menu p {
   margin: 0.9rem 0.8rem 0.2rem;
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.65rem;
 }
 
@@ -675,8 +761,8 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: max(45rem, 100svh);
-  padding: 8.2rem clamp(1rem, 5vw, 4rem) 2.2rem;
+  min-height: max(38rem, 100svh);
+  padding: 6.0rem clamp(1rem, 5vw, 4rem) 2.2rem;
 }
 
 .hero__content {
@@ -776,8 +862,12 @@ a {
   inset: 5% 7%;
   z-index: -1;
   border-radius: 50%;
-  content: '';
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 20%, transparent), transparent 67%);
+  content: "";
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 20%, transparent),
+    transparent 67%
+  );
   filter: blur(12px);
 }
 
@@ -809,11 +899,20 @@ a {
   --hero-entry-x: 0rem;
   --hero-entry-y: 3.2rem;
   background:
-    linear-gradient(128deg, rgba(255, 255, 255, 0.5), transparent 38%, rgba(20, 34, 98, 0.07)),
-    linear-gradient(145deg, color-mix(in srgb, var(--surface-solid) 88%, var(--tile-color)), color-mix(in srgb, var(--surface-solid) 80%, var(--bg-deep))),
-    var(--surface-solid);
+    linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.15),
+      transparent 38%,
+      rgba(0, 0, 0, 0.4)
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--tile-color) 50%, #000),
+      color-mix(in srgb, var(--tile-color) 30%, #000)
+    );
   opacity: 0;
-  transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0) scale(0.58);
+  transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0)
+    scale(0.58);
   animation-duration: var(--hero-loop-duration);
   animation-timing-function: cubic-bezier(0.16, 0.84, 0.3, 1);
   animation-delay: var(--hero-start-delay);
@@ -858,20 +957,45 @@ a {
   --tile-color: var(--nss-red-deep);
 }
 
-html:not([data-theme='dark']) .hero-puzzle__piece {
+html:not([data-theme="dark"]) .hero-puzzle__piece {
   background:
-    linear-gradient(128deg, rgba(255, 255, 255, 0.6), transparent 38%, rgba(20, 34, 98, 0.15)),
-    linear-gradient(145deg, color-mix(in srgb, var(--tile-color) 90%, white), var(--tile-color));
+    linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.6),
+      transparent 38%,
+      rgba(20, 34, 98, 0.15)
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--tile-color) 90%, white),
+      var(--tile-color)
+    );
 }
 
-html:not([data-theme='dark']) .hero-puzzle__piece--a { --tile-color: var(--nss-blue); }
-html:not([data-theme='dark']) .hero-puzzle__piece--b { --tile-color: var(--nss-blue-deep); }
-html:not([data-theme='dark']) .hero-puzzle__piece--c { --tile-color: var(--nss-red); }
-html:not([data-theme='dark']) .hero-puzzle__piece--d { --tile-color: var(--nss-blue); }
-html:not([data-theme='dark']) .hero-puzzle__piece--e { --tile-color: var(--nss-red-deep); }
-html:not([data-theme='dark']) .hero-puzzle__piece--f { --tile-color: var(--nss-red); }
-html:not([data-theme='dark']) .hero-puzzle__piece--g { --tile-color: var(--nss-blue-mid); }
-html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-blue-deep); }
+html:not([data-theme="dark"]) .hero-puzzle__piece--a {
+  --tile-color: var(--nss-blue);
+}
+html:not([data-theme="dark"]) .hero-puzzle__piece--b {
+  --tile-color: var(--nss-blue-deep);
+}
+html:not([data-theme="dark"]) .hero-puzzle__piece--c {
+  --tile-color: var(--nss-red);
+}
+html:not([data-theme="dark"]) .hero-puzzle__piece--d {
+  --tile-color: var(--nss-blue);
+}
+html:not([data-theme="dark"]) .hero-puzzle__piece--e {
+  --tile-color: var(--nss-red-deep);
+}
+html:not([data-theme="dark"]) .hero-puzzle__piece--f {
+  --tile-color: var(--nss-red);
+}
+html:not([data-theme="dark"]) .hero-puzzle__piece--g {
+  --tile-color: var(--nss-blue-mid);
+}
+html:not([data-theme="dark"]) .hero-puzzle__piece--h {
+  --tile-color: var(--nss-blue-deep);
+}
 
 .hero-puzzle__piece--a {
   top: -4%;
@@ -946,11 +1070,24 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   align-content: center;
   gap: 0.28rem;
   background:
-    linear-gradient(128deg, rgba(255, 255, 255, 0.5), transparent 38%, rgba(9, 14, 58, 0.16)),
-    linear-gradient(140deg, color-mix(in srgb, var(--accent) 72%, #ffffff), var(--accent) 54%, var(--nss-blue));
+    linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.5),
+      transparent 38%,
+      rgba(9, 14, 58, 0.16)
+    ),
+    linear-gradient(
+      140deg,
+      color-mix(in srgb, var(--accent) 72%, #ffffff),
+      var(--accent) 54%,
+      var(--nss-blue)
+    );
   color: #fff;
-  filter: drop-shadow(0 0 15px color-mix(in srgb, var(--accent) 48%, transparent));
-  animation: missing-piece var(--hero-loop-duration) cubic-bezier(0.16, 0.84, 0.3, 1) var(--hero-start-delay) infinite both;
+  filter: drop-shadow(
+    0 0 15px color-mix(in srgb, var(--accent) 48%, transparent)
+  );
+  animation: missing-piece var(--hero-loop-duration)
+    cubic-bezier(0.16, 0.84, 0.3, 1) var(--hero-start-delay) infinite both;
   will-change: opacity, transform;
 }
 
@@ -958,16 +1095,22 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   position: absolute;
   z-index: 0;
   inset: -55% 34%;
-  content: '';
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.72),
+    transparent
+  );
   transform: rotate(22deg) translateX(-180%);
-  animation: missing-reflection var(--hero-loop-duration) ease-in-out var(--hero-start-delay) infinite both;
+  animation: missing-reflection var(--hero-loop-duration) ease-in-out
+    var(--hero-start-delay) infinite both;
 }
 
 .hero-puzzle__missing span {
   position: relative;
   z-index: 1;
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: clamp(0.42rem, 0.83vw, 0.66rem);
   letter-spacing: 0.08em;
 }
@@ -975,7 +1118,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 .hero-puzzle__missing strong {
   position: relative;
   z-index: 1;
-  font-family: 'Oranienbaum', Georgia, serif;
+  font-family: "Oranienbaum", Georgia, serif;
   font-size: clamp(2rem, 4.4vw, 3.8rem);
   font-weight: 400;
   letter-spacing: -0.06em;
@@ -986,7 +1129,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   z-index: 3;
   display: block;
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.6rem;
   letter-spacing: 0.1em;
   opacity: 0.76;
@@ -1024,7 +1167,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .hero__stamp span {
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.58rem;
   text-transform: uppercase;
 }
@@ -1045,7 +1188,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   margin: auto auto 0;
   padding-top: 2rem;
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.61rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -1074,7 +1217,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   z-index: 1;
   width: min(100%, 1300px);
   margin: 0 auto;
-  padding: clamp(5.5rem, 11vw, 9rem) clamp(1rem, 5vw, 4rem);
+  padding: clamp(4.7rem, 9.35vw, 7.6rem) clamp(1rem, 5vw, 4rem);
 }
 
 .section-copy h2,
@@ -1111,7 +1254,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 }
 
 .story-brief {
-  margin-top:10rem;
+  margin-top: 8rem;
   padding-top: 0;
 }
 
@@ -1159,12 +1302,12 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   aspect-ratio: 1;
   border: 1px solid var(--line);
   border-radius: 50%;
-  content: '';
+  content: "";
 }
 
 .story-brief__card > span {
   color: var(--accent);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.61rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1192,7 +1335,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 .story-brief__card--accent {
   border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
   background:
-    radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--accent) 27%, transparent), transparent 34%),
+    radial-gradient(
+      circle at 90% 10%,
+      color-mix(in srgb, var(--accent) 27%, transparent),
+      transparent 34%
+    ),
     color-mix(in srgb, var(--accent) 9%, var(--surface-solid));
 }
 
@@ -1227,7 +1374,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   justify-content: space-between;
   padding: 0.85rem 1rem;
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.61rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -1260,8 +1407,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--accent) 23%, var(--bg-deep)), var(--ink));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 23%, var(--bg-deep)),
+    var(--ink)
+  );
 }
 
 .video-card__frame iframe {
@@ -1286,21 +1436,39 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(circle at 78% 18%, color-mix(in srgb, var(--accent) 36%, transparent), transparent 28%),
-    linear-gradient(132deg, color-mix(in srgb, var(--nss-blue) 44%, var(--bg-deep)), color-mix(in srgb, var(--ink) 88%, var(--nss-blue)));
+    radial-gradient(
+      circle at 78% 18%,
+      color-mix(in srgb, var(--accent) 36%, transparent),
+      transparent 28%
+    ),
+    linear-gradient(
+      132deg,
+      color-mix(in srgb, var(--nss-blue) 44%, var(--bg-deep)),
+      color-mix(in srgb, var(--ink) 88%, var(--nss-blue))
+    );
   opacity: 1;
   transform: scale(1);
-  transition: opacity 560ms ease, transform 720ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0s;
+  transition:
+    opacity 560ms ease,
+    transform 720ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
 }
 
 .video-card__skeleton::before {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(color-mix(in srgb, #ffffff 11%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, #ffffff 11%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      color-mix(in srgb, #ffffff 11%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, #ffffff 11%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 2.3rem 2.3rem;
-  content: '';
+  content: "";
   opacity: 0.48;
   transform: perspective(32rem) rotateX(55deg) scale(1.55) translateY(17%);
   transform-origin: bottom;
@@ -1344,7 +1512,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   bottom: 9%;
   left: 7%;
   height: 0.18rem;
-  background: linear-gradient(90deg, var(--accent) 0 27%, color-mix(in srgb, #ffffff 18%, transparent) 27%);
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0 27%,
+    color-mix(in srgb, #ffffff 18%, transparent) 27%
+  );
 }
 
 .video-card__skeleton-sheen {
@@ -1355,7 +1527,12 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   display: block;
   width: 45%;
   height: 190%;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
   transform: rotate(14deg);
   animation: skeleton-sweep 2.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
@@ -1403,7 +1580,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .rail-toolbar__hint {
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.61rem;
   letter-spacing: 0.04em;
 }
@@ -1473,7 +1650,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   scroll-snap-align: center;
   transform: scale(0.93) perspective(1000px) rotateY(3deg);
   transform-origin: center;
-  transition: transform 430ms cubic-bezier(0.16, 1, 0.3, 1), opacity 360ms ease, box-shadow 360ms ease, filter 360ms ease;
+  transition:
+    transform 430ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 360ms ease,
+    box-shadow 360ms ease,
+    filter 360ms ease;
   will-change: transform;
 }
 
@@ -1488,7 +1669,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   transform: scale(1) perspective(1000px) rotateY(0);
 }
 
-.site-shell[data-theme='dark'] .premium-card--active {
+.site-shell[data-theme="dark"] .premium-card--active {
   box-shadow: 0 30px 64px rgba(0, 0, 0, 0.39);
 }
 
@@ -1497,7 +1678,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   isolation: isolate;
   overflow: hidden;
   min-height: 100%;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--nss-blue) 86%, var(--card-accent)), color-mix(in srgb, var(--nss-blue-deep) 82%, var(--card-accent)));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--nss-blue) 86%, var(--card-accent)),
+    color-mix(in srgb, var(--nss-blue-deep) 82%, var(--card-accent))
+  );
 }
 
 .premium-card__visual::before,
@@ -1505,7 +1690,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   position: absolute;
   z-index: 0;
   border: 1px solid rgba(255, 255, 255, 0.44);
-  content: '';
+  content: "";
   pointer-events: none;
   transition: opacity 280ms ease;
 }
@@ -1531,7 +1716,15 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   position: absolute;
   z-index: 2;
   inset: 0;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--card-accent, var(--nss-blue)) 14%, var(--surface-solid)), var(--surface-solid));
+  background: linear-gradient(
+    145deg,
+    color-mix(
+      in srgb,
+      var(--card-accent, var(--nss-blue)) 14%,
+      var(--surface-solid)
+    ),
+    var(--surface-solid)
+  );
 }
 
 .premium-card__visual:has(.asset-frame--loaded)::before,
@@ -1555,7 +1748,9 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   object-fit: cover;
   opacity: 0;
   transform: scale(1.035);
-  transition: opacity 620ms ease, transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 620ms ease,
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .asset-frame--loaded img {
@@ -1569,20 +1764,34 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  background: linear-gradient(142deg, color-mix(in srgb, var(--nss-blue) 16%, var(--surface-solid)), color-mix(in srgb, var(--nss-blue-soft) 44%, var(--surface-solid)));
+  background: linear-gradient(
+    142deg,
+    color-mix(in srgb, var(--nss-blue) 16%, var(--surface-solid)),
+    color-mix(in srgb, var(--nss-blue-soft) 44%, var(--surface-solid))
+  );
   opacity: 1;
   transform: scale(1);
-  transition: opacity 620ms ease, transform 820ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0s;
+  transition:
+    opacity 620ms ease,
+    transform 820ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
 }
 
 .asset-skeleton::before {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--ink) 8%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--ink) 8%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      color-mix(in srgb, var(--ink) 8%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--ink) 8%, transparent) 1px,
+      transparent 1px
+    );
   background-size: clamp(1.5rem, 7vw, 3.25rem) clamp(1.5rem, 7vw, 3.25rem);
-  content: '';
+  content: "";
   opacity: 0.4;
 }
 
@@ -1592,7 +1801,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   display: block;
   width: 48%;
   aspect-ratio: 1;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--nss-blue) 34%, #ffffff), color-mix(in srgb, var(--nss-blue) 55%, var(--surface-solid)));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--nss-blue) 34%, #ffffff),
+    color-mix(in srgb, var(--nss-blue) 55%, var(--surface-solid))
+  );
   filter: none;
   opacity: 0.38;
   -webkit-mask-image: var(--piece-mask);
@@ -1623,7 +1836,12 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   display: block;
   width: 34%;
   height: 195%;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.36), transparent);
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.36),
+    transparent
+  );
   transform: rotate(15deg);
   animation: skeleton-sweep 4.4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
@@ -1637,14 +1855,21 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 }
 
 .asset-frame--project {
-  background:
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.68) 58%, color-mix(in srgb, var(--card-accent, var(--accent)) 16%, #ffffff));
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.98),
+    rgba(255, 255, 255, 0.68) 58%,
+    color-mix(in srgb, var(--card-accent, var(--accent)) 16%, #ffffff)
+  );
 }
 
 .asset-frame--project img {
   object-fit: contain;
   padding: clamp(0.9rem, 2.8vw, 2.7rem);
-  filter: drop-shadow(0 14px 18px color-mix(in srgb, var(--card-accent, var(--accent)) 20%, transparent));
+  filter: drop-shadow(
+    0 14px 18px
+      color-mix(in srgb, var(--card-accent, var(--accent)) 20%, transparent)
+  );
 }
 
 .asset-frame--logo img {
@@ -1661,7 +1886,19 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   overflow: hidden;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 42%),
-    linear-gradient(145deg, color-mix(in srgb, var(--card-accent, var(--accent)) 72%, var(--nss-blue-deep)), color-mix(in srgb, var(--card-accent, var(--nss-blue)) 15%, var(--surface-solid)));
+    linear-gradient(
+      145deg,
+      color-mix(
+        in srgb,
+        var(--card-accent, var(--accent)) 72%,
+        var(--nss-blue-deep)
+      ),
+      color-mix(
+        in srgb,
+        var(--card-accent, var(--nss-blue)) 15%,
+        var(--surface-solid)
+      )
+    );
   opacity: 0;
   transition: opacity 380ms ease;
 }
@@ -1675,7 +1912,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   position: absolute;
   border: 1px solid rgba(255, 255, 255, 0.33);
   border-radius: 50%;
-  content: '';
+  content: "";
 }
 
 .asset-fallback::before {
@@ -1717,20 +1954,54 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .asset-frame--project .asset-fallback {
   background:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.33), transparent 28%),
-    linear-gradient(145deg, color-mix(in srgb, var(--card-accent, var(--accent)) 82%, var(--nss-blue-deep)), color-mix(in srgb, var(--card-accent, var(--nss-blue)) 18%, var(--nss-blue-deep)));
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.33),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(
+        in srgb,
+        var(--card-accent, var(--accent)) 82%,
+        var(--nss-blue-deep)
+      ),
+      color-mix(
+        in srgb,
+        var(--card-accent, var(--nss-blue)) 18%,
+        var(--nss-blue-deep)
+      )
+    );
 }
 
 .asset-frame--event .asset-fallback {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 45%),
-    linear-gradient(145deg, var(--event-accent, var(--accent)), color-mix(in srgb, var(--event-accent, var(--accent)) 20%, var(--nss-blue-deep)));
+    linear-gradient(
+      145deg,
+      var(--event-accent, var(--accent)),
+      color-mix(
+        in srgb,
+        var(--event-accent, var(--accent)) 20%,
+        var(--nss-blue-deep)
+      )
+    );
 }
 
 .asset-frame--logo .asset-fallback {
   background:
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.88) 0 17%, transparent 18%),
-    conic-gradient(from 10deg, var(--nss-blue), var(--nss-red), #ffffff, var(--nss-blue));
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.88) 0 17%,
+      transparent 18%
+    ),
+    conic-gradient(
+      from 10deg,
+      var(--nss-blue),
+      var(--nss-red),
+      #ffffff,
+      var(--nss-blue)
+    );
 }
 
 .asset-frame--logo .asset-fallback::before,
@@ -1741,7 +2012,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .asset-frame--logo .asset-fallback__label {
   color: #15231c;
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -1754,13 +2025,34 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   padding: clamp(1.45rem, 4vw, 3.7rem);
 }
 
-.premium-card__body > p:first-child {
-  margin: 0;
-  color: var(--nss-blue);
+.premium-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 0.85rem;
+  padding: 0.28rem 0.68rem;
+  border: 1px solid color-mix(in srgb, var(--card-accent, var(--nss-blue)) 26%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-accent, var(--nss-blue)) 8%, transparent);
+  color: var(--card-accent, var(--nss-blue));
   font-family: var(--font-ui);
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.premium-card__sdg-tag {
+  display: inline-flex;
+  margin-top: 0.45rem;
+  padding: 0.28rem 0.68rem;
+  border: 1px solid color-mix(in srgb, var(--card-accent, var(--nss-blue)) 26%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-accent, var(--nss-blue)) 8%, transparent);
+  color: var(--card-accent, var(--nss-blue));
+  font-family: var(--font-ui);
+  font-size: 0.71rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 .premium-card__body h3 {
@@ -1772,21 +2064,6 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   letter-spacing: -0.06em;
   line-height: 1;
   min-height: 4em;
-}
-
-.premium-card__sdg-tag {
-  display: inline-block;
-  align-self: flex-start;
-  margin-top: 0.5rem;
-  padding: 0.25rem 0.65rem;
-  border: 1px solid color-mix(in srgb, var(--card-accent) 40%, transparent);
-  border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--card-accent) 12%, transparent);
-  color: var(--card-accent);
-  font-family: var(--font-ui);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
 }
 
 .premium-card__line {
@@ -1811,7 +2088,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   margin-top: auto;
   padding-top: 1.6rem;
   color: var(--ink);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.66rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -1844,7 +2121,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 }
 
 .content-section--project .premium-card__visual {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--nss-blue) 82%, var(--card-accent)), color-mix(in srgb, var(--nss-blue-deep) 84%, var(--card-accent)));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--nss-blue) 82%, var(--card-accent)),
+    color-mix(in srgb, var(--nss-blue-deep) 84%, var(--card-accent))
+  );
 }
 
 .manifesto-section {
@@ -1911,7 +2192,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 }
 
 .diary-section {
-  padding-top: clamp(6.5rem, 13vw, 10rem);
+  padding-top: clamp(5.5rem, 11vw, 8.5rem);
 }
 
 .diary-window {
@@ -1958,7 +2239,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   mix-blend-mode: multiply;
 }
 
-.site-shell[data-theme='dark'] .diary-window__visual .asset-frame img {
+.site-shell[data-theme="dark"] .diary-window__visual .asset-frame img {
   mix-blend-mode: luminosity;
 }
 
@@ -1972,7 +2253,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   border-radius: 999px;
   background: rgba(20, 29, 24, 0.2);
   color: #fff;
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.57rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -2008,7 +2289,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.6rem;
 }
 
@@ -2046,7 +2327,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   width: 100%;
   height: 100%;
   transform: translateX(-100%);
-  background: linear-gradient(90deg, var(--event-accent), color-mix(in srgb, var(--event-accent) 54%, #ffffff));
+  background: linear-gradient(
+    90deg,
+    var(--event-accent),
+    color-mix(in srgb, var(--event-accent) 54%, #ffffff)
+  );
   animation: diary-timer var(--diary-delay, 6500ms) linear both;
 }
 
@@ -2071,9 +2356,13 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   background: color-mix(in srgb, var(--surface-solid) 72%, transparent);
   color: var(--muted);
   cursor: pointer;
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.59rem;
-  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
 }
 
 .diary-tab:hover,
@@ -2085,8 +2374,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 }
 
 .connect-section {
-  padding-top: clamp(7rem, 13vw, 10rem);
-  padding-bottom: clamp(5.5rem, 10vw, 8rem);
+  padding-top: clamp(5.9rem, 11vw, 8.5rem);
+  padding-bottom: clamp(4.7rem, 8.5vw, 6.8rem);
 }
 
 .connect-section__top {
@@ -2128,10 +2417,13 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   box-shadow: 0 8px 22px rgba(30, 35, 31, 0.04);
 }
 
-
 .connect-card--about {
   background:
-    radial-gradient(circle at 85% 12%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 31%),
+    radial-gradient(
+      circle at 85% 12%,
+      color-mix(in srgb, var(--accent) 20%, transparent),
+      transparent 31%
+    ),
     color-mix(in srgb, var(--surface-solid) 72%, transparent);
 }
 
@@ -2155,7 +2447,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 .connect-card__label {
   margin: auto 0 0 !important;
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.63rem !important;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -2196,7 +2488,9 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   height: 1.35rem;
   flex-shrink: 0;
   display: block;
-  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 220ms ease;
+  transition:
+    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 220ms ease;
 }
 
 .social-icon--instagram {
@@ -2306,7 +2600,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .connect-card--contacts a span {
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.6rem;
   font-weight: 400;
 }
@@ -2342,10 +2636,11 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
   border-radius: 50%;
 
-  background:
-    radial-gradient(circle,
-      color-mix(in srgb, var(--accent) 15%, transparent),
-      transparent 70%);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 15%, transparent),
+    transparent 70%
+  );
 }
 
 .contact-directory__header {
@@ -2361,18 +2656,18 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   color: var(--accent-text);
 
   font-family: var(--font-ui);
-  font-size: .72rem;
-  letter-spacing: .14em;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .contact-directory__header h3 {
-  margin: .45rem 0 .8rem;
+  margin: 0.45rem 0 0.8rem;
 
   font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 400;
-  line-height: .95;
+  line-height: 0.95;
 }
 
 .contact-directory__header p {
@@ -2395,7 +2690,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 .contact-person {
   display: flex;
   flex-direction: column;
-  gap: .35rem;
+  gap: 0.35rem;
 
   padding: 1.15rem 1.2rem;
 
@@ -2405,9 +2700,9 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   background: color-mix(in srgb, var(--surface-solid) 90%, transparent);
 
   transition:
-    transform .25s ease,
-    border-color .25s ease,
-    box-shadow .25s ease;
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .contact-person:hover {
@@ -2415,7 +2710,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
   border-color: var(--accent);
 
-  box-shadow: 0 12px 24px rgba(0,0,0,.08);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
 .contact-person strong {
@@ -2427,8 +2722,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   color: var(--muted);
 
   font-family: var(--font-ui);
-  font-size: .82rem;
-  letter-spacing: .04em;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
 }
 .site-footer {
   position: relative;
@@ -2444,7 +2739,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   border-radius: 1rem;
   background: color-mix(in srgb, var(--surface) 76%, transparent);
   color: var(--muted);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.58rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -2474,8 +2769,16 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   place-items: center;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 43%, rgba(94, 102, 255, 0.42), transparent 20rem),
-    radial-gradient(circle at 20% 76%, rgba(237, 28, 36, 0.22), transparent 19rem),
+    radial-gradient(
+      circle at 50% 43%,
+      rgba(94, 102, 255, 0.42),
+      transparent 20rem
+    ),
+    radial-gradient(
+      circle at 20% 76%,
+      rgba(237, 28, 36, 0.22),
+      transparent 19rem
+    ),
     linear-gradient(145deg, #080a25, #171b57 52%, #080a25 100%);
   color: #f7f8ff;
   transition: opacity 820ms ease;
@@ -2493,8 +2796,14 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 .loading-screen__aurora {
   position: absolute;
   inset: -30%;
-  background:
-    conic-gradient(from 220deg at 50% 50%, transparent, rgba(237, 28, 36, 0.2), transparent 24%, rgba(89, 101, 255, 0.24), transparent 58%);
+  background: conic-gradient(
+    from 220deg at 50% 50%,
+    transparent,
+    rgba(237, 28, 36, 0.2),
+    transparent 24%,
+    rgba(89, 101, 255, 0.24),
+    transparent 58%
+  );
   filter: blur(38px);
   opacity: 0.82;
   animation: loader-aurora 8s ease-in-out infinite alternate;
@@ -2506,8 +2815,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   inset: -50%;
   opacity: 0.2;
   background-image:
-    linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
   background-size: 34px 34px;
   transform: rotate(19deg);
 }
@@ -2518,7 +2827,9 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   width: min(calc(100% - 3rem), 33rem);
   justify-items: center;
   text-align: center;
-  transition: opacity 640ms ease, transform 760ms cubic-bezier(0.16, 0.84, 0.3, 1);
+  transition:
+    opacity 640ms ease,
+    transform 760ms cubic-bezier(0.16, 0.84, 0.3, 1);
 }
 
 .loading-screen--leaving .loading-screen__content {
@@ -2542,7 +2853,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 .loader-puzzle__stage::after {
   position: absolute;
   z-index: -1;
-  content: '';
+  content: "";
   pointer-events: none;
 }
 
@@ -2557,8 +2868,16 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 .loader-puzzle__stage::after {
   inset: 0;
   background:
-    radial-gradient(circle at 12% 76%, rgba(237, 28, 36, 0.23), transparent 32%),
-    radial-gradient(circle at 88% 22%, rgba(91, 113, 255, 0.22), transparent 30%);
+    radial-gradient(
+      circle at 12% 76%,
+      rgba(237, 28, 36, 0.23),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 88% 22%,
+      rgba(91, 113, 255, 0.22),
+      transparent 30%
+    );
   filter: blur(15px);
 }
 
@@ -2579,9 +2898,15 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   min-height: 0;
 }
 
-.loader-puzzle__cell:nth-child(4n + 2) { --tile-color: #ec1b24; }
-.loader-puzzle__cell:nth-child(4n + 3) { --tile-color: #ffffff; }
-.loader-puzzle__cell:nth-child(4n) { --tile-color: #4f51a5; }
+.loader-puzzle__cell:nth-child(4n + 2) {
+  --tile-color: #ec1b24;
+}
+.loader-puzzle__cell:nth-child(4n + 3) {
+  --tile-color: #ffffff;
+}
+.loader-puzzle__cell:nth-child(4n) {
+  --tile-color: #4f51a5;
+}
 
 .loader-puzzle__piece,
 .loader-puzzle__you {
@@ -2600,12 +2925,23 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .loader-puzzle__piece {
   background:
-    linear-gradient(128deg, rgba(255, 255, 255, 0.5), transparent 36%, rgba(5, 9, 39, 0.2)),
-    linear-gradient(145deg, color-mix(in srgb, var(--tile-color) 70%, #ffffff), color-mix(in srgb, var(--tile-color) 94%, #080a25));
+    linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.5),
+      transparent 36%,
+      rgba(5, 9, 39, 0.2)
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--tile-color) 70%, #ffffff),
+      color-mix(in srgb, var(--tile-color) 94%, #080a25)
+    );
   filter: drop-shadow(0 10px 15px rgba(2, 7, 38, 0.42));
   opacity: 0;
-  transform: translate3d(var(--piece-entry-x), var(--piece-entry-y), 0) scale(0.58);
-  animation: loader-piece 1260ms cubic-bezier(0.16, 0.84, 0.3, 1) var(--piece-delay) both;
+  transform: translate3d(var(--piece-entry-x), var(--piece-entry-y), 0)
+    scale(0.58);
+  animation: loader-piece 1260ms cubic-bezier(0.16, 0.84, 0.3, 1)
+    var(--piece-delay) both;
 }
 
 .loader-puzzle__you {
@@ -2617,22 +2953,34 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   gap: 0.1rem;
   overflow: hidden;
   background:
-    linear-gradient(126deg, rgba(255, 255, 255, 0.58), transparent 36%, rgba(22, 21, 65, 0.16)),
+    linear-gradient(
+      126deg,
+      rgba(255, 255, 255, 0.58),
+      transparent 36%,
+      rgba(22, 21, 65, 0.16)
+    ),
     linear-gradient(145deg, #ffb2b6, #ec1b24 54%, #2f3192);
   color: #fff;
   filter: drop-shadow(0 0 18px rgba(236, 27, 36, 0.5));
   opacity: 0;
   transform: translate3d(0, 2.2rem, 0) scale(0.54);
-  animation: loader-you 1320ms cubic-bezier(0.16, 0.84, 0.3, 1) var(--loader-you-delay) both;
+  animation: loader-you 1320ms cubic-bezier(0.16, 0.84, 0.3, 1)
+    var(--loader-you-delay) both;
 }
 
 .loader-puzzle__you::before {
   position: absolute;
   inset: -54% 34%;
-  content: '';
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.78), transparent);
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.78),
+    transparent
+  );
   transform: rotate(24deg) translateX(-180%);
-  animation: loader-reflection 1400ms ease-out calc(var(--loader-you-delay) + 220ms) both;
+  animation: loader-reflection 1400ms ease-out
+    calc(var(--loader-you-delay) + 220ms) both;
 }
 
 .loader-puzzle__you small,
@@ -2643,7 +2991,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .loader-puzzle__you small {
   max-width: 76%;
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: clamp(0.28rem, 0.74vw, 0.45rem);
   letter-spacing: 0.08em;
   line-height: 1.05;
@@ -2652,7 +3000,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 }
 
 .loader-puzzle__you strong {
-  font-family: 'Oranienbaum', Georgia, serif;
+  font-family: "Oranienbaum", Georgia, serif;
   font-size: clamp(1.4rem, 4vw, 2.35rem);
   font-weight: 400;
   line-height: 0.74;
@@ -2692,7 +3040,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   width: min(78vw, 22rem);
   padding-top: 0.95rem;
   border-top: 1px solid rgba(231, 235, 255, 0.3);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.66rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -2716,7 +3064,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .loading-screen__motto span {
   color: rgba(231, 235, 255, 0.62);
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: "DM Mono", "Courier New", monospace;
   font-size: 0.55rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2724,7 +3072,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
 .loading-screen__motto strong {
   color: #fff;
-  font-family: 'Oranienbaum', Georgia, serif;
+  font-family: "Oranienbaum", Georgia, serif;
   font-size: clamp(2rem, 6vw, 3rem);
   font-style: italic;
   font-weight: 400;
@@ -2735,7 +3083,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 @keyframes loader-piece {
   0% {
     opacity: 0;
-    transform: translate3d(var(--piece-entry-x), var(--piece-entry-y), 0) scale(0.58);
+    transform: translate3d(var(--piece-entry-x), var(--piece-entry-y), 0)
+      scale(0.58);
   }
 
   70% {
@@ -3058,7 +3407,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   0%,
   4% {
     opacity: 0;
-    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0) scale(0.58);
+    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0)
+      scale(0.58);
   }
 
   15% {
@@ -3075,7 +3425,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   90%,
   100% {
     opacity: 0;
-    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0) scale(0.58);
+    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0)
+      scale(0.58);
   }
 }
 
@@ -3083,7 +3434,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   0%,
   10% {
     opacity: 0;
-    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0) scale(0.58);
+    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0)
+      scale(0.58);
   }
 
   22% {
@@ -3100,7 +3452,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   90%,
   100% {
     opacity: 0;
-    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0) scale(0.58);
+    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0)
+      scale(0.58);
   }
 }
 
@@ -3108,7 +3461,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   0%,
   17% {
     opacity: 0;
-    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0) scale(0.58);
+    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0)
+      scale(0.58);
   }
 
   29% {
@@ -3125,7 +3479,8 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   90%,
   100% {
     opacity: 0;
-    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0) scale(0.58);
+    transform: translate3d(var(--hero-entry-x), var(--hero-entry-y), 0)
+      scale(0.58);
   }
 }
 
@@ -3195,14 +3550,15 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 }
 
 /* A single engraved display face keeps every headline in the same institutional register. */
-.site-shell :is(
-  h1,
-  h2,
-  h3,
-  .asset-fallback__label,
-  .manifesto-section__mark,
-  .hero-puzzle__missing strong
-) {
+.site-shell
+  :is(
+    h1,
+    h2,
+    h3,
+    .asset-fallback__label,
+    .manifesto-section__mark,
+    .hero-puzzle__missing strong
+  ) {
   font-family: var(--font-display);
   font-weight: 400;
   font-kerning: normal;
@@ -3325,8 +3681,6 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
     opacity: 0.12;
   }
 
-
-
   .site-header {
     top: 0.6rem;
     width: calc(100% - 1.2rem);
@@ -3334,7 +3688,15 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
     margin-top: 0.6rem;
     padding: 0.5rem 0.55rem 0.5rem 0.7rem;
     border-radius: 1rem;
-    background: color-mix(in srgb, var(--surface-solid) 96%, transparent);
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(24px) saturate(145%);
+    backdrop-filter: blur(24px) saturate(145%);
+  }
+
+  .site-shell[data-theme="dark"] .site-header {
+    background: rgba(12, 15, 43, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.14);
   }
 
   .hero__content > *,
@@ -3415,7 +3777,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
 
   .hero {
     min-height: auto;
-    padding-top: 7.3rem;
+    padding-top: 5.8rem;
     padding-bottom: 2rem;
   }
 
@@ -3453,8 +3815,6 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   .hero-puzzle {
     inset: 5% 4%;
   }
-
-
 
   .hero__stamp {
     bottom: 2%;
@@ -3499,7 +3859,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   }
 
   .content-section {
-    padding: 5rem 1rem;
+    padding: 4.25rem 1rem;
   }
 
   .section-copy h2,
@@ -3546,7 +3906,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   }
 
   .story-brief {
-    padding-top: 4.2rem;
+    padding-top: 3.5rem;
   }
 
   .story-brief__intro {
@@ -3699,7 +4059,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
     border-radius: 0.82rem;
     background: color-mix(in srgb, var(--surface-solid) 84%, transparent);
     color: var(--ink);
-    font-family: 'DM Mono', 'Courier New', monospace;
+    font-family: "DM Mono", "Courier New", monospace;
     font-size: 0.61rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -3815,8 +4175,6 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   }
 }
 
-
-
 @media (prefers-reduced-motion: reduce) {
   .loading-screen__motto {
     animation: none !important;
@@ -3873,7 +4231,7 @@ html:not([data-theme='dark']) .hero-puzzle__piece--h { --tile-color: var(--nss-b
   .theme-transition::view-transition-old(root) {
     z-index: 1;
   }
-  
+
   .theme-transition::view-transition-new(root) {
     z-index: 2;
     animation: theme-wipe 0.7s cubic-bezier(0.4, 0, 0.2, 1);

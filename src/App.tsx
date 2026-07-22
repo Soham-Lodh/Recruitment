@@ -7,7 +7,6 @@ import type {
 } from "react";
 import {
   RiInstagramFill,
-  RiLinkedinBoxFill,
   RiYoutubeFill,
 } from "./components/SocialIcons";
 
@@ -620,7 +619,7 @@ function PremiumRail({
               />
             </div>
             <div className="premium-card__body">
-              <p>{item.eyebrow}</p>
+              <p className="premium-card__eyebrow">{item.eyebrow}</p>
               <h3>{item.title}</h3>
               {item.sdgLabel && (
                 <span className="premium-card__sdg-tag">
@@ -983,13 +982,13 @@ function App() {
             aria-label="NSS SCE KIIT home"
             onClick={() => handleNavClick("top")}
           >
-            <NssSeal className="brand__mark" alt="NSS SCE KIIT logo" />
-            <span className="brand__divider" aria-hidden="true" />
             <img
               className="brand__kiit"
               src="./logos/KIIT-Logo.png"
               alt="Kalinga Institute of Industrial Technology"
             />
+            <span className="brand__divider" aria-hidden="true" />
+            <NssSeal className="brand__mark" alt="NSS SCE KIIT logo" />
             <span className="brand__divider" aria-hidden="true" />
             <span className="brand__copy">
               <strong>NSS SCE</strong>
@@ -1537,14 +1536,13 @@ function App() {
                   <ArrowIcon />
                 </a>
                 <a
-                  href="https://www.linkedin.com/company/nss-sce-kiit/"
+                  href="https://nss.kiit.ac.in/"
                   target="_blank"
                   rel="noreferrer"
                   className="connect-card__link connect-card__link--linkedin"
                 >
                   <span className="connect-card__link-label">
-                    <RiLinkedinBoxFill className="social-icon social-icon--linkedin" />
-                    <span>LinkedIn</span>
+                    <span>NSS KIIT</span>
                   </span>
                   <ArrowIcon />
                 </a>
