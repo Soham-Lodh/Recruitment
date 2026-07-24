@@ -18,9 +18,6 @@ export const ACCENT_COLOR_MAP: Record<AccentToken, string> = {
 export interface Project {
   id: string;
   name: string;
-  sdg: string;
-  sdgLabel: string;
-  desc: string;
   logo: string;
   accent: AccentToken;
 }
@@ -37,8 +34,6 @@ export interface DomainItem {
 export interface EventItem {
   id: string;
   title: string;
-  date: string;
-  location: string;
   description: string;
   image: string;
   accent: string;
@@ -52,8 +47,8 @@ export interface ContactPerson {
 export interface RailItem {
   id: string;
   title: string;
-  eyebrow: string;
-  description: string;
+  eyebrow?: string;
+  description?: string;
   image: string;
   accent: string;
   sdg?: string;
@@ -64,82 +59,55 @@ export const PROJECTS: Project[] = [
   {
     id: "bandhutva",
     name: "Bandhutva",
-    sdg: "4, 17",
-    sdgLabel: "Quality Education & Partnerships",
-    desc: "Enhancing educational equity and building strong institutional partnerships to create a unified, inclusive campus environment that mirrors global solidarity goals.",
-    logo: "/logos/bandhutva.png",
+    logo: "/logos/bandhutva.webp",
     accent: "lime"
   },
   {
     id: "dhara",
     name: "Dhara",
-    sdg: "13, 14, 15",
-    sdgLabel: "Climate Action & Life Below Water/Land",
-    desc: "Leading urgent climate action and protecting life below water and on land through massive reforestation, water body preservation, and sustainable planetary care.",
-    logo: "/logos/dhara.png",
+    logo: "/logos/dhara.webp",
     accent: "cyan"
   },
   {
     id: "nidaan",
     name: "Nidaan",
-    sdg: "3, 12",
-    sdgLabel: "Health & Responsible Consumption",
-    desc: "Promoting community well-being through health awareness while advocating for responsible consumption and sustainable production cycles to reduce medical waste.",
-    logo: "/logos/nidaan.png",
+    logo: "/logos/nidaan.webp",
     accent: "violet"
   },
   {
     id: "riddhi",
     name: "Riddhi",
-    sdg: "8, 9",
-    sdgLabel: "Decent Work and Infrastructure",
-    desc: "Driving equitable economic growth and infrastructure innovation by empowering local artisans and communities with modern skills and creative technological solutions.",
-    logo: "/logos/riddhi.png",
+    logo: "/logos/riddhi.webp",
     accent: "amber"
   },
   {
     id: "sanyukt",
     name: "Sanyukt",
-    sdg: "16",
-    sdgLabel: "Peace, Justice & Strong Institutions",
-    desc: "Resolving conflicts, advocating for justice, and building transparent leadership frameworks within the student and local communities for total accountability.",
-    logo: "/logos/sanyukt.png",
+    logo: "/logos/sanyukt.webp",
     accent: "mint"
   },
   {
     id: "sparsh",
     name: "Sparsh",
-    sdg: "1, 2",
-    sdgLabel: "No Poverty & Zero Hunger",
-    desc: "Working at the grassroots to eliminate poverty and zero-hunger through systematic donation drives, community kitchens, and direct support for vulnerable populations.",
-    logo: "/logos/sparsh.png",
+    logo: "/logos/sparsh.webp",
     accent: "lime"
   },
   {
     id: "swet",
     name: "Swet",
-    sdg: "11",
-    sdgLabel: "Sustainable Cities & Communities",
-    desc: "Transforming urban spaces and campus living into sustainable, eco-friendly hubs through smart logistics and community-driven urban planning.",
-    logo: "/logos/swet.png",
+    logo: "/logos/swet.webp",
     accent: "coral"
   },
   {
     id: "udaan",
     name: "Udaan",
-    sdg: "5, 10",
-    sdgLabel: "Gender Equality & Reduced Inequalities",
-    desc: "Breaking glass ceilings through gender equality advocacy and reducing social inequalities by empowering marginalized voices through education and legal awareness.",
-    logo: "/logos/udaan.png",
+    logo: "/logos/udaan.webp",
     accent: "cyan"
   },
   {
     id: "urja",
     name: "Urja",
-    sdg: "6, 7",
-    sdgLabel: "Clean Water & Energy",
-    desc: "Harnessing the power of clean energy and ensuring universal access to clean water and sanitation, driving traditional communities towards a sustainable energy future.",
-    logo: "/logos/urja.png",
+    logo: "/logos/urja.webp",
     accent: "violet"
   },
 ];
@@ -147,12 +115,8 @@ export const PROJECTS: Project[] = [
 export const projectRailItems: RailItem[] = PROJECTS.map((project) => ({
   id: project.id,
   title: project.name,
-  eyebrow: `SDG ${project.sdg}`,
-  description: project.desc,
   image: project.logo,
   accent: ACCENT_COLOR_MAP[project.accent],
-  sdg: project.sdg,
-  sdgLabel: project.sdgLabel
 }));
 
 export const DOMAINS: DomainItem[] = [
@@ -205,105 +169,101 @@ export const DOMAINS: DomainItem[] = [
 
 export const EVENT_DIARY: EventItem[] = [
   {
-    id: "health-camp",
-    title: "Health Camp",
-    date: "March 2025",
-    location: "Damana High School",
+    id: "ann",
+    title: "Ann Daan",
     description:
-      "NSS SCE organized an ENT health camp with free check-ups, consultations, and guidance to encourage healthy practices and early detection.",
-    image: "/health camp.jpg",
-    accent: "#e46e51"
+      "Volunteers organized an Ann Daan drive by preparing and serving nutritious meals to community dogs on campus, promoting compassion, responsible animal care, and kindness toward stray animals.",
+    image: "/events/ann.webp",
+    accent: "#C97B47"
   },
   {
-    id: "orphanage-visit",
+    id: "orphanage",
     title: "Orphanage Visit",
-    date: "March 2025",
-    location: "Madhurmaye Orphanage",
     description:
-      "Volunteers shared meaningful moments with children through interactive sessions on good habits, hygiene practices, and moral values.",
-    image: "/orphange.jpg",
-    accent: "#6c79bc"
+      "NSS volunteers spent quality time with children through engaging games, creative activities, storytelling, and interactive learning sessions, creating joyful memories while encouraging confidence and personal growth.",
+    image: "/events/orphanage.webp",
+    accent: "#D76A64"
   },
   {
-    id: "plantation-drive",
+    id: "plantation",
     title: "Plantation Drive",
-    date: "July 2025",
-    location: "Prasanti Vihar",
     description:
-      "Saplings were planted in public spaces and educational institutions to encourage greener practices and environmental responsibility.",
-    image: "/plantation.jpeg",
-    accent: "#47886d"
+      "Volunteers planted saplings across the campus to promote environmental sustainability, raise awareness about afforestation, and encourage long-term responsibility toward protecting green spaces.",
+    image: "/events/plant.webp",
+    accent: "#4F7D44"
   },
   {
     id: "cleanliness-drive",
     title: "Cleanliness Drive",
-    date: "September 2024",
-    location: "KIIT Road",
     description:
-      "Volunteers cleaned public areas, spoke about waste management, and encouraged the community to maintain a clean, healthy environment.",
-    image: "/cleandrive.jpg",
-    accent: "#d59345"
+      "Students participated in a campus cleanliness initiative by collecting litter, segregating waste, and spreading awareness about maintaining a cleaner, healthier, and more sustainable environment.",
+    image: "/events/clean.webp",
+    accent: "#4F6F55"
   },
   {
-    id: "road-safety",
-    title: "Road Safety Rally",
-    date: "January 2025",
-    location: "KIIT Road",
+    id: "audi",
+    title: "NSS Orientation",
     description:
-      "A public rally used posters, slogans, and conversations to reinforce responsible driving, helmets, seatbelts, and traffic safety.",
-    image: "/roadsafety.JPG",
-    accent: "#c85f50"
+      "The NSS orientation introduced students to the organization's mission, activities, and opportunities, encouraging them to participate in meaningful community service and social responsibility initiatives.",
+    image: "/events/audi.webp",
+    accent: "#2E5D8A"
   },
   {
-    id: "animal-feeding",
-    title: "Animal Feeding",
-    date: "November 2024",
-    location: "KIIT Road",
+    id: "special-school",
+    title: "Special School Visit",
     description:
-      "The unit provided food and clean water to stray animals, promoting empathy, care, and humane treatment for voiceless beings.",
-    image: "/animalfeeding.jpg",
-    accent: "#8f6a4a"
-  },
-  {
-    id: "special-camp",
-    title: "Special Camp",
-    date: "March 2024",
-    location: "Village",
-    description:
-      "A community-focused camp brought together cleanliness drives, awareness rallies, health check-ups, and educational sessions.",
-    image: "/specialcamp.jpg",
-    accent: "#9164ab"
-  },
-  {
-    id: "daan",
-    title: "DAAN",
-    date: "November 2024",
-    location: "Slum",
-    description:
-      "Essentials including clothes, food items, and stationery were collected and distributed to support underprivileged communities.",
-    image: "/daan.jpg",
-    accent: "#bf7852"
-  },
-  {
-    id: "slum-visit",
-    title: "Slum Visit",
-    date: "March 2025",
-    location: "Local Slum",
-    description:
-      "Volunteers held awareness sessions around hygiene, education, and health while listening to residents and distributing essentials.",
-    image: "/slumvisit.jpg",
-    accent: "#497b92"
+      "Volunteers engaged children through fun learning activities, games, and creative interactions, fostering inclusion, confidence, and joyful experiences while strengthening community bonds.",
+    image: "/events/special.webp",
+    accent: "#D67B59"
   },
   {
     id: "school-visit",
-    title: "School Visit",
-    date: "December 2025",
-    location: "Damana High School",
+    title: "School Awareness Program",
     description:
-      "Interactive learning sessions covered hygiene, discipline, and moral values to inspire young minds and support holistic development.",
-    image: "/schoolvisit.jpg",
-    accent: "#d1a24e"
+      "NSS volunteers conducted interactive awareness sessions on road safety, responsible behavior, and civic values, encouraging students to develop safe habits and become responsible citizens.",
+    image: "/events/school.webp",
+    accent: "#4A567A"
   },
+  {
+    id: "blood-donation",
+    title: "Blood Donation Drive",
+    description:
+      "A large-scale voluntary blood donation camp was organized in collaboration with healthcare professionals, encouraging students to donate blood and contribute toward saving lives.",
+    image: "/events/blood.webp",
+    accent: "#B23A3A"
+  },
+  {
+    id: "dental-camp",
+    title: "Dental Camp",
+    description:
+      "NSS volunteers coordinated a free dental health camp offering oral check-ups, hygiene awareness, and preventive care guidance while assisting healthcare professionals throughout the event.",
+    image: "/events/dental.webp",
+    accent: "#7A6C4B"
+  },
+  {
+    id: "nukkad-natak",
+    title: "Nukkad Natak",
+    description:
+      "A powerful street play highlighted the harmful effects of ragging and promoted respect, empathy, and a safe, inclusive campus environment through impactful performances and public engagement.",
+    image: "/events/nukkad.webp",
+    accent: "#A82D35"
+  },
+  {
+    id: "oldage-home-visit",
+    title: "Old Age Home Visit",
+    description:
+      "Volunteers spent meaningful time with senior citizens through conversations, cultural activities, music, and interactive sessions, bringing companionship, joy, and emotional support.",
+    image: "/events/oldage.webp",
+    accent: "#C98C42"
+  },
+  {
+    id: "vastra-daan",
+    title: "Vastra Daan",
+    description:
+      "Clothing collected through donation drives was distributed to underprivileged families, ensuring usable garments reached those in need while encouraging generosity and community support.",
+    image: "/events/vastra.webp",
+    accent: "#5E6F8F"
+  }
 ];
 
 export const CONTACT_DIRECTORY: ContactPerson[] = [

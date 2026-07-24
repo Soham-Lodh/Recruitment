@@ -330,14 +330,12 @@ function PremiumRail({
   sectionId,
   eyebrow,
   title,
-  description,
   items,
   kind,
 }: {
   sectionId: string;
   eyebrow: string;
   title: string;
-  description: string;
   items: RailItem[];
   kind: "domain" | "project";
 }) {
@@ -541,7 +539,6 @@ function PremiumRail({
           <p className="eyebrow">{eyebrow}</p>
           <h2>{title}</h2>
         </div>
-        <p>{description}</p>
       </div>
 
       <div className="rail-toolbar">
@@ -619,15 +616,8 @@ function PremiumRail({
               />
             </div>
             <div className="premium-card__body">
-              <p className="premium-card__eyebrow">{item.eyebrow}</p>
               <h3>{item.title}</h3>
-              {item.sdgLabel && (
-                <span className="premium-card__sdg-tag">
-                  {item.sdgLabel}
-                </span>
-              )}
-              <span className="premium-card__line" />
-              <p className="premium-card__description">{item.description}</p>
+              <p>{item.description}</p>
             </div>
           </article>
         ))}
@@ -984,27 +974,18 @@ function App() {
           >
             <img
               className="brand__kiit"
-              src="./logos/KIIT-Logo.png"
+              src="./logos/KIITLOGO.avif"
               alt="Kalinga Institute of Industrial Technology"
             />
             <span className="brand__divider" aria-hidden="true" />
             <NssSeal className="brand__mark" alt="NSS SCE KIIT logo" />
             <span className="brand__divider" aria-hidden="true" />
             <span className="brand__copy">
-              <strong>NSS SCE</strong>
-              <span>KIIT</span>
+              <strong>NSS SCE KIIT</strong>
             </span>
           </a>
 
           <nav className="desktop-nav" aria-label="Primary navigation">
-            <a
-              href="#story"
-              className={activeSection === "story" ? "nav-link--active" : ""}
-              aria-current={activeSection === "story" ? "page" : undefined}
-              onClick={() => handleNavClick("story")}
-            >
-              The Story
-            </a>
             <a
               href="#domains"
               className={activeSection === "domains" ? "nav-link--active" : ""}
@@ -1027,7 +1008,7 @@ function App() {
               aria-current={activeSection === "diary" ? "page" : undefined}
               onClick={() => handleNavClick("diary")}
             >
-              Impact
+              Events
             </a>
             <a
               href="#connect"
@@ -1245,44 +1226,6 @@ function App() {
             </div>
           </section>
 
-          <section className="content-section story-brief" id="story">
-            <div className="story-brief__intro">
-              <p className="eyebrow">The applicant is the answer</p>
-              <h2>
-                We are not simply asking you to join. We are showing you where
-                NSS needs you.
-              </h2>
-            </div>
-            <div className="story-brief__grid">
-              <article className="story-brief__card">
-                <span>A unique shape</span>
-                <h3>Every individual carries something distinct.</h3>
-                <p>
-                  Every volunteer brings a different set of skills, ideas, and
-                  efforts. Like a puzzle piece, every person has a shape and
-                  purpose that cannot be replaced.
-                </p>
-              </article>
-              <article className="story-brief__card story-brief__card--accent">
-                <span>The missing piece</span>
-                <h3>You are not another addition to NSS.</h3>
-                <p>
-                  You are the missing piece that helps complete it. From your
-                  very first step, your contribution is important and valued.
-                </p>
-              </article>
-              <article className="story-brief__card">
-                <span>The whole picture</span>
-                <h3>When every strength meets, the picture becomes whole.</h3>
-                <p>
-                  Existing volunteers, seniors, coordinators, and new recruits
-                  come together to build an organisation shaped by everyone who
-                  chooses to be part of it.
-                </p>
-              </article>
-            </div>
-          </section>
-
           <section className="content-section video-section">
             <div className="video-section__copy">
               <p className="eyebrow">See the picture move</p>
@@ -1318,7 +1261,6 @@ function App() {
             sectionId="domains"
             eyebrow="Where your strength fits"
             title="Five ways to make a mark."
-            description="Find the contribution space that feels most like you. These are independent, tactile rails: take your time, swipe through, and discover the work behind each one."
             items={domains}
             kind="domain"
           />
@@ -1351,7 +1293,6 @@ function App() {
             sectionId="projects"
             eyebrow="The wider picture"
             title="Projects with room for your piece."
-            description="Every project is a different edge of the NSS SCE KIIT puzzle. Together, they turn individual effort into an enduring picture of service."
             items={projects}
             kind="project"
           />
@@ -1362,10 +1303,6 @@ function App() {
                 <p className="eyebrow">Event diary</p>
                 <h2>Moments that became more than moments.</h2>
               </div>
-              <p>
-                From health support to awareness drives, every field note tells
-                the story of students choosing action over apathy.
-              </p>
             </div>
 
             <div
@@ -1398,7 +1335,6 @@ function App() {
                   label={selectedEvent.title}
                   kind="event"
                 />
-                <div className="diary-window__tag">NSS field note</div>
               </div>
               <div
                 className="diary-window__content"
@@ -1407,8 +1343,6 @@ function App() {
                 <p className="eyebrow">Event archive</p>
                 <h3>{selectedEvent.title}</h3>
                 <div className="diary-window__meta">
-                  <span>{selectedEvent.date}</span>
-                  <span>{selectedEvent.location}</span>
                 </div>
                 <p>{selectedEvent.description}</p>
                 <div className="diary-window__controls">
@@ -1446,32 +1380,6 @@ function App() {
                   }
                 />
               </div>
-            </div>
-
-            <div
-              className="diary-tabs"
-              role="tablist"
-              aria-label="Choose an event"
-            >
-              {eventDiary.map((event, index) => (
-                <button
-                  className={joinClassNames(
-                    "diary-tab",
-                    eventIndex === index && "diary-tab--active",
-                  )}
-                  key={event.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={eventIndex === index}
-                  onClick={() => {
-                    if (!diaryClickSuppressedRef.current) {
-                      selectDiaryEvent(index);
-                    }
-                  }}
-                >
-                  {event.title}
-                </button>
-              ))}
             </div>
           </section>
 

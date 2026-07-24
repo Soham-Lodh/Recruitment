@@ -495,11 +495,7 @@ a {
   display: block;
   width: 4.25rem;
   height: 2.72rem;
-  padding: 0.12rem 0.18rem;
-  border: 1px solid var(--line);
   border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 5px 13px color-mix(in srgb, var(--nss-blue) 10%, transparent);
   object-fit: contain;
   object-position: center;
 }
@@ -513,7 +509,7 @@ a {
 .desktop-nav a {
   position: relative;
   color: var(--muted);
-  font-size: 0.76rem;
+  font-size: 1rem;
   font-weight: 700;
   transition: color 180ms ease;
 }
